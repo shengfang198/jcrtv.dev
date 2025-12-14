@@ -540,7 +540,6 @@ function Body(props) {
       {/* Growth */}
       <section>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-          <div className="max-w-7xl mx-auto">
             <div className="animate-on-scroll h-full bg-[#0C0D0F] rounded-[2.5rem] p-8 border border-white/5 relative overflow-hidden group hover:border-white/10 transition-colors">
               <div className="relative z-10">
                 <div className="flex justify-between items-start mb-6">
@@ -640,7 +639,6 @@ function Body(props) {
                 )}
               </div>
             </div>
-          </div>
         </div>
       </section>
 
