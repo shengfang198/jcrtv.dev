@@ -1,3 +1,4 @@
+
 import React from 'react';
 
 function Expertise() {
@@ -15,9 +16,8 @@ function Expertise() {
           <div className="w-20 h-px bg-white/10 mx-auto transition-all duration-300 underline-expand"></div>
         </div>
 
-        <div className="max-w-7xl mx-auto">
-          {/* Expertise Card */}
-          <div className="animate-on-scroll flashlight-card bg-[#0C0D0F] rounded-[2.5rem] p-8 border border-white/5 relative overflow-hidden group hover:border-white/10 transition-colors backdrop-blur-2xl">
+        {/* Expertise Card */}
+        <div className="animate-on-scroll flashlight-card bg-[#0C0D0F] rounded-[2.5rem] p-8 border border-white/5 relative overflow-hidden group hover:border-white/10 transition-colors backdrop-blur-2xl">
             <div className="flex justify-between items-start mb-6">
               <div className="px-3 py-1 bg-white/5 rounded-full border border-white/5 text-[10px] text-neutral-400 font-semibold uppercase tracking-wider">Expertise</div>
             </div>
@@ -34,7 +34,7 @@ function Expertise() {
               <span className="text-sm text-neutral-400 font-medium">Expert Level Proficiency</span>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <div className="grid grid-cols-1 gap-12">
               <div className="max-w-md mx-auto md:max-w-none">
                 <h3 className="text-2xl text-white mb-6 font-medium tracking-tight">My Skills</h3>
                 <p className="text-neutral-400 mb-8">
@@ -86,45 +86,44 @@ function Expertise() {
                 </p>
                 <div className="grid grid-cols-3 gap-4">
                   <div className="bg-neutral-800/20 p-4 rounded-xl border border-neutral-700/50 flex flex-col items-center justify-center text-center hover:bg-neutral-800/30 transition-colors">
-                    <img src="/unrealengine.svg" alt="Unreal Engine" className="h-16 w-16" />
+                    <img src="./unrealengine.svg" alt="Unreal Engine" className="h-16 w-16" />
                     <h4 className="font-medium text-white mt-3">Unreal Engine</h4>
                   </div>
                   <div className="bg-neutral-800/20 p-4 rounded-xl border border-neutral-700/50 flex flex-col items-center justify-center text-center hover:bg-neutral-800/30 transition-colors">
-                    <img src="/autocad.svg" alt="Auto Cad" className="h-16 w-16" />
+                    <img src="./autocad.svg" alt="Auto Cad" className="h-16 w-16" />
                     <h4 className="font-medium text-white mt-3">Auto Cad</h4>
                   </div>
                   <div className="bg-neutral-800/20 p-4 rounded-xl border border-neutral-700/50 flex flex-col items-center justify-center text-center hover:bg-neutral-800/30 transition-colors">
-                    <img src="/blender.svg" alt="Blender" className="h-16 w-16" />
+                    <img src="./blender.svg" alt="Blender" className="h-16 w-16" />
                     <h4 className="font-medium text-white mt-3">Blender</h4>
                   </div>
                   <div className="bg-neutral-800/20 p-4 rounded-xl border border-neutral-700/50 flex flex-col items-center justify-center text-center hover:bg-neutral-800/30 transition-colors">
-                    <img src="/figma.png" alt="Figma" className="h-16 w-16" />
+                    <img src="./figma.png" alt="Figma" className="h-16 w-16" />
                     <h4 className="font-medium text-white mt-3">Figma</h4>
                   </div>
                   <div className="bg-neutral-800/20 p-4 rounded-xl border border-neutral-700/50 flex flex-col items-center justify-center text-center hover:bg-neutral-800/30 transition-colors">
-                    <img src="/react.svg" alt="React" className="h-16 w-16" />
+                    <img src="./react.svg" alt="React" className="h-16 w-16" />
                     <h4 className="font-medium text-white mt-3">React</h4>
                   </div>
                   <div className="bg-neutral-800/20 p-4 rounded-xl border border-neutral-700/50 flex flex-col items-center justify-center text-center hover:bg-neutral-800/30 transition-colors">
-                    <img src="/nodejs.png" alt="Node.js" className="h-16 w-16" />
+                    <img src="./nodejs.png" alt="Node.js" className="h-16 w-16" />
                     <h4 className="font-medium text-white mt-3">Node.js</h4>
                   </div>
                   <div className="bg-neutral-800/20 p-4 rounded-xl border border-neutral-700/50 flex flex-col items-center justify-center text-center hover:bg-neutral-800/30 transition-colors">
-                    <img src="/js.png" alt="JavaScript" className="h-16 w-16" />
+                    <img src="./js.png" alt="JavaScript" className="h-16 w-16" />
                     <h4 className="font-medium text-white mt-3">JavaScript</h4>
                   </div>
                   <div className="bg-neutral-800/20 p-4 rounded-xl border border-neutral-700/50 flex flex-col items-center justify-center text-center hover:bg-neutral-800/30 transition-colors">
-                    <img src="/database.png" alt="PostgreSQL" className="h-16 w-16" />
+                    <img src="./database.png" alt="PostgreSQL" className="h-16 w-16" />
                     <h4 className="font-medium text-white mt-3">PostgreSQL</h4>
                   </div>
                   <div className="bg-neutral-800/20 p-4 rounded-xl border border-neutral-700/50 flex flex-col items-center justify-center text-center hover:bg-neutral-800/30 transition-colors">
-                    <img src="/cpp.png" alt="C++" className="h-16 w-16" />
+                    <img src="./c++.png" alt="C++" className="h-16 w-16" />
                     <h4 className="font-medium text-white mt-3">C++</h4>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
         </div>
       </div>
     </section>

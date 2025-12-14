@@ -14,8 +14,7 @@ function Profile() {
           <div className="w-20 h-px bg-white/10 mx-auto transition-all duration-300 underline-expand"></div>
         </div>
 
-        <div className="max-w-7xl mx-auto">
-          {/* Profile Card */}
+        {/* Profile Card */}
           <div className="animate-on-scroll flashlight-card bg-[#0C0D0F] rounded-[2.5rem] p-8 border border-white/5 relative overflow-hidden group hover:border-white/10 transition-colors backdrop-blur-2xl">
             <div className="flex justify-between items-start mb-6">
               <div className="px-3 py-1 bg-white/5 rounded-full border border-white/5 text-[10px] text-neutral-400 font-semibold uppercase tracking-wider">Profile</div>
@@ -54,7 +53,7 @@ function Profile() {
 
               <div className="flex gap-3 mt-6">
                 <a
-                  href="/resume__.pdf"
+                  href="./resume__.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="bg-indigo-500 hover:bg-indigo-600 focus:bg-blue-600 focus:outline-none text-white text-sm px-5 py-2.5 rounded-full font-semibold transition-colors border border-blue-500 inline-block"
@@ -63,7 +62,6 @@ function Profile() {
                 </a>
               </div>
             </div>
-          </div>
         </div>
       </div>
     </section>
