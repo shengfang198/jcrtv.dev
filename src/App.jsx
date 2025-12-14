@@ -1,14 +1,14 @@
 import './App.css'
 import { useState } from 'react'
-import Cover from './components/cover'
-import Header from './components/header'
-import Body from './components/body'
+import Cover from './components/Cover.jsx'
+import Header from './components/Header.jsx'
+import Body from './components/Body.jsx'
 import Profile from './components/Profile.jsx'
 import Expertise from './components/Expertise.jsx'
-import Projects from './components/project.jsx'
+import Projects from './components/Projects.jsx'
 import Career from './components/Career.jsx'
-import Footer from './components/footer.jsx'
-import projectsData from './data/projectsData.jsx'
+import Footer from './components/Footer.jsx'
+import projectsData from './data/ProjectsData.jsx'
 
 function App() {
   const [selectedProject, setSelectedProject] = useState(null);
