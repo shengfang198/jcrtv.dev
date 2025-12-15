@@ -191,6 +191,26 @@ function Body(props) {
     // Flashlight effect for cards
     const addFlashlightEffect = () => {
       const cards = document.querySelectorAll('.flashlight-card');
+      let isScrolling = false;
+      let scrollThrottle;
+      let activeCards = new Set(); // Track cards with active flashlight
+
+      // Hide flashlights during scroll, show after scroll stops
+      const handleScroll = () => {
+        isScrolling = true;
+        // Hide all active flashlights during scroll
+        activeCards.forEach(card => {
+          card.classList.remove('flashlight-active');
+        });
+        activeCards.clear();
+
+        clearTimeout(scrollThrottle);
+        scrollThrottle = setTimeout(() => {
+          isScrolling = false;
+        }, 100);
+      };
+
+      window.addEventListener('scroll', handleScroll, { passive: true });
 
       cards.forEach(card => {
         let currentColors = {};
@@ -211,6 +231,9 @@ function Body(props) {
 
         // Update colors and set initial mouse position on hover enter
         card.addEventListener('mouseenter', (e) => {
+          // Only activate if not scrolling
+          if (isScrolling) return;
+
           updateColors();
 
           // Temporarily disable transform transition during initial hover
@@ -226,6 +249,7 @@ function Body(props) {
 
           // Now activate the flashlight
           card.classList.add('flashlight-active');
+          activeCards.add(card);
 
           // Re-enable transform transition after a frame
           requestAnimationFrame(() => {
@@ -235,9 +259,24 @@ function Body(props) {
 
         card.addEventListener('mouseleave', () => {
           card.classList.remove('flashlight-active');
+          activeCards.delete(card);
         });
 
         card.addEventListener('mousemove', (e) => {
+          // Don't update position during scroll, and don't show flashlight during scroll
+          if (isScrolling) {
+            card.classList.remove('flashlight-active');
+            activeCards.delete(card);
+            return;
+          }
+
+          // Only show flashlight if mouse is moving and not scrolling
+          if (!card.classList.contains('flashlight-active')) {
+            card.classList.add('flashlight-active');
+            activeCards.add(card);
+            updateColors(); // Generate colors when reactivating
+          }
+
           const rect = card.getBoundingClientRect();
           const x = e.clientX - rect.left - 200; // Center the 400px blob on cursor
           const y = e.clientY - rect.top - 200;  // Center the 400px blob on cursor
@@ -311,17 +350,14 @@ function Body(props) {
   };
 
   return (
-    <main className="z-10 w-full pt-12 p-0 relative min-h-screen flex flex-col" style={{ backgroundColor: '#0a0a0a' }}>
+    <main className="z-10 w-full pt-32 p-0 relative min-h-screen flex flex-col" style={{ backgroundColor: '#0a0a0a' }}>
       <div className="flex-grow">
         {/* Particles Background */}
         <div id="particles-js" className="fixed top-0 left-0 right-0 bottom-0 pointer-events-none -z-10"></div>
       </div>
       {/* Hero Header */}
       <div className="text-center max-w-5xl mx-auto mb-24">
-        <div className="animate-on-scroll inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-neutral-300 text-xs font-semibold mb-8">
-          <span className="flex h-2 w-2 rounded-full bg-white"></span>
-          Professional Portfolio
-        </div>
+
 
         <h1 className="animate-on-scroll md:text-8xl leading-[1] text-7xl font-medium text-white tracking-tight mb-8">
           Jay Creative <br className="hidden md:block" />

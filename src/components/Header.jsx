@@ -3,7 +3,7 @@ import React from 'react';
 function Header() {
   return (
     <>
-      <div className="fixed left-1/2 transform -translate-x-1/2 z-50" style={{top: '30px'}}>
+      <div className="fixed top-[30px] left-0 right-0 flex justify-center z-50">
       <nav className="grid grid-cols-3 items-center bg-[#0C0D0F] w-full h-16 max-w-5xl border border-white/5 rounded-full px-8 py-3 shadow-2xl">
 
         <div className="flex items-center justify-start">
