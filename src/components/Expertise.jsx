@@ -118,7 +118,7 @@ function Expertise() {
                     <h4 className="font-medium text-white mt-3">PostgreSQL</h4>
                   </div>
                   <div className="bg-neutral-800/20 p-4 rounded-xl border border-neutral-700/50 flex flex-col items-center justify-center text-center hover:bg-neutral-800/30 transition-colors">
-                    <img src="./c++.png" alt="C++" className="h-16 w-16" />
+                    <img src="./cpp.png" alt="C++" className="h-16 w-16" />
                     <h4 className="font-medium text-white mt-3">C++</h4>
                   </div>
                 </div>
@@ -131,3 +131,4 @@ function Expertise() {
 }
 
 export default Expertise;
+
