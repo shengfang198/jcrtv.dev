@@ -8,7 +8,7 @@ const archViz7 = '/3DVISUALIZATION/7.jpg'
 const archViz8 = '/3DVISUALIZATION/8.jpg'
 const archViz9 = '/3DVISUALIZATION/9.jpg'
 const archViz10 = '/3DVISUALIZATION/10.jpg'
-const figmaAnimation = '/FIGMA/figmaAnimation.mp4'
+const figmaAnimation = '/FIGMA/uiux.mp4'
 const gamedevImage = '/GAMEDEV/gamedev.png'
 const saasImage = '/SAAS/saas.png'
 const graphicArtist1 = '/GRAPHIC_ARTIST/Untitled-1.png'
@@ -370,3 +370,4 @@ const projectsData = {
 };
 
 export default projectsData;
+
