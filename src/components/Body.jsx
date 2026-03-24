@@ -32,12 +32,23 @@ function Body(props) {
   const [runnerGameOver, setRunnerGameOver] = useState(false);
   const [runnerScore, setRunnerScore] = useState(0);
   const [runnerHighScore, setRunnerHighScore] = useState(0);
-  const [runnerPlayerY, setRunnerPlayerY] = useState(0);
+  const RUNNER_TRACK_HEIGHT = 304;
+  const RUNNER_GROUND_OFFSET = 24;
+  const RUNNER_PLAYER_SIZE = 50;
+  const RUNNER_TOP_PADDING = 4;
+  const getTopSpawnY = (trackHeight) => {
+    const playableHeight = trackHeight - RUNNER_GROUND_OFFSET;
+    return Math.max(playableHeight - RUNNER_PLAYER_SIZE - RUNNER_TOP_PADDING, 0);
+  };
+  const DEFAULT_TOP_SPAWN_Y = getTopSpawnY(RUNNER_TRACK_HEIGHT);
+  const [runnerPlayerY, setRunnerPlayerY] = useState(DEFAULT_TOP_SPAWN_Y);
   const [runnerObstacles, setRunnerObstacles] = useState([]);
+  const RUNNER_FLY_FORCE = 8.2;
+  const RUNNER_GRAVITY = 0.6;
   const runnerTrackRef = useRef(null);
   const runnerFrameRef = useRef(null);
   const runnerStateRef = useRef({
-    playerY: 0,
+    playerY: DEFAULT_TOP_SPAWN_Y,
     velocity: 0,
     obstacles: [],
     spawnCounter: 0,
@@ -321,8 +332,11 @@ function Body(props) {
   }, []);
 
   const resetRunnerState = () => {
+    const trackHeight = runnerTrackRef.current?.clientHeight || RUNNER_TRACK_HEIGHT;
+    const startY = getTopSpawnY(trackHeight);
+
     runnerStateRef.current = {
-      playerY: 0,
+      playerY: startY,
       velocity: 0,
       obstacles: [],
       spawnCounter: 55,
@@ -333,16 +347,15 @@ function Body(props) {
     setRunnerStarted(true);
     setRunnerGameOver(false);
     setRunnerScore(0);
-    setRunnerPlayerY(0);
+    setRunnerPlayerY(startY);
     setRunnerObstacles([]);
   };
 
-  const jumpRunner = () => {
+  const flyRunner = () => {
     const s = runnerStateRef.current;
     if (!s.isStarted || s.isGameOver) return;
-    if (s.playerY === 0) {
-      s.velocity = 10;
-    }
+    // Flap-style fly input for sustained airtime.
+    s.velocity = RUNNER_FLY_FORCE;
   };
 
   useEffect(() => {
@@ -353,7 +366,7 @@ function Body(props) {
           resetRunnerState();
           return;
         }
-        jumpRunner();
+        flyRunner();
       }
     };
 
@@ -364,12 +377,12 @@ function Body(props) {
   useEffect(() => {
     if (!runnerStarted || runnerGameOver) return () => {};
 
-    const GRAVITY = 0.6;
+    const GRAVITY = RUNNER_GRAVITY;
     const SPEED = 6;
-    const PLAYER_SIZE = 50;
+    const PLAYER_SIZE = RUNNER_PLAYER_SIZE;
     const PLAYER_X = 72;
-    const TRACK_HEIGHT = 160;
-    const GROUND_OFFSET = 24;
+    const TRACK_HEIGHT = RUNNER_TRACK_HEIGHT;
+    const GROUND_OFFSET = RUNNER_GROUND_OFFSET;
     const enemyColors = [
       '#ef4444',
       '#f97316',
@@ -380,6 +393,11 @@ function Body(props) {
       '#8b5cf6',
       '#ec4899'
     ];
+    const isEdgeCollision = (a, b) => {
+      const overlapX = a.left <= b.right && a.right >= b.left;
+      const overlapY = a.bottom <= b.top && a.top >= b.bottom;
+      return overlapX && overlapY;
+    };
 
     const tick = () => {
       const s = runnerStateRef.current;
@@ -401,14 +419,25 @@ function Body(props) {
 
       s.spawnCounter -= 1;
       if (s.spawnCounter <= 0) {
-        const blockSize = 26 + Math.floor(Math.random() * 20);
+        const trackHeight = runnerTrackRef.current?.clientHeight || TRACK_HEIGHT;
+        const playableHeight = trackHeight - GROUND_OFFSET;
+        const isTallBlock = Math.random() < 0.35;
+        const blockHeight = isTallBlock
+          ? Math.floor(playableHeight * (0.42 + Math.random() * 0.12))
+          : 26 + Math.floor(Math.random() * 20);
+        const blockWidth = isTallBlock
+          ? 30 + Math.floor(Math.random() * 18)
+          : blockHeight;
         const trackWidth = runnerTrackRef.current?.clientWidth || 760;
         const randomColor = enemyColors[Math.floor(Math.random() * enemyColors.length)];
         const obstaclePosition = Math.random() < 0.5 ? 'bottom' : 'top';
+        const adjustedHeight = obstaclePosition === 'top'
+          ? Math.max(Math.floor(blockHeight * 0.7), 20)
+          : blockHeight;
         s.obstacles.push({
-          x: trackWidth + blockSize,
-          width: blockSize,
-          height: blockSize,
+          x: trackWidth + blockWidth,
+          width: blockWidth,
+          height: adjustedHeight,
           color: randomColor,
           position: obstaclePosition
         });
@@ -419,26 +448,33 @@ function Body(props) {
         .map((o) => ({ ...o, x: o.x - SPEED }))
         .filter((o) => o.x + o.width > -10);
 
-      const collided = s.obstacles.some((o) => {
-        const playerRect = {
-          left: PLAYER_X,
-          right: PLAYER_X + PLAYER_SIZE,
-          bottom: s.playerY,
-          top: s.playerY + PLAYER_SIZE
-        };
+      const trackWidth = runnerTrackRef.current?.clientWidth || 760;
+      const playerRect = {
+        left: PLAYER_X,
+        right: PLAYER_X + PLAYER_SIZE,
+        bottom: s.playerY,
+        top: s.playerY + PLAYER_SIZE
+      };
 
+      const collidedWithBlock = s.obstacles.some((o) => {
         const obstacleRect = {
           left: o.x,
           right: o.x + o.width,
           bottom: o.position === 'top' ? playableHeight - o.height : 0,
           top: o.position === 'top' ? playableHeight : o.height
         };
-
-        const overlapX = playerRect.left <= obstacleRect.right && playerRect.right >= obstacleRect.left;
-        const overlapY = playerRect.bottom <= obstacleRect.top && playerRect.top >= obstacleRect.bottom;
-
-        return overlapX && overlapY;
+        return isEdgeCollision(playerRect, obstacleRect);
       });
+
+      const groundRect = {
+        left: 0,
+        right: trackWidth,
+        bottom: -1,
+        top: 0
+      };
+      const collidedWithGround = isEdgeCollision(playerRect, groundRect);
+
+      const collided = collidedWithBlock || collidedWithGround;
 
       if (collided) {
         s.isGameOver = true;
@@ -463,7 +499,7 @@ function Body(props) {
         window.clearInterval(runnerFrameRef.current);
       }
     };
-  }, [runnerStarted, runnerGameOver, runnerHighScore]);
+  }, [runnerStarted, runnerGameOver, runnerHighScore, RUNNER_GRAVITY]);
 
   // Form submission handler
   const handleFormSubmit = async (e) => {
@@ -854,10 +890,10 @@ function Body(props) {
               </div>
             </div>
 
-            <h3 className="text-2xl text-white mb-2 font-medium tracking-tight">Runner Box</h3>
-            <p className="text-neutral-400 mb-6">Press Play, then use Space or Up Arrow to jump.</p>
+            <h3 className="text-2xl text-white mb-2 font-medium tracking-tight">Flappy Bills</h3>
+            <p className="text-neutral-400 mb-6">Press Play, then use Space or Up Arrow to fly.</p>
 
-            <div ref={runnerTrackRef} className="runner-track relative h-40 rounded-2xl border border-white/10 bg-white/5 overflow-hidden">
+            <div ref={runnerTrackRef} className="runner-track relative h-72 rounded-2xl border border-white/10 bg-white/5 overflow-hidden">
               <div className="absolute bottom-6 left-0 right-0 h-[2px] bg-white/20" />
               <div
                 className="runner-player absolute bottom-6 left-[72px] w-[50px] h-[50px]"
@@ -894,12 +930,12 @@ function Body(props) {
                   if (!runnerStarted) {
                     resetRunnerState();
                   } else {
-                    jumpRunner();
+                    flyRunner();
                   }
                 }}
                 className="runner-play-btn px-5 py-2.5 rounded-full font-semibold text-sm transition-colors"
               >
-                {!runnerStarted ? (runnerGameOver ? 'Play Again' : 'Play') : 'Jump'}
+                {!runnerStarted ? (runnerGameOver ? 'Play Again' : 'Play') : 'Fly'}
               </button>
               {runnerGameOver && (
                 <span className="text-sm text-neutral-400">Game over. Press Play Again.</span>
