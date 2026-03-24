@@ -880,20 +880,23 @@ function Body(props) {
       {/* Mini Runner Game */}
       <section>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-          <div className="animate-on-scroll runner-card rounded-[2.5rem] p-8 border border-white/5 relative overflow-hidden group hover:border-white/10 transition-colors bg-[#0C0D0F]">
-            <div className="flex items-center justify-between mb-6">
-              <div className="px-3 py-1 bg-white/5 rounded-full border border-white/5 text-xs text-neutral-400 font-semibold uppercase tracking-wider">
-                Mini Game
+          <div className="animate-on-scroll runner-card rounded-[2.5rem] border border-white/5 relative overflow-hidden group hover:border-white/10 transition-colors bg-transparent">
+            <div className="runner-card-surface bg-[#0C0D0F] p-8 pb-4 rounded-t-[2.5rem]">
+              <div className="flex items-center justify-between mb-6">
+                <div className="px-3 py-1 bg-white/5 rounded-full border border-white/5 text-xs text-neutral-400 font-semibold uppercase tracking-wider">
+                  Mini Game
+                </div>
+                <div className="text-sm text-neutral-400 font-medium">
+                  Score: <span className="text-white">{runnerScore}</span> | Best: <span className="text-white">{runnerHighScore}</span>
+                </div>
               </div>
-              <div className="text-sm text-neutral-400 font-medium">
-                Score: <span className="text-white">{runnerScore}</span> | Best: <span className="text-white">{runnerHighScore}</span>
-              </div>
+
+              <h3 className="text-2xl text-white mb-2 font-medium tracking-tight">Flappy Bills</h3>
+              <p className="text-neutral-400 mb-0">Press Play, then use Space or Up Arrow to fly.</p>
             </div>
 
-            <h3 className="text-2xl text-white mb-2 font-medium tracking-tight">Flappy Bills</h3>
-            <p className="text-neutral-400 mb-6">Press Play, then use Space or Up Arrow to fly.</p>
-
-            <div ref={runnerTrackRef} className="runner-track relative h-72 rounded-2xl border border-white/10 bg-white/5 overflow-hidden">
+            <div className="px-8">
+            <div ref={runnerTrackRef} className="runner-track relative h-72 rounded-2xl border border-white/10 bg-transparent overflow-hidden">
               <div className="absolute bottom-6 left-0 right-0 h-[2px] bg-white/20" />
               <div
                 className="runner-player absolute bottom-6 left-[72px] w-[50px] h-[50px]"
@@ -922,24 +925,27 @@ function Body(props) {
                 />
               ))}
             </div>
+            </div>
 
-            <div className="mt-6 flex items-center gap-3">
-              <button
-                type="button"
-                onClick={() => {
-                  if (!runnerStarted) {
-                    resetRunnerState();
-                  } else {
-                    flyRunner();
-                  }
-                }}
-                className="runner-play-btn px-5 py-2.5 rounded-full font-semibold text-sm transition-colors"
-              >
-                {!runnerStarted ? (runnerGameOver ? 'Play Again' : 'Play') : 'Fly'}
-              </button>
-              {runnerGameOver && (
-                <span className="text-sm text-neutral-400">Game over. Press Play Again.</span>
-              )}
+            <div className="runner-card-surface bg-[#0C0D0F] p-8 pt-5 rounded-b-[2.5rem]">
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (!runnerStarted) {
+                      resetRunnerState();
+                    } else {
+                      flyRunner();
+                    }
+                  }}
+                  className="runner-play-btn px-5 py-2.5 rounded-full font-semibold text-sm transition-colors"
+                >
+                  {!runnerStarted ? (runnerGameOver ? 'Play Again' : 'Play') : 'Fly'}
+                </button>
+                {runnerGameOver && (
+                  <span className="text-sm text-neutral-400">Game over. Press Play Again.</span>
+                )}
+              </div>
             </div>
           </div>
         </div>

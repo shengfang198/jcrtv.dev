@@ -731,13 +731,18 @@ html.theme-light .project-modal-video-btn:hover {
 }
 
 html.theme-light .runner-card {
-  background: #ffffff;
+  background: transparent;
   border-color: #e5e7eb;
-  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.05);
+  box-shadow: none;
+}
+
+html.theme-light .runner-card-surface {
+  background: #ffffff;
+  box-shadow: none;
 }
 
 html.theme-light .runner-track {
-  background: #f8fafc;
+  background: transparent;
   border-color: #dbe3ed;
 }
 
