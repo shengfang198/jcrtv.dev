@@ -366,7 +366,7 @@ function Body(props) {
 
     const GRAVITY = 0.6;
     const SPEED = 6;
-    const PLAYER_SIZE = 80;
+    const PLAYER_SIZE = 50;
     const PLAYER_X = 72;
     const enemyColors = [
       '#ef4444',
@@ -410,18 +410,22 @@ function Body(props) {
         .filter((o) => o.x + o.width > -10);
 
       const collided = s.obstacles.some((o) => {
-        const playerLeft = PLAYER_X;
-        const playerRight = PLAYER_X + PLAYER_SIZE;
-        const playerBottom = s.playerY;
-        const playerTop = s.playerY + PLAYER_SIZE;
+        const playerRect = {
+          left: PLAYER_X,
+          right: PLAYER_X + PLAYER_SIZE,
+          bottom: s.playerY,
+          top: s.playerY + PLAYER_SIZE
+        };
 
-        const obstacleLeft = o.x;
-        const obstacleRight = o.x + o.width;
-        const obstacleBottom = 0;
-        const obstacleTop = o.height;
+        const obstacleRect = {
+          left: o.x,
+          right: o.x + o.width,
+          bottom: 0,
+          top: o.height
+        };
 
-        const overlapX = playerLeft <= obstacleRight && playerRight >= obstacleLeft;
-        const overlapY = playerBottom <= obstacleTop && playerTop >= obstacleBottom;
+        const overlapX = playerRect.left <= obstacleRect.right && playerRect.right >= obstacleRect.left;
+        const overlapY = playerRect.bottom <= obstacleRect.top && playerRect.top >= obstacleRect.bottom;
 
         return overlapX && overlapY;
       });
