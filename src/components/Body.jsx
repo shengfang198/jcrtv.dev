@@ -368,6 +368,8 @@ function Body(props) {
     const SPEED = 6;
     const PLAYER_SIZE = 50;
     const PLAYER_X = 72;
+    const TRACK_HEIGHT = 160;
+    const GROUND_OFFSET = 24;
     const enemyColors = [
       '#ef4444',
       '#f97316',
@@ -389,20 +391,28 @@ function Body(props) {
         s.playerY = 0;
         s.velocity = 0;
       }
+      const trackHeight = runnerTrackRef.current?.clientHeight || TRACK_HEIGHT;
+      const playableHeight = trackHeight - GROUND_OFFSET;
+      const maxPlayerY = Math.max(playableHeight - PLAYER_SIZE, 0);
+      if (s.playerY > maxPlayerY) {
+        s.playerY = maxPlayerY;
+        s.velocity = 0;
+      }
 
       s.spawnCounter -= 1;
       if (s.spawnCounter <= 0) {
-        const obstacleWidth = 28;
-        const obstacleHeight = 24 + Math.floor(Math.random() * 34);
+        const blockSize = 26 + Math.floor(Math.random() * 20);
         const trackWidth = runnerTrackRef.current?.clientWidth || 760;
         const randomColor = enemyColors[Math.floor(Math.random() * enemyColors.length)];
+        const obstaclePosition = Math.random() < 0.5 ? 'bottom' : 'top';
         s.obstacles.push({
-          x: trackWidth + obstacleWidth,
-          width: obstacleWidth,
-          height: obstacleHeight,
-          color: randomColor
+          x: trackWidth + blockSize,
+          width: blockSize,
+          height: blockSize,
+          color: randomColor,
+          position: obstaclePosition
         });
-        s.spawnCounter = 60 + Math.floor(Math.random() * 70);
+        s.spawnCounter = 46 + Math.floor(Math.random() * 44);
       }
 
       s.obstacles = s.obstacles
@@ -420,8 +430,8 @@ function Body(props) {
         const obstacleRect = {
           left: o.x,
           right: o.x + o.width,
-          bottom: 0,
-          top: o.height
+          bottom: o.position === 'top' ? playableHeight - o.height : 0,
+          top: o.position === 'top' ? playableHeight : o.height
         };
 
         const overlapX = playerRect.left <= obstacleRect.right && playerRect.right >= obstacleRect.left;
@@ -862,11 +872,12 @@ function Body(props) {
               {runnerObstacles.map((obstacle, index) => (
                 <div
                   key={`${index}-${obstacle.x}`}
-                  className="runner-obstacle absolute bottom-6 rounded-sm"
+                  className="runner-obstacle absolute rounded-sm"
                   style={{
                     left: `${obstacle.x}px`,
                     width: `${obstacle.width}px`,
                     height: `${obstacle.height}px`,
+                    ...(obstacle.position === 'top' ? { top: '0px' } : { bottom: '1.5rem' }),
                     backgroundColor: obstacle.color,
                     backgroundImage:
                       'linear-gradient(rgba(255,255,255,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.2) 1px, transparent 1px)',
