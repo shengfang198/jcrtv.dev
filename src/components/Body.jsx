@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Profile from './Profile.jsx';
 import Expertise from './Expertise.jsx';
 import Projects from './Projects.jsx';
 import Career from './Career.jsx';
 import Footer from './Footer.jsx';
+import moneyCashGif from '../assets/money-cash.gif';
 
 function Body(props) {
   const [typedText, setTypedText] = useState('');
@@ -27,6 +28,23 @@ function Body(props) {
   const [seoSearchTerm, setSeoSearchTerm] = useState('');
   const [seoSearchVisible, setSeoSearchVisible] = useState(false);
   const [referenceMinimized, setReferenceMinimized] = useState(false);
+  const [runnerStarted, setRunnerStarted] = useState(false);
+  const [runnerGameOver, setRunnerGameOver] = useState(false);
+  const [runnerScore, setRunnerScore] = useState(0);
+  const [runnerHighScore, setRunnerHighScore] = useState(0);
+  const [runnerPlayerY, setRunnerPlayerY] = useState(0);
+  const [runnerObstacles, setRunnerObstacles] = useState([]);
+  const runnerTrackRef = useRef(null);
+  const runnerFrameRef = useRef(null);
+  const runnerStateRef = useRef({
+    playerY: 0,
+    velocity: 0,
+    obstacles: [],
+    spawnCounter: 0,
+    score: 0,
+    isStarted: false,
+    isGameOver: false
+  });
 
   // A-Z Development Terms & Tools Data
   const devTerms = [
@@ -179,12 +197,12 @@ function Body(props) {
       }
     }, 150);
 
-    // Generate ultra-vibrant tones matching the snippet colors (orange to purple)
+    // Generate vibrant tones for richer flashlight glow
     const getRandomColor = () => {
-      const colors = [300, 39, 264]; // magenta, orange (39), violet (264) hues
+      const colors = [18, 32, 48, 210, 262, 292, 328]; // orange to magenta-blue spectrum
       const hue = colors[Math.floor(Math.random() * colors.length)];
-      const saturation = 95; // High saturation like snippet
-      const lightness = 56; // Matching the snippet's 56%
+      const saturation = 92 + Math.floor(Math.random() * 7); // 92-98
+      const lightness = 58 + Math.floor(Math.random() * 9); // 58-66
       return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
     };
 
@@ -302,6 +320,137 @@ function Body(props) {
     return () => clearInterval(interval);
   }, []);
 
+  const resetRunnerState = () => {
+    runnerStateRef.current = {
+      playerY: 0,
+      velocity: 0,
+      obstacles: [],
+      spawnCounter: 55,
+      score: 0,
+      isStarted: true,
+      isGameOver: false
+    };
+    setRunnerStarted(true);
+    setRunnerGameOver(false);
+    setRunnerScore(0);
+    setRunnerPlayerY(0);
+    setRunnerObstacles([]);
+  };
+
+  const jumpRunner = () => {
+    const s = runnerStateRef.current;
+    if (!s.isStarted || s.isGameOver) return;
+    if (s.playerY === 0) {
+      s.velocity = 10;
+    }
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.code === 'Space' || e.code === 'ArrowUp') {
+        e.preventDefault();
+        if (!runnerStarted || runnerGameOver) {
+          resetRunnerState();
+          return;
+        }
+        jumpRunner();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [runnerStarted, runnerGameOver]);
+
+  useEffect(() => {
+    if (!runnerStarted || runnerGameOver) return () => {};
+
+    const GRAVITY = 0.6;
+    const SPEED = 6;
+    const PLAYER_SIZE = 80;
+    const PLAYER_X = 72;
+    const enemyColors = [
+      '#ef4444',
+      '#f97316',
+      '#eab308',
+      '#22c55e',
+      '#06b6d4',
+      '#3b82f6',
+      '#8b5cf6',
+      '#ec4899'
+    ];
+
+    const tick = () => {
+      const s = runnerStateRef.current;
+      if (!s.isStarted || s.isGameOver) return;
+
+      s.playerY += s.velocity;
+      s.velocity -= GRAVITY;
+      if (s.playerY < 0) {
+        s.playerY = 0;
+        s.velocity = 0;
+      }
+
+      s.spawnCounter -= 1;
+      if (s.spawnCounter <= 0) {
+        const obstacleWidth = 28;
+        const obstacleHeight = 24 + Math.floor(Math.random() * 34);
+        const trackWidth = runnerTrackRef.current?.clientWidth || 760;
+        const randomColor = enemyColors[Math.floor(Math.random() * enemyColors.length)];
+        s.obstacles.push({
+          x: trackWidth + obstacleWidth,
+          width: obstacleWidth,
+          height: obstacleHeight,
+          color: randomColor
+        });
+        s.spawnCounter = 60 + Math.floor(Math.random() * 70);
+      }
+
+      s.obstacles = s.obstacles
+        .map((o) => ({ ...o, x: o.x - SPEED }))
+        .filter((o) => o.x + o.width > -10);
+
+      const collided = s.obstacles.some((o) => {
+        const playerLeft = PLAYER_X;
+        const playerRight = PLAYER_X + PLAYER_SIZE;
+        const playerBottom = s.playerY;
+        const playerTop = s.playerY + PLAYER_SIZE;
+
+        const obstacleLeft = o.x;
+        const obstacleRight = o.x + o.width;
+        const obstacleBottom = 0;
+        const obstacleTop = o.height;
+
+        const overlapX = playerLeft <= obstacleRight && playerRight >= obstacleLeft;
+        const overlapY = playerBottom <= obstacleTop && playerTop >= obstacleBottom;
+
+        return overlapX && overlapY;
+      });
+
+      if (collided) {
+        s.isGameOver = true;
+        setRunnerGameOver(true);
+        setRunnerStarted(false);
+        const finalScore = Math.floor(s.score);
+        if (finalScore > runnerHighScore) {
+          setRunnerHighScore(finalScore);
+        }
+        return;
+      }
+
+      s.score += 0.12;
+      setRunnerPlayerY(s.playerY);
+      setRunnerObstacles(s.obstacles);
+      setRunnerScore(Math.floor(s.score));
+    };
+
+    runnerFrameRef.current = window.setInterval(tick, 16);
+    return () => {
+      if (runnerFrameRef.current) {
+        window.clearInterval(runnerFrameRef.current);
+      }
+    };
+  }, [runnerStarted, runnerGameOver, runnerHighScore]);
+
   // Form submission handler
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -350,7 +499,7 @@ function Body(props) {
   };
 
   return (
-    <main className="z-10 w-full pt-32 p-0 relative min-h-screen flex flex-col" style={{ backgroundColor: '#0a0a0a' }}>
+    <main className="z-10 w-full pt-32 p-0 relative min-h-screen flex flex-col">
       <div className="flex-grow">
         {/* Particles Background */}
         <div id="particles-js" className="fixed top-0 left-0 right-0 bottom-0 pointer-events-none -z-10"></div>
@@ -375,7 +524,7 @@ function Body(props) {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter your email"
-            className={`w-full sm:flex-1 bg-[#161616] border rounded-full px-6 py-3.5 text-base outline-none focus:ring-1 focus:ring-white/20 transition-all placeholder:text-neutral-600 shadow-lg h-[52px] text-white ${
+            className={`theme-email-input w-full sm:flex-1 bg-[#161616] border rounded-full px-6 py-3.5 text-base outline-none focus:ring-1 focus:ring-white/20 transition-all placeholder:text-neutral-600 shadow-lg h-[52px] text-white ${
               submitStatus === 'error' ? 'border-red-500' : 'border-white/10 focus:border-white/20'
             }`}
             disabled={isSubmitting}
@@ -425,15 +574,15 @@ function Body(props) {
               <div className="flex justify-between items-start mb-6">
                 <div className="px-3 py-1 bg-white/5 rounded-full border border-white/5 text-xs text-neutral-400 font-semibold uppercase tracking-wider">Insights</div>
                 <button
-                  className="text-neutral-600 hover:text-neutral-300 transition-colors"
+                  className="theme-minimize-btn text-neutral-600 hover:text-neutral-300 transition-colors"
                   onClick={() => setDesignReviewMinimized(!designReviewMinimized)}
                 >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round">
                     <circle cx="12" cy="12" r="10"/>
                     {designReviewMinimized ? (
-                      <path d="m9 12 6 0"/>
+                      <path d="M9 12h6"/>
                     ) : (
-                      <path d="m15 9-6 6"/>
+                      <path d="M15 9L9 15"/>
                     )}
                   </svg>
                 </button>
@@ -456,17 +605,17 @@ function Body(props) {
 
                   <div className="border-t border-white/5 pt-5 flex items-center justify-between">
                     <div className="flex -space-x-3">
-                      <div className="w-10 h-10 rounded-full bg-neutral-800 border-[3px] border-[#0C0D0F] flex items-center justify-center text-xs text-neutral-300 font-bold">JD</div>
-                      <div className="w-10 h-10 rounded-full bg-neutral-700 border-[3px] border-[#0C0D0F] flex items-center justify-center text-xs text-white font-bold">AS</div>
-                      <div className="w-10 h-10 rounded-full bg-neutral-900 border-[3px] border-[#0C0D0F] flex items-center justify-center text-xs text-white font-bold">+{extraAttendees}</div>
+                      <div className="theme-attendee-avatar theme-attendee-jd w-10 h-10 rounded-full border-[3px] flex items-center justify-center text-xs font-bold">JD</div>
+                      <div className="theme-attendee-avatar theme-attendee-as w-10 h-10 rounded-full border-[3px] flex items-center justify-center text-xs font-bold">AS</div>
+                      <div className="theme-attendee-avatar theme-attendee-count w-10 h-10 rounded-full border-[3px] flex items-center justify-center text-xs font-bold">+{extraAttendees}</div>
                     </div>
                     {reviewSubmitted ? (
-                      <div className="bg-white/5 text-white text-sm px-5 py-2.5 rounded-full font-semibold border border-white/5">
+                      <div className="theme-review-badge bg-white/5 text-white text-sm px-5 py-2.5 rounded-full font-semibold border border-white/5">
                         Thank you for the review!
                       </div>
                     ) : (
                       <button
-                        className="bg-white/5 text-white hover:bg-white/10 text-sm px-5 py-2.5 rounded-full font-semibold transition-colors border border-white/5"
+                        className="theme-review-btn bg-white/5 text-white hover:bg-white/10 text-sm px-5 py-2.5 rounded-full font-semibold transition-colors border border-white/5"
                         onClick={() => {
                           const newCount = extraAttendees + 1;
                           setExtraAttendees(newCount);
@@ -495,15 +644,15 @@ function Body(props) {
               <div className="flex justify-between items-start mb-6">
                 <div className="px-3 py-1 bg-white/5 rounded-full border border-white/5 text-xs text-neutral-400 font-semibold uppercase tracking-wider">Reference</div>
                 <button
-                  className="text-neutral-600 hover:text-neutral-300 transition-colors"
+                  className="theme-minimize-btn text-neutral-600 hover:text-neutral-300 transition-colors"
                   onClick={() => setReferenceMinimized(!referenceMinimized)}
                 >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round">
                     <circle cx="12" cy="12" r="10"/>
                     {referenceMinimized ? (
-                      <path d="m9 12 6 0"/>
+                      <path d="M9 12h6"/>
                     ) : (
-                      <path d="m15 9-6 6"/>
+                      <path d="M15 9L9 15"/>
                     )}
                   </svg>
                 </button>
@@ -581,15 +730,15 @@ function Body(props) {
                 <div className="flex justify-between items-start mb-6">
                   <div className="px-3 py-1 bg-white/5 rounded-full border border-white/5 text-xs text-neutral-400 font-semibold uppercase tracking-wider">Performance</div>
                   <button
-                    className="text-neutral-600 hover:text-neutral-300 transition-colors"
+                    className="theme-minimize-btn text-neutral-600 hover:text-neutral-300 transition-colors"
                     onClick={() => setGrowthMinimized(!growthMinimized)}
                   >
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round">
                       <circle cx="12" cy="12" r="10"/>
                       {growthMinimized ? (
-                        <path d="m9 12 6 0"/>
+                        <path d="M9 12h6"/>
                       ) : (
-                        <path d="m15 9-6 6"/>
+                        <path d="M15 9L9 15"/>
                       )}
                     </svg>
                   </button>
@@ -675,6 +824,73 @@ function Body(props) {
                 )}
               </div>
             </div>
+        </div>
+      </section>
+
+      {/* Mini Runner Game */}
+      <section>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+          <div className="animate-on-scroll runner-card rounded-[2.5rem] p-8 border border-white/5 relative overflow-hidden group hover:border-white/10 transition-colors bg-[#0C0D0F]">
+            <div className="flex items-center justify-between mb-6">
+              <div className="px-3 py-1 bg-white/5 rounded-full border border-white/5 text-xs text-neutral-400 font-semibold uppercase tracking-wider">
+                Mini Game
+              </div>
+              <div className="text-sm text-neutral-400 font-medium">
+                Score: <span className="text-white">{runnerScore}</span> | Best: <span className="text-white">{runnerHighScore}</span>
+              </div>
+            </div>
+
+            <h3 className="text-2xl text-white mb-2 font-medium tracking-tight">Runner Box</h3>
+            <p className="text-neutral-400 mb-6">Press Play, then use Space or Up Arrow to jump.</p>
+
+            <div ref={runnerTrackRef} className="runner-track relative h-40 rounded-2xl border border-white/10 bg-white/5 overflow-hidden">
+              <div className="absolute bottom-6 left-0 right-0 h-[2px] bg-white/20" />
+              <div
+                className="runner-player absolute bottom-6 left-[72px] w-[50px] h-[50px]"
+                style={{ transform: `translateY(${-runnerPlayerY}px)` }}
+              >
+                <img
+                  src={moneyCashGif}
+                  alt="Runner character"
+                  className="w-full h-full object-contain runner-player-sprite"
+                />
+              </div>
+              {runnerObstacles.map((obstacle, index) => (
+                <div
+                  key={`${index}-${obstacle.x}`}
+                  className="runner-obstacle absolute bottom-6 rounded-sm"
+                  style={{
+                    left: `${obstacle.x}px`,
+                    width: `${obstacle.width}px`,
+                    height: `${obstacle.height}px`,
+                    backgroundColor: obstacle.color,
+                    backgroundImage:
+                      'linear-gradient(rgba(255,255,255,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.2) 1px, transparent 1px)',
+                    backgroundSize: '6px 6px'
+                  }}
+                />
+              ))}
+            </div>
+
+            <div className="mt-6 flex items-center gap-3">
+              <button
+                type="button"
+                onClick={() => {
+                  if (!runnerStarted) {
+                    resetRunnerState();
+                  } else {
+                    jumpRunner();
+                  }
+                }}
+                className="runner-play-btn px-5 py-2.5 rounded-full font-semibold text-sm transition-colors"
+              >
+                {!runnerStarted ? (runnerGameOver ? 'Play Again' : 'Play') : 'Jump'}
+              </button>
+              {runnerGameOver && (
+                <span className="text-sm text-neutral-400">Game over. Press Play Again.</span>
+              )}
+            </div>
+          </div>
         </div>
       </section>
 

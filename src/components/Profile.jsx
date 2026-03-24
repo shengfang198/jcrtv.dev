@@ -2,7 +2,7 @@ import React from 'react';
 
 function Profile() {
   return (
-    <section id="about" className="py-20" style={{ backgroundColor: '#0a0a0a' }}>
+    <section id="about" className="py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <div className="px-3 py-1 bg-white/5 rounded-full border border-white/5 text-xs text-neutral-400 font-semibold uppercase tracking-wider mb-4">
@@ -40,12 +40,12 @@ function Profile() {
 
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-2">
-                  <div className="flex items-center text-neutral-500 text-xs font-semibold">
+                  <div className="profile-contact-item flex items-center text-neutral-500 text-xs font-semibold">
                     <i className="fas fa-envelope mr-2 text-neutral-600"></i>
                     <span>lharc3395@gmail.com</span>
                   </div>
                 </div>
-                <div className="flex items-center text-neutral-500 text-xs font-semibold">
+                <div className="profile-contact-item flex items-center text-neutral-500 text-xs font-semibold">
                   <i className="fas fa-map-marker-alt mr-2 text-neutral-600"></i>
                   <span>Davao, Philippines</span>
                 </div>

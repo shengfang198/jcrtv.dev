@@ -2,7 +2,7 @@ import React from 'react';
 
 function Career() {
   return (
-    <section id="resume" className="py-20" style={{ backgroundColor: '#0a0a0a' }}>
+    <section id="resume" className="py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <div className="px-3 py-1 bg-white/5 rounded-full border border-white/5 text-xs text-neutral-400 font-semibold uppercase tracking-wider mb-4">
@@ -52,7 +52,7 @@ function Career() {
                       <div className="flex-1">
                         <div className="flex items-center justify-between mb-1">
                           <h4 className="font-medium text-white">SaaS Developer / Web Platform Developer</h4>
-                          <span className="bg-cyan-500/20 text-cyan-300 text-xs px-2 py-1 rounded-full">2024–Present</span>
+                          <span className="bg-cyan-600 text-white text-xs px-2 py-1 rounded-full">2024–Present</span>
                         </div>
                         <p className="text-neutral-400 text-xs text-gray-500 mb-1">Next.js, React, Node.js, PostgreSQL, Tailwind CSS</p>
                         <p className="text-neutral-400 text-xs text-gray-500 mb-1">Self-Initiated Project / Freelance / Independent</p>
@@ -71,7 +71,7 @@ function Career() {
                       <div className="flex-1">
                         <div className="flex items-center justify-between mb-1">
                           <h4 className="font-medium text-white">UI Designer & Developer</h4>
-                          <span className="bg-cyan-500/20 text-cyan-300 text-xs px-2 py-1 rounded-full">2024</span>
+                          <span className="bg-cyan-600 text-white text-xs px-2 py-1 rounded-full">2024</span>
                         </div>
                         <p className="text-neutral-400 text-xs text-gray-500 mb-1">Figma, React, JavaScript, C++, Node.js, PostgreSQL</p>
                         <ul className="text-neutral-400 text-sm space-y-1 mt-2">
@@ -89,7 +89,7 @@ function Career() {
                       <div className="flex-1">
                         <div className="flex items-center justify-between mb-1">
                           <h4 className="font-medium text-white">Real Estate Editor</h4>
-                          <span className="bg-cyan-500/20 text-cyan-300 text-xs px-2 py-1 rounded-full">2025–Present</span>
+                          <span className="bg-cyan-600 text-white text-xs px-2 py-1 rounded-full">2025–Present</span>
                         </div>
                         <p className="text-neutral-400 text-xs text-gray-500 mb-1">Adobe Creative Cloud — Property Marketing & Design</p>
                         <ul className="text-neutral-400 text-sm space-y-1 mt-2">
@@ -116,14 +116,14 @@ function Career() {
                       <div className="flex-1">
                         <div className="flex items-center justify-between mb-1">
                           <h4 className="font-medium text-white">3D & Advanced C++ Programming</h4>
-                          <span className="bg-indigo-500/20 text-indigo-300 text-xs px-2 py-1 rounded-full">2024</span>
+                          <span className="bg-indigo-600 text-white text-xs px-2 py-1 rounded-full">2024</span>
                         </div>
                         <p className="text-neutral-400 text-sm">Udemy — Game Development & Advanced Programming</p>
                         <p className="text-neutral-500 text-xs mt-1">Focused on 3D systems, performance logic, and advanced C++ concepts for interactive applications</p>
                         <div className="mt-3">
                           <button
                             onClick={() => window.open('/cert.png', '_blank')}
-                            className="bg-indigo-500/20 text-indigo-300 hover:bg-indigo-500/30 hover:text-indigo-200 text-xs px-3 py-1.5 rounded-full font-medium transition-colors border border-indigo-500/30"
+                            className="bg-indigo-600 text-white hover:bg-indigo-700 text-xs px-3 py-1.5 rounded-full font-medium transition-colors border border-indigo-600"
                           >
                             View Certificate
                           </button>
@@ -135,7 +135,7 @@ function Career() {
                       <div className="flex-1">
                         <div className="flex items-center justify-between mb-1">
                           <h4 className="font-medium text-white">ICT / Multimedia Design</h4>
-                          <span className="bg-purple-500/20 text-purple-300 text-xs px-2 py-1 rounded-full">2016</span>
+                          <span className="bg-purple-600 text-white text-xs px-2 py-1 rounded-full">2016</span>
                         </div>
                         <p className="text-neutral-400 text-sm">Specialized in Interaction Design and Visual Communication</p>
                         <p className="text-neutral-500 text-xs mt-1">Strong foundation in digital media, layout, and user-centered design</p>
@@ -146,7 +146,7 @@ function Career() {
                       <div className="flex-1">
                         <div className="flex items-center justify-between mb-1">
                           <h4 className="font-medium text-white">Bachelor of Science in Business Administration</h4>
-                          <span className="bg-indigo-500/20 text-indigo-300 text-xs px-2 py-1 rounded-full">2014</span>
+                          <span className="bg-indigo-600 text-white text-xs px-2 py-1 rounded-full">2014</span>
                         </div>
                         <p className="text-neutral-400 text-sm">Xavier University – Ateneo de Cagayan (CDO)</p>
                         <p className="text-neutral-500 text-xs mt-1">Equipped with foundational knowledge in business management, marketing, and operations</p>
@@ -162,7 +162,7 @@ function Career() {
                   href="https://www.linkedin.com/in/corales-edgar-jr-506324247/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-white/5 text-white hover:bg-white/10 focus:bg-blue-100 focus:text-blue-900 focus:outline-none text-sm px-5 py-2.5 rounded-full font-semibold transition-colors border border-white/5"
+                  className="bg-blue-600 text-white hover:bg-blue-700 focus:bg-blue-700 focus:text-white focus:outline-none text-sm px-5 py-2.5 rounded-full font-semibold transition-colors border border-blue-600"
                 >
                   View LinkedIn
                 </a>
