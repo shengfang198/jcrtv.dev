@@ -284,7 +284,8 @@ const projectsData = {
           'PostgreSQL – relational database for structured business logic',
           'Socket.io – real-time updates and messaging',
           'Docker – containerized services for deployment consistency',
-          'AWS – cloud hosting and infrastructure'
+          'Supabase – managed database, authentication, and backend services',
+          'OnRender – cloud hosting, builds, and production deployment'
         ]
       },
       {
@@ -311,7 +312,7 @@ const projectsData = {
       },
       {
         title: 'Scalability & Deployment Readiness',
-        content: 'Designed for multi-user and multi-team usage. Optimized relational queries for high-volume orders and revisions. WebSocket-based updates for live order and chat status. Dockerized setup for consistent staging and production deployment. Cloud-ready infrastructure with AWS integration.'
+        content: 'Designed for multi-user and multi-team usage. Optimized relational queries for high-volume orders and revisions. WebSocket-based updates for live order and chat status. Dockerized setup for consistent staging and production deployment. Cloud-ready stack hosted on OnRender with Supabase for data, auth, and backend services.'
       }
     ],
     results: [
