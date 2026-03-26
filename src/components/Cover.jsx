@@ -218,7 +218,7 @@ function Cover() {
 
 
   return (
-    <div className="fixed top-0 left-0 right-0 h-24 bg-gradient-to-r from-black/30 via-black/20 to-black/30 backdrop-blur-md -z-10 pointer-events-none">
+    <div className="cover-atmosphere fixed top-0 left-0 right-0 h-24 bg-gradient-to-r from-black/30 via-black/20 to-black/30 backdrop-blur-md -z-10 pointer-events-none">
       {/* Realistic Atmospheric Particles */}
       <div className="absolute inset-0 overflow-hidden">
         <style>

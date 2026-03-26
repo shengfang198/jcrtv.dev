@@ -835,17 +835,68 @@ html.theme-light footer {
 }
 
 html.theme-light footer {
-  color: #1e293b;
+  color: #0f172a;
 }
 
 html.theme-light footer h4.text-white,
 html.theme-light footer .font-semibold.text-white {
+  color: #020617;
+  font-weight: 700;
+}
+
+html.theme-light footer .text-neutral-400,
+html.theme-light footer .text-gray-400,
+html.theme-light footer ul li,
+html.theme-light footer ul span {
   color: #0f172a;
+  font-weight: 600;
+  opacity: 1;
+}
+
+html.theme-light footer p.text-neutral-400 {
+  color: #0f172a;
+  font-weight: 600;
+}
+
+html.theme-light footer a.text-gray-400 {
+  color: #0f172a;
+  opacity: 1;
 }
 
 html.theme-light footer a.text-gray-400:hover,
 html.theme-light footer a.hover\:text-white:hover {
   color: #2563eb;
+}
+
+.footer-brand {
+  background-image: linear-gradient(to right, #818cf8, #c084fc);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+html.theme-light .footer-brand {
+  background-image: none;
+  -webkit-background-clip: unset;
+  background-clip: border-box;
+  color: #4338ca;
+}
+
+/* Section eyebrow + title row (Browse My Recent, Projects, etc.) */
+html.theme-light section .text-center.mb-16 .text-neutral-400 {
+  color: #0f172a;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+html.theme-light section .text-center.mb-16 .border.border-white\/5.text-neutral-400 {
+  background-color: rgba(15, 23, 42, 0.12);
+  border-color: rgba(15, 23, 42, 0.28);
+  color: #020617;
+}
+
+html.theme-light section .text-center.mb-16 > div.h-px.bg-white\/10 {
+  background-color: rgba(15, 23, 42, 0.35);
 }
 
 html.theme-light .flashlight-card,
@@ -858,11 +909,11 @@ html.theme-light .bg-\[\#0C0D0F\] {
 }
 
 html.theme-light .bg-white\/5 {
-  background-color: rgba(15, 23, 42, 0.04);
+  background-color: rgba(15, 23, 42, 0.1);
 }
 
 html.theme-light .bg-white\/10 {
-  background-color: rgba(15, 23, 42, 0.08);
+  background-color: rgba(15, 23, 42, 0.14);
 }
 
 html.theme-light .bg-white\/20 {
@@ -872,7 +923,7 @@ html.theme-light .bg-white\/20 {
 html.theme-light .border-white\/5,
 html.theme-light .border-white\/10,
 html.theme-light .border-white\/20 {
-  border-color: rgba(15, 23, 42, 0.12);
+  border-color: rgba(15, 23, 42, 0.22);
 }
 
 html.theme-light .bg-neutral-800\/20,
@@ -906,14 +957,14 @@ html.theme-light .text-neutral-300 {
 }
 
 html.theme-light .text-neutral-400 {
-  color: #334155;
+  color: #1e293b;
 }
 
 html.theme-light .text-neutral-500,
 html.theme-light .text-neutral-600,
 html.theme-light .text-gray-400,
 html.theme-light .text-gray-500 {
-  color: #1e293b;
+  color: #0f172a;
 }
 
 /* Flashlight hover: lift body copy (incl. Experience <li>) above flat light-theme grays */
@@ -956,14 +1007,8 @@ html.theme-light #scrollToTop {
   border-color: rgba(15, 23, 42, 0.15);
 }
 
-html.theme-light .fixed.top-0.left-0.right-0.h-24 {
-  background: linear-gradient(to right, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.85), rgba(255, 255, 255, 0.95));
-}
-
-html.theme-light .fixed.top-0.left-0.right-0.h-24 .bg-white\/30,
-html.theme-light .fixed.top-0.left-0.right-0.h-24 .bg-white\/20,
-html.theme-light .fixed.top-0.left-0.right-0.h-24 .bg-white\/50 {
-  background-color: rgba(59, 130, 246, 0.18);
+html.theme-light .cover-atmosphere {
+  display: none;
 }
 
 @media (prefers-color-scheme: light) {

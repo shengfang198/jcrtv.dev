@@ -25,27 +25,35 @@ function App() {
   };
 
   return (
-    <div className="w-full min-h-screen">
-      <Cover />
-      <Header />
-      <Body
-        projectsData={projectsData}
-        selectedProject={selectedProject}
-        isModalOpen={isModalOpen}
-        onOpenModal={openProjectModal}
-        onCloseModal={closeProjectModal}
+    <div className="w-full min-h-screen relative">
+      {/* Below all page content (sibling z-[1] wrapper) — was inside main z-10 and stacked on top of Profile/Projects/Footer */}
+      <div
+        id="particles-js"
+        className="fixed inset-0 pointer-events-none z-0"
+        aria-hidden="true"
       />
-      <Profile />
-      <Expertise />
-      <Projects
-        projectsData={projectsData}
-        onOpenModal={openProjectModal}
-        selectedProject={selectedProject}
-        isModalOpen={isModalOpen}
-        onCloseModal={closeProjectModal}
-      />
-      <Career />
-      <Footer />
+      <div className="relative z-[1]">
+        <Cover />
+        <Header />
+        <Body
+          projectsData={projectsData}
+          selectedProject={selectedProject}
+          isModalOpen={isModalOpen}
+          onOpenModal={openProjectModal}
+          onCloseModal={closeProjectModal}
+        />
+        <Profile />
+        <Expertise />
+        <Projects
+          projectsData={projectsData}
+          onOpenModal={openProjectModal}
+          selectedProject={selectedProject}
+          isModalOpen={isModalOpen}
+          onCloseModal={closeProjectModal}
+        />
+        <Career />
+        <Footer />
+      </div>
     </div>
   )
 }

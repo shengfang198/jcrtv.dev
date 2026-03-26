@@ -27,10 +27,9 @@ function Footer() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
-              <div className="text-2xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent mb-4">
-
+              <div className="footer-brand text-2xl font-bold mb-4">
+                Jay Creative
               </div>
-
             </div>
 
             <div>

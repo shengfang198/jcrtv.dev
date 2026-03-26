@@ -813,11 +813,7 @@ function Body(props) {
   };
 
   return (
-    <main className="z-10 w-full pt-32 p-0 relative min-h-screen flex flex-col">
-      <div className="flex-grow">
-        {/* Particles Background */}
-        <div id="particles-js" className="fixed top-0 left-0 right-0 bottom-0 pointer-events-none -z-10"></div>
-      </div>
+    <main className="w-full pt-32 p-0 relative min-h-screen flex flex-col">
       {/* Hero Header */}
       <div className="text-center max-w-5xl mx-auto mb-24">
 
