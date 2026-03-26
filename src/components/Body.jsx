@@ -217,19 +217,290 @@ function Body(props) {
       return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
     };
 
-    // Flashlight effect for cards
+    // Flashlight effect for cards — grows from small to full; random scatter each hover
     const addFlashlightEffect = () => {
       const cards = document.querySelectorAll('.flashlight-card');
+      const FLASH_HALF = 690; // half of 1380px main glow (3× 460 base; matches CSS)
       let isScrolling = false;
       let scrollThrottle;
-      let activeCards = new Set(); // Track cards with active flashlight
+      let activeCards = new Set();
+      const scaleRafByCard = new WeakMap();
+      /** Smoothed follow: { tx, ty, cx, cy, rafId } — glow eases toward cursor */
+      const flashStickyByCard = new WeakMap();
+      const STICKY_LERP = 0.065;
+      const STICKY_LERP_FAR = 0.11;
+      const STICKY_FAR_DIST2 = 405000;
 
-      // Hide flashlights during scroll, show after scroll stops
+      const easeOutQuint = (t) => 1 - (1 - t) ** 5;
+
+      const randRange = (min, max) => min + Math.random() * (max - min);
+      const pct = (min, max) => `${randRange(min, max).toFixed(1)}%`;
+
+      const cancelFlashScaleGrow = (card) => {
+        const id = scaleRafByCard.get(card);
+        if (id != null) cancelAnimationFrame(id);
+        scaleRafByCard.delete(card);
+      };
+
+      const startFlashScaleGrow = (card) => {
+        cancelFlashScaleGrow(card);
+        card.style.setProperty('--flash-scale', '0.08');
+        const from = 0.08;
+        const to = 1;
+        const duration = 940;
+        const t0 = performance.now();
+
+        const tick = (now) => {
+          const t = Math.min(1, (now - t0) / duration);
+          const s = from + (to - from) * easeOutQuint(t);
+          card.style.setProperty('--flash-scale', s.toFixed(4));
+          if (t < 1) {
+            scaleRafByCard.set(card, requestAnimationFrame(tick));
+          } else {
+            scaleRafByCard.delete(card);
+          }
+        };
+        scaleRafByCard.set(card, requestAnimationFrame(tick));
+      };
+
+      const blobCornerPct = () => `${Math.floor(32 + Math.random() * 36)}%`;
+
+      const randomBlobRadius = (el, prefix) => {
+        for (let i = 1; i <= 8; i += 1) {
+          el.style.setProperty(`${prefix}${i}`, blobCornerPct());
+        }
+      };
+
+      const randomEllipse = (el, ew, eh) => {
+        const w = `${Math.floor(72 + Math.random() * 52)}%`;
+        const h = `${Math.floor(72 + Math.random() * 52)}%`;
+        el.style.setProperty(ew, w);
+        el.style.setProperty(eh, h);
+      };
+
+      const cancelFlashSticky = (card) => {
+        const s = flashStickyByCard.get(card);
+        if (s?.rafId != null) cancelAnimationFrame(s.rafId);
+        flashStickyByCard.delete(card);
+      };
+
+      /** Nearest edge when entering = side user came from. */
+      const getEntryEdge = (w, h, mx, my) => {
+        const dTop = my;
+        const dBottom = h - my;
+        const dLeft = mx;
+        const dRight = w - mx;
+        let edge = 'top';
+        let min = dTop;
+        if (dBottom < min) {
+          min = dBottom;
+          edge = 'bottom';
+        }
+        if (dLeft < min) {
+          min = dLeft;
+          edge = 'left';
+        }
+        if (dRight < min) {
+          edge = 'right';
+        }
+        return edge;
+      };
+
+      const getCardPadding = (card, rect) => {
+        const cs = getComputedStyle(card);
+        const pl = parseFloat(cs.paddingLeft) || 0;
+        const pr = parseFloat(cs.paddingRight) || 0;
+        const pt = parseFloat(cs.paddingTop) || 0;
+        const pb = parseFloat(cs.paddingBottom) || 0;
+        const avg = (pl + pr + pt + pb) / 4;
+        const fallback = Math.min(rect.width, rect.height) * 0.1;
+        return Math.max(10, avg || fallback);
+      };
+
+      /**
+       * Glow is not centered on the cursor near the entry edge: it stays on that side until
+       * the cursor moves inward past half the card padding, then eases toward cursor-centered.
+       */
+      const getBiasedTarget = (rect, mx, my, entryEdge, paddingPx, FLASH_HALF_) => {
+        const w = rect.width;
+        const h = rect.height;
+        const cursorTx = mx - FLASH_HALF_;
+        const cursorTy = my - FLASH_HALF_;
+        const halfPad = Math.max(14, paddingPx * 0.5);
+
+        let distIn = 0;
+        if (entryEdge === 'left') distIn = mx;
+        else if (entryEdge === 'right') distIn = w - mx;
+        else if (entryEdge === 'top') distIn = my;
+        else distIn = h - my;
+
+        const t = Math.min(1, distIn / halfPad);
+        const tSmooth = t * t * (3 - 2 * t);
+
+        let tx = cursorTx;
+        let ty = cursorTy;
+
+        if (entryEdge === 'left') {
+          const lockedTx = -FLASH_HALF_ * 0.52 + mx * 0.2;
+          tx = lockedTx + (cursorTx - lockedTx) * tSmooth;
+          ty = cursorTy;
+        } else if (entryEdge === 'right') {
+          const lockedTx = w - FLASH_HALF_ * 0.48 - (w - mx) * 0.2;
+          tx = lockedTx + (cursorTx - lockedTx) * tSmooth;
+          ty = cursorTy;
+        } else if (entryEdge === 'top') {
+          const lockedTy = -FLASH_HALF_ * 0.52 + my * 0.2;
+          tx = cursorTx;
+          ty = lockedTy + (cursorTy - lockedTy) * tSmooth;
+        } else {
+          const lockedTy = h - FLASH_HALF_ * 0.48 - (h - my) * 0.2;
+          tx = cursorTx;
+          ty = lockedTy + (cursorTy - lockedTy) * tSmooth;
+        }
+
+        return { tx, ty };
+      };
+
+      /** Glow center starts just outside that edge (card space), then eases toward biased target. */
+      const getSpawnTranslate = (rect, mx, my, paddingPx, FLASH_HALF_) => {
+        const w = rect.width;
+        const h = rect.height;
+        const edge = getEntryEdge(w, h, mx, my);
+        const pad = FLASH_HALF_ * 0.48;
+        let scx = mx;
+        let scy = my;
+        if (edge === 'top') {
+          scy = -pad;
+        } else if (edge === 'bottom') {
+          scy = h + pad;
+        } else if (edge === 'left') {
+          scx = -pad;
+        } else {
+          scx = w + pad;
+        }
+        const { tx: targetTx, ty: targetTy } = getBiasedTarget(rect, mx, my, edge, paddingPx, FLASH_HALF_);
+        return {
+          spawnTx: scx - FLASH_HALF_,
+          spawnTy: scy - FLASH_HALF_,
+          targetTx,
+          targetTy,
+          entryEdge: edge
+        };
+      };
+
+      const beginFlashlightFromEdge = (card, clientX, clientY, rect) => {
+        const mx = clientX - rect.left;
+        const my = clientY - rect.top;
+        const paddingPx = getCardPadding(card, rect);
+        const { spawnTx, spawnTy, targetTx, targetTy, entryEdge } = getSpawnTranslate(rect, mx, my, paddingPx, FLASH_HALF);
+        cancelFlashSticky(card);
+        flashStickyByCard.set(card, {
+          tx: targetTx,
+          ty: targetTy,
+          cx: spawnTx,
+          cy: spawnTy,
+          rafId: null,
+          entryEdge,
+          paddingPx
+        });
+        card.style.setProperty('--translate-x', `${spawnTx}px`);
+        card.style.setProperty('--translate-y', `${spawnTy}px`);
+        scheduleFlashSticky(card);
+      };
+
+      const updateFlashlightTarget = (card, rect, clientX, clientY) => {
+        const mx = clientX - rect.left;
+        const my = clientY - rect.top;
+        const s = flashStickyByCard.get(card);
+        const edge = s?.entryEdge ?? getEntryEdge(rect.width, rect.height, mx, my);
+        const paddingPx = s?.paddingPx ?? getCardPadding(card, rect);
+        const { tx, ty } = getBiasedTarget(rect, mx, my, edge, paddingPx, FLASH_HALF);
+        if (!s) {
+          flashStickyByCard.set(card, {
+            tx,
+            ty,
+            cx: tx,
+            cy: ty,
+            rafId: null,
+            entryEdge: edge,
+            paddingPx
+          });
+        } else {
+          s.tx = tx;
+          s.ty = ty;
+        }
+      };
+
+      const scheduleFlashSticky = (card) => {
+        const s = flashStickyByCard.get(card);
+        if (!s || s.rafId != null) return;
+
+        const tick = () => {
+          const st = flashStickyByCard.get(card);
+          if (!st || !card.classList.contains('flashlight-active')) {
+            if (st) st.rafId = null;
+            return;
+          }
+          const dist2 = (st.tx - st.cx) ** 2 + (st.ty - st.cy) ** 2;
+          const k = dist2 > STICKY_FAR_DIST2 ? STICKY_LERP_FAR : STICKY_LERP;
+          st.cx += (st.tx - st.cx) * k;
+          st.cy += (st.ty - st.cy) * k;
+          card.style.setProperty('--translate-x', `${st.cx}px`);
+          card.style.setProperty('--translate-y', `${st.cy}px`);
+          if (dist2 > 0.2) {
+            st.rafId = requestAnimationFrame(tick);
+          } else {
+            st.cx = st.tx;
+            st.cy = st.ty;
+            card.style.setProperty('--translate-x', `${st.cx}px`);
+            card.style.setProperty('--translate-y', `${st.cy}px`);
+            st.rafId = null;
+          }
+        };
+
+        s.rafId = requestAnimationFrame(tick);
+      };
+
+      const randomizeFlashlightScatter = (card) => {
+        randomBlobRadius(card, '--blob-a');
+        randomBlobRadius(card, '--blob-b');
+        card.style.setProperty('--blob-rot-a', `${randRange(-10, 10).toFixed(1)}deg`);
+        card.style.setProperty('--blob-rot-b', `${randRange(-12, 12).toFixed(1)}deg`);
+
+        randomEllipse(card, '--e1w', '--e1h');
+        randomEllipse(card, '--e2w', '--e2h');
+        randomEllipse(card, '--e3w', '--e3h');
+        randomEllipse(card, '--e4w', '--e4h');
+        randomEllipse(card, '--e5w', '--e5h');
+        randomEllipse(card, '--e6w', '--e6h');
+        randomEllipse(card, '--e7w', '--e7h');
+
+        card.style.setProperty('--g1x', pct(23, 31));
+        card.style.setProperty('--g1y', pct(28, 36));
+        card.style.setProperty('--g2x', pct(66, 74));
+        card.style.setProperty('--g2y', pct(30, 38));
+        card.style.setProperty('--g3x', pct(42, 50));
+        card.style.setProperty('--g3y', pct(64, 72));
+        card.style.setProperty('--g4x', pct(58, 66));
+        card.style.setProperty('--g4y', pct(52, 60));
+        card.style.setProperty('--g5x', pct(18, 26));
+        card.style.setProperty('--g5y', pct(54, 62));
+        card.style.setProperty('--g6x', pct(38, 46));
+        card.style.setProperty('--g6y', pct(44, 52));
+        card.style.setProperty('--g7x', pct(62, 70));
+        card.style.setProperty('--g7y', pct(46, 54));
+        card.style.setProperty('--scatter-a-x', `${randRange(-36, 36)}px`);
+        card.style.setProperty('--scatter-a-y', `${randRange(-36, 36)}px`);
+        card.style.setProperty('--scatter-b-x', `${randRange(-56, 56)}px`);
+        card.style.setProperty('--scatter-b-y', `${randRange(-56, 56)}px`);
+      };
+
       const handleScroll = () => {
         isScrolling = true;
-        // Hide all active flashlights during scroll
-        activeCards.forEach(card => {
+        activeCards.forEach((card) => {
           card.classList.remove('flashlight-active');
+          cancelFlashScaleGrow(card);
+          cancelFlashSticky(card);
         });
         activeCards.clear();
 
@@ -241,7 +512,7 @@ function Body(props) {
 
       window.addEventListener('scroll', handleScroll, { passive: true });
 
-      cards.forEach(card => {
+      cards.forEach((card) => {
         let currentColors = {};
 
         const updateColors = () => {
@@ -258,63 +529,56 @@ function Body(props) {
           card.style.setProperty('--flashlight-quaternary', currentColors.quaternary);
         };
 
-        // Update colors and set initial mouse position on hover enter
         card.addEventListener('mouseenter', (e) => {
-          // Only activate if not scrolling
           if (isScrolling) return;
 
           updateColors();
+          randomizeFlashlightScatter(card);
+          startFlashScaleGrow(card);
 
-          // Temporarily disable transform transition during initial hover
           card.classList.add('flashlight-initial-enter');
 
-          // Set initial mouse position immediately before showing the flashlight
           const rect = card.getBoundingClientRect();
-          const x = e.clientX - rect.left - 200; // Center the 400px blob on cursor
-          const y = e.clientY - rect.top - 200;  // Center the 400px blob on cursor
+          beginFlashlightFromEdge(card, e.clientX, e.clientY, rect);
 
-          card.style.setProperty('--translate-x', `${x}px`);
-          card.style.setProperty('--translate-y', `${y}px`);
-
-          // Now activate the flashlight
           card.classList.add('flashlight-active');
           activeCards.add(card);
 
-          // Re-enable transform transition after a frame
           requestAnimationFrame(() => {
             card.classList.remove('flashlight-initial-enter');
           });
         });
 
         card.addEventListener('mouseleave', () => {
+          cancelFlashScaleGrow(card);
+          cancelFlashSticky(card);
           card.classList.remove('flashlight-active');
           activeCards.delete(card);
         });
 
         card.addEventListener('mousemove', (e) => {
-          // Don't update position during scroll, and don't show flashlight during scroll
           if (isScrolling) {
             card.classList.remove('flashlight-active');
             activeCards.delete(card);
+            cancelFlashScaleGrow(card);
+            cancelFlashSticky(card);
             return;
           }
 
-          // Only show flashlight if mouse is moving and not scrolling
+          const rect = card.getBoundingClientRect();
+
           if (!card.classList.contains('flashlight-active')) {
             card.classList.add('flashlight-active');
             activeCards.add(card);
-            updateColors(); // Generate colors when reactivating
+            updateColors();
+            randomizeFlashlightScatter(card);
+            startFlashScaleGrow(card);
+            beginFlashlightFromEdge(card, e.clientX, e.clientY, rect);
+            return;
           }
 
-          const rect = card.getBoundingClientRect();
-          const x = e.clientX - rect.left - 200; // Center the 400px blob on cursor
-          const y = e.clientY - rect.top - 200;  // Center the 400px blob on cursor
-
-          // Use requestAnimationFrame for ultra-smooth updates
-          requestAnimationFrame(() => {
-            card.style.setProperty('--translate-x', `${x}px`);
-            card.style.setProperty('--translate-y', `${y}px`);
-          });
+          updateFlashlightTarget(card, rect, e.clientX, e.clientY);
+          scheduleFlashSticky(card);
         });
       });
     };

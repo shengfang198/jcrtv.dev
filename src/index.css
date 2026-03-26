@@ -295,35 +295,72 @@ html {
     background-image: radial-gradient(circle at 0 100%,#ff4f311f,#fff0),radial-gradient(circle at 50% 100%,hsla(0,0%,100%,.06),transparent),radial-gradient(circle at 50% 100%,#4b397a6e,#2a192963)
 }
 
-/* Flashlight effect for cards */
+/* Flashlight — random blob outline + ellipse smears (JS sets --blob-a*, --e*w/h each hover) */
 .flashlight-card:before {
   content: '';
   position: absolute;
   z-index: -1;
   pointer-events: none;
-  border-radius: 100%;
+  border-radius: var(--blob-a1, 62%) var(--blob-a2, 38%) var(--blob-a3, 52%) var(--blob-a4, 48%) / var(--blob-a5, 48%) var(--blob-a6, 55%) var(--blob-a7, 45%) var(--blob-a8, 52%);
   background:
-    radial-gradient(circle at 30% 30%, var(--flashlight-primary), transparent 58%),
-    radial-gradient(circle at 70% 35%, var(--flashlight-secondary), transparent 62%),
-    radial-gradient(circle at 50% 70%, var(--flashlight-tertiary), transparent 65%),
-    radial-gradient(circle at 65% 65%, var(--flashlight-quaternary), transparent 70%);
+    radial-gradient(ellipse var(--e1w, 135%) var(--e1h, 88%) at var(--g1x, 26%) var(--g1y, 34%), var(--flashlight-primary), transparent 54%),
+    radial-gradient(ellipse var(--e2w, 92%) var(--e2h, 118%) at var(--g2x, 74%) var(--g2y, 36%), var(--flashlight-secondary), transparent 56%),
+    radial-gradient(ellipse var(--e3w, 108%) var(--e3h, 78%) at var(--g3x, 46%) var(--g3y, 72%), var(--flashlight-tertiary), transparent 58%),
+    radial-gradient(ellipse var(--e4w, 124%) var(--e4h, 96%) at var(--g4x, 64%) var(--g4y, 58%), var(--flashlight-quaternary), transparent 60%),
+    radial-gradient(ellipse var(--e5w, 72%) var(--e5h, 98%) at var(--g5x, 16%) var(--g5y, 60%), var(--flashlight-primary), transparent 48%);
   opacity: 0;
-  filter: blur(52px) saturate(140%) brightness(118%);
-  transform: translate(var(--translate-x, 0), var(--translate-y, 0));
-  transition: opacity 0.3s ease-out, transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  width: 460px;
-  height: 460px;
+  filter: blur(78px) saturate(140%) brightness(118%);
+  transform: translate(
+      calc(var(--translate-x, 0px) + var(--scatter-a-x, 0px)),
+      calc(var(--translate-y, 0px) + var(--scatter-a-y, 0px))
+    )
+    rotate(var(--blob-rot-a, 0deg))
+    scale(var(--flash-scale, 1));
+  transform-origin: center center;
+  transition: opacity 0.32s ease-out;
+  width: 1380px;
+  height: 1380px;
   mix-blend-mode: screen;
   will-change: transform, opacity;
 }
 
-/* Disable transform transition on initial hover to prevent jumping */
 .flashlight-card.flashlight-initial-enter:before {
-  transition: opacity 0.3s ease-out;
+  transition: opacity 0.32s ease-out;
+}
+
+/* Secondary scattered blob — different random outline + rotation */
+.flashlight-card:after {
+  content: '';
+  position: absolute;
+  z-index: -2;
+  pointer-events: none;
+  border-radius: var(--blob-b1, 48%) var(--blob-b2, 52%) var(--blob-b3, 44%) var(--blob-b4, 56%) / var(--blob-b5, 54%) var(--blob-b6, 46%) var(--blob-b7, 52%) var(--blob-b8, 48%);
+  background:
+    radial-gradient(ellipse var(--e6w, 118%) var(--e6h, 92%) at var(--g6x, 42%) var(--g6y, 48%), var(--flashlight-tertiary), transparent 52%),
+    radial-gradient(ellipse var(--e7w, 88%) var(--e7h, 112%) at var(--g7x, 72%) var(--g7y, 52%), var(--flashlight-secondary), transparent 54%);
+  opacity: 0;
+  filter: blur(69px) saturate(125%) brightness(110%);
+  /* +150px aligns secondary 1080px box center with 1380px main (half-difference) */
+  transform: translate(
+      calc(var(--translate-x, 0px) + var(--scatter-b-x, 0px) + 150px),
+      calc(var(--translate-y, 0px) + var(--scatter-b-y, 0px) + 150px)
+    )
+    rotate(var(--blob-rot-b, 0deg))
+    scale(calc(var(--flash-scale, 1) * 0.78));
+  transform-origin: center center;
+  transition: opacity 0.32s ease-out;
+  width: 1080px;
+  height: 1080px;
+  mix-blend-mode: screen;
+  will-change: transform, opacity;
 }
 
 .flashlight-active:before {
   opacity: 0.62;
+}
+
+.flashlight-active:after {
+  opacity: 0.44;
 }
 
 /* Keep text readable while glow is active */
@@ -344,6 +381,20 @@ html {
   color: #d1d5db;
   filter: none;
   text-shadow: 0 0 8px rgba(255, 255, 255, 0.18);
+}
+
+/* Experience / lists — same lit treatment as body copy (Education uses more <p>) */
+.flashlight-active h4 {
+  color: #ffffff;
+  filter: none;
+  text-shadow: 0 0 16px rgba(255, 255, 255, 0.35);
+  font-weight: 500;
+}
+
+.flashlight-active li {
+  color: #e5e7eb;
+  filter: none;
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
 }
 
 .flashlight-card {
@@ -482,7 +533,7 @@ button:focus-visible {
 }
 
 html.theme-light {
-  --background: #f7f8fb;
+  --background: #e4e9f2;
   --foreground: #111827;
   --card: #ffffff;
   --card-foreground: #111827;
@@ -766,20 +817,35 @@ html.theme-light .runner-card .border-white\/10 {
 html.theme-light .profile-contact-item,
 html.theme-light .profile-contact-item span,
 html.theme-light .profile-contact-item i {
-  color: #4b5563;
+  color: #1e293b;
 }
 
 html.theme-light .flashlight-active .profile-contact-item,
 html.theme-light .flashlight-active .profile-contact-item span,
 html.theme-light .flashlight-active .profile-contact-item i {
-  color: #4b5563;
-  text-shadow: none;
+  color: #0f172a;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.45);
+  font-weight: 600;
 }
 
 html.theme-light main,
 html.theme-light section,
 html.theme-light footer {
   background: transparent;
+}
+
+html.theme-light footer {
+  color: #1e293b;
+}
+
+html.theme-light footer h4.text-white,
+html.theme-light footer .font-semibold.text-white {
+  color: #0f172a;
+}
+
+html.theme-light footer a.text-gray-400:hover,
+html.theme-light footer a.hover\:text-white:hover {
+  color: #2563eb;
 }
 
 html.theme-light .flashlight-card,
@@ -820,21 +886,54 @@ html.theme-light .border-gray-800 {
 }
 
 html.theme-light .text-white {
-  color: #111827;
+  color: #0f172a;
 }
 
+/* Stronger contrast than mid-gray “fog” — section badges, footer, Profile body */
 html.theme-light .text-white\/90,
-html.theme-light .text-white\/80,
+html.theme-light .text-white\/80 {
+  color: #334155;
+}
+
 html.theme-light .text-white\/60,
-html.theme-light .text-white\/50,
+html.theme-light .text-white\/50 {
+  color: #475569;
+}
+
 html.theme-light .text-neutral-200,
-html.theme-light .text-neutral-300,
-html.theme-light .text-neutral-400,
+html.theme-light .text-neutral-300 {
+  color: #475569;
+}
+
+html.theme-light .text-neutral-400 {
+  color: #334155;
+}
+
 html.theme-light .text-neutral-500,
 html.theme-light .text-neutral-600,
 html.theme-light .text-gray-400,
 html.theme-light .text-gray-500 {
-  color: #4b5563;
+  color: #1e293b;
+}
+
+/* Flashlight hover: lift body copy (incl. Experience <li>) above flat light-theme grays */
+html.theme-light .flashlight-active h3,
+html.theme-light .flashlight-active h4 {
+  color: #0f172a;
+  text-shadow: 0 0 14px rgba(255, 255, 255, 0.88);
+  font-weight: 600;
+}
+
+html.theme-light .flashlight-active p,
+html.theme-light .flashlight-active li {
+  color: #1f2937;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.55);
+}
+
+html.theme-light .flashlight-active span.text-neutral-400,
+html.theme-light .flashlight-active span.text-sm.text-neutral-400 {
+  color: #1e293b;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.45);
 }
 
 html.theme-light .hover\:text-white:hover {
@@ -846,7 +945,10 @@ html.theme-light .hover\:bg-white\/10:hover {
 }
 
 html.theme-light #particles-js {
-  opacity: 0.35;
+  opacity: 0.62;
+  background: radial-gradient(ellipse 100% 70% at 50% 0%, rgba(148, 163, 184, 0.22) 0%, transparent 55%),
+    radial-gradient(ellipse 90% 60% at 80% 100%, rgba(203, 213, 225, 0.35) 0%, transparent 50%),
+    linear-gradient(180deg, #dce3ee 0%, #e4e9f2 45%, #e8edf5 100%);
 }
 
 html.theme-light #scrollToTop {

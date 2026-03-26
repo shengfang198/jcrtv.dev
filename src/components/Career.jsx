@@ -54,8 +54,8 @@ function Career() {
                           <h4 className="font-medium text-white">SaaS Developer / Web Platform Developer</h4>
                           <span className="bg-cyan-600 text-white text-xs px-2 py-1 rounded-full">2024–Present</span>
                         </div>
-                        <p className="text-neutral-400 text-xs text-gray-500 mb-1">Next.js, React, Node.js, PostgreSQL, Tailwind CSS</p>
-                        <p className="text-neutral-400 text-xs text-gray-500 mb-1">Self-Initiated Project / Freelance / Independent</p>
+                        <p className="text-neutral-400 text-sm mb-1">Next.js, React, Node.js, PostgreSQL, Tailwind CSS</p>
+                        <p className="text-neutral-400 text-sm mb-1">Self-Initiated Project / Freelance / Independent</p>
                         <ul className="text-neutral-400 text-sm space-y-1 mt-2">
                           <li>• Designed and developed a SaaS web platform with full frontend–backend integration</li>
                           <li>• Implemented authentication, API security, and role-based access control</li>
@@ -73,7 +73,7 @@ function Career() {
                           <h4 className="font-medium text-white">UI Designer & Developer</h4>
                           <span className="bg-cyan-600 text-white text-xs px-2 py-1 rounded-full">2024</span>
                         </div>
-                        <p className="text-neutral-400 text-xs text-gray-500 mb-1">Figma, React, JavaScript, C++, Node.js, PostgreSQL</p>
+                        <p className="text-neutral-400 text-sm mb-1">Figma, React, JavaScript, C++, Node.js, PostgreSQL</p>
                         <ul className="text-neutral-400 text-sm space-y-1 mt-2">
                           <li>• Designed user interfaces and interactive layouts using Figma</li>
                           <li>• Developed frontend components and interactions using React and JavaScript</li>
@@ -91,7 +91,7 @@ function Career() {
                           <h4 className="font-medium text-white">Real Estate Editor</h4>
                           <span className="bg-cyan-600 text-white text-xs px-2 py-1 rounded-full">2025–Present</span>
                         </div>
-                        <p className="text-neutral-400 text-xs text-gray-500 mb-1">Adobe Creative Cloud — Property Marketing & Design</p>
+                        <p className="text-neutral-400 text-sm mb-1">Adobe Creative Cloud — Property Marketing & Design</p>
                         <ul className="text-neutral-400 text-sm space-y-1 mt-2">
                           <li>• Designed and edited marketing materials for real estate listings</li>
                           <li>• Enhanced property visuals using professional photo and layout techniques</li>
