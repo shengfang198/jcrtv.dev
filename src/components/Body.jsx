@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Profile from './Profile.jsx';
 import Expertise from './Expertise.jsx';
 import Projects from './Projects.jsx';
@@ -41,12 +41,16 @@ function Body(props) {
     return Math.max(playableHeight - RUNNER_PLAYER_SIZE - RUNNER_TOP_PADDING, 0);
   };
   const DEFAULT_TOP_SPAWN_Y = getTopSpawnY(RUNNER_TRACK_HEIGHT);
-  const [runnerPlayerY, setRunnerPlayerY] = useState(DEFAULT_TOP_SPAWN_Y);
   const [runnerObstacles, setRunnerObstacles] = useState([]);
   const RUNNER_FLY_FORCE = 8.2;
   const RUNNER_GRAVITY = 0.6;
   const runnerTrackRef = useRef(null);
-  const runnerFrameRef = useRef(null);
+  const runnerPlayerElRef = useRef(null);
+  const runnerObstacleElsRef = useRef(new Map());
+  const runnerRafRef = useRef(null);
+  const runnerLastFrameRef = useRef(null);
+  const runnerScoreLastUpdateRef = useRef(0);
+  const runnerObstacleIdRef = useRef(0);
   const runnerStateRef = useRef({
     playerY: DEFAULT_TOP_SPAWN_Y,
     velocity: 0,
@@ -56,6 +60,14 @@ function Body(props) {
     isStarted: false,
     isGameOver: false
   });
+
+  // Ensure the player starts at the right vertical offset (before the first "reset").
+  useEffect(() => {
+    const playerEl = runnerPlayerElRef.current;
+    if (!playerEl) return;
+    const y = runnerStateRef.current.playerY;
+    playerEl.style.transform = `translateY(${-y}px)`;
+  }, []);
 
   // A-Z Development Terms & Tools Data
   const devTerms = [
@@ -595,9 +607,13 @@ function Body(props) {
     return () => clearInterval(interval);
   }, []);
 
-  const resetRunnerState = () => {
+  const resetRunnerState = useCallback(() => {
     const trackHeight = runnerTrackRef.current?.clientHeight || RUNNER_TRACK_HEIGHT;
-    const startY = getTopSpawnY(trackHeight);
+    const playableHeight = trackHeight - RUNNER_GROUND_OFFSET;
+    const startY = Math.max(playableHeight - RUNNER_PLAYER_SIZE - RUNNER_TOP_PADDING, 0);
+
+    runnerObstacleElsRef.current.clear();
+    runnerObstacleIdRef.current = 0;
 
     runnerStateRef.current = {
       playerY: startY,
@@ -611,16 +627,20 @@ function Body(props) {
     setRunnerStarted(true);
     setRunnerGameOver(false);
     setRunnerScore(0);
-    setRunnerPlayerY(startY);
     setRunnerObstacles([]);
-  };
 
-  const flyRunner = () => {
+    // Update DOM once; the RAF loop will take over afterwards.
+    if (runnerPlayerElRef.current) {
+      runnerPlayerElRef.current.style.transform = `translateY(${-startY}px)`;
+    }
+  }, []);
+
+  const flyRunner = useCallback(() => {
     const s = runnerStateRef.current;
     if (!s.isStarted || s.isGameOver) return;
     // Flap-style fly input for sustained airtime.
     s.velocity = RUNNER_FLY_FORCE;
-  };
+  }, []);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -636,17 +656,20 @@ function Body(props) {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [runnerStarted, runnerGameOver]);
+  }, [runnerStarted, runnerGameOver, resetRunnerState, flyRunner]);
 
   useEffect(() => {
-    if (!runnerStarted || runnerGameOver) return () => {};
+    if (!runnerStarted || runnerGameOver) return undefined;
 
     const GRAVITY = RUNNER_GRAVITY;
-    const SPEED = 6;
+    const SPEED = 6; // px per "base frame" (roughly 60fps)
+    const SCORE_PER_FRAME = 0.12;
+    const BASE_FRAME_MS = 1000 / 60;
     const PLAYER_SIZE = RUNNER_PLAYER_SIZE;
     const PLAYER_X = 72;
     const TRACK_HEIGHT = RUNNER_TRACK_HEIGHT;
     const GROUND_OFFSET = RUNNER_GROUND_OFFSET;
+
     const enemyColors = [
       '#ef4444',
       '#f97316',
@@ -657,22 +680,30 @@ function Body(props) {
       '#8b5cf6',
       '#ec4899'
     ];
+
     const isEdgeCollision = (a, b) => {
       const overlapX = a.left <= b.right && a.right >= b.left;
       const overlapY = a.bottom <= b.top && a.top >= b.bottom;
       return overlapX && overlapY;
     };
 
-    const tick = () => {
+    const loop = (now) => {
       const s = runnerStateRef.current;
       if (!s.isStarted || s.isGameOver) return;
 
-      s.playerY += s.velocity;
-      s.velocity -= GRAVITY;
+      const lastNow = runnerLastFrameRef.current ?? now;
+      const dtMs = Math.min(50, Math.max(0, now - lastNow));
+      const dtFrames = dtMs / BASE_FRAME_MS;
+      runnerLastFrameRef.current = now;
+
+      s.playerY += s.velocity * dtFrames;
+      s.velocity -= GRAVITY * dtFrames;
+
       if (s.playerY < 0) {
         s.playerY = 0;
         s.velocity = 0;
       }
+
       const trackHeight = runnerTrackRef.current?.clientHeight || TRACK_HEIGHT;
       const playableHeight = trackHeight - GROUND_OFFSET;
       const maxPlayerY = Math.max(playableHeight - PLAYER_SIZE, 0);
@@ -681,10 +712,10 @@ function Body(props) {
         s.velocity = 0;
       }
 
-      s.spawnCounter -= 1;
+      s.spawnCounter -= dtFrames;
+      let didSpawn = false;
+
       if (s.spawnCounter <= 0) {
-        const trackHeight = runnerTrackRef.current?.clientHeight || TRACK_HEIGHT;
-        const playableHeight = trackHeight - GROUND_OFFSET;
         const isTallBlock = Math.random() < 0.35;
         const blockHeight = isTallBlock
           ? Math.floor(playableHeight * (0.42 + Math.random() * 0.12))
@@ -698,19 +729,28 @@ function Body(props) {
         const adjustedHeight = obstaclePosition === 'top'
           ? Math.max(Math.floor(blockHeight * 0.7), 20)
           : blockHeight;
+
+        const id = runnerObstacleIdRef.current++;
         s.obstacles.push({
+          id,
           x: trackWidth + blockWidth,
           width: blockWidth,
           height: adjustedHeight,
           color: randomColor,
           position: obstaclePosition
         });
+
         s.spawnCounter = 46 + Math.floor(Math.random() * 44);
+        didSpawn = true;
       }
 
-      s.obstacles = s.obstacles
-        .map((o) => ({ ...o, x: o.x - SPEED }))
-        .filter((o) => o.x + o.width > -10);
+      // Move obstacles + remove those that have passed the left edge.
+      const oldLen = s.obstacles.length;
+      for (let i = 0; i < s.obstacles.length; i += 1) {
+        s.obstacles[i].x -= SPEED * dtFrames;
+      }
+      s.obstacles = s.obstacles.filter((o) => o.x + o.width > -10);
+      const didRemove = s.obstacles.length !== oldLen;
 
       const trackWidth = runnerTrackRef.current?.clientWidth || 760;
       const playerRect = {
@@ -738,32 +778,58 @@ function Body(props) {
       };
       const collidedWithGround = isEdgeCollision(playerRect, groundRect);
 
-      const collided = collidedWithBlock || collidedWithGround;
-
-      if (collided) {
+      if (collidedWithBlock || collidedWithGround) {
         s.isGameOver = true;
         setRunnerGameOver(true);
         setRunnerStarted(false);
+
         const finalScore = Math.floor(s.score);
-        if (finalScore > runnerHighScore) {
-          setRunnerHighScore(finalScore);
-        }
+        setRunnerScore(finalScore);
+        if (finalScore > runnerHighScore) setRunnerHighScore(finalScore);
         return;
       }
 
-      s.score += 0.12;
-      setRunnerPlayerY(s.playerY);
-      setRunnerObstacles(s.obstacles);
-      setRunnerScore(Math.floor(s.score));
+      s.score += SCORE_PER_FRAME * dtFrames;
+
+      // Update DOM positions directly to avoid per-frame React re-renders.
+      if (runnerPlayerElRef.current) {
+        runnerPlayerElRef.current.style.transform = `translateY(${-s.playerY}px)`;
+      }
+      for (let i = 0; i < s.obstacles.length; i += 1) {
+        const o = s.obstacles[i];
+        const el = runnerObstacleElsRef.current.get(o.id);
+        if (el) el.style.left = `${o.x}px`;
+      }
+
+      if (now - runnerScoreLastUpdateRef.current > 100) {
+        setRunnerScore(Math.floor(s.score));
+        runnerScoreLastUpdateRef.current = now;
+      }
+
+      if (didSpawn || didRemove) {
+        setRunnerObstacles([...s.obstacles]);
+      }
+
+      runnerRafRef.current = requestAnimationFrame(loop);
     };
 
-    runnerFrameRef.current = window.setInterval(tick, 16);
+    runnerLastFrameRef.current = null;
+    runnerScoreLastUpdateRef.current = 0;
+    runnerRafRef.current = requestAnimationFrame(loop);
+
     return () => {
-      if (runnerFrameRef.current) {
-        window.clearInterval(runnerFrameRef.current);
-      }
+      if (runnerRafRef.current) cancelAnimationFrame(runnerRafRef.current);
     };
-  }, [runnerStarted, runnerGameOver, runnerHighScore, RUNNER_GRAVITY]);
+  }, [runnerStarted, runnerGameOver, runnerHighScore]);
+
+  // When obstacles are added/removed, their `left` needs to be set once so they don't render at an incorrect position.
+  useEffect(() => {
+    for (let i = 0; i < runnerObstacles.length; i += 1) {
+      const o = runnerObstacles[i];
+      const el = runnerObstacleElsRef.current.get(o.id);
+      if (el) el.style.left = `${o.x}px`;
+    }
+  }, [runnerObstacles]);
 
   // Form submission handler
   const handleFormSubmit = async (e) => {
@@ -1159,8 +1225,8 @@ function Body(props) {
             <div ref={runnerTrackRef} className="runner-track relative h-72 rounded-2xl border border-white/10 bg-transparent overflow-hidden">
               <div className="absolute bottom-6 left-0 right-0 h-[2px] bg-white/20" />
               <div
+                ref={runnerPlayerElRef}
                 className="runner-player absolute bottom-6 left-[72px] w-[50px] h-[50px]"
-                style={{ transform: `translateY(${-runnerPlayerY}px)` }}
               >
                 <img
                   src={moneyCashGif}
@@ -1168,12 +1234,15 @@ function Body(props) {
                   className="w-full h-full object-contain runner-player-sprite"
                 />
               </div>
-              {runnerObstacles.map((obstacle, index) => (
+              {runnerObstacles.map((obstacle) => (
                 <div
-                  key={`${index}-${obstacle.x}`}
+                  key={obstacle.id}
+                  ref={(el) => {
+                    if (el) runnerObstacleElsRef.current.set(obstacle.id, el);
+                    else runnerObstacleElsRef.current.delete(obstacle.id);
+                  }}
                   className="runner-obstacle absolute rounded-sm"
                   style={{
-                    left: `${obstacle.x}px`,
                     width: `${obstacle.width}px`,
                     height: `${obstacle.height}px`,
                     ...(obstacle.position === 'top' ? { top: '0px' } : { bottom: '1.5rem' }),
