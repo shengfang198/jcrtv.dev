@@ -92,13 +92,13 @@ function ProjectModal({ isOpen, onClose, project }) {
               <div className="project-modal-label text-xs text-neutral-400 font-semibold uppercase tracking-wider mb-3">Project Samples</div>
               {project.samples ? (
                 project.samples.length > 3 ? (
-                  <div className="relative">
-                    <div className="project-modal-media-wrap max-w-4xl mx-auto bg-white/10 rounded-lg overflow-hidden flex items-center justify-center max-h-[70vh]">
+                  <div className="relative w-full min-w-0">
+                    <div className="project-modal-media-wrap w-full max-w-4xl mx-auto min-h-0 min-w-0 bg-white/10 rounded-lg overflow-hidden flex items-center justify-center p-2 sm:p-3 md:p-4 max-h-[min(58vh,85dvh)] sm:max-h-[min(65vh,88dvh)] md:max-h-[min(72vh,90dvh)]">
                       {project.samples[currentSampleIndex].endsWith('.mp4') || project.samples[currentSampleIndex].endsWith('.mov') || project.samples[currentSampleIndex].endsWith('.webm') ? (
                         <video
                           src={project.samples[currentSampleIndex]}
                           controls
-                          className="max-w-full max-h-full object-contain transition-all duration-300"
+                          className="w-auto h-auto max-w-full max-h-[min(54vh,80dvh)] sm:max-h-[min(60vh,84dvh)] md:max-h-[min(68vh,86dvh)] object-contain object-center transition-all duration-300"
                         >
                           Your browser does not support the video tag.
                         </video>
@@ -106,7 +106,7 @@ function ProjectModal({ isOpen, onClose, project }) {
                         <img
                           src={project.samples[currentSampleIndex]}
                           alt={`Sample ${currentSampleIndex + 1}`}
-                          className="max-w-full max-h-full object-contain transition-all duration-300"
+                          className="w-auto h-auto max-w-full max-h-[min(54vh,80dvh)] sm:max-h-[min(60vh,84dvh)] md:max-h-[min(68vh,86dvh)] object-contain object-center transition-all duration-300"
                         />
                       )}
                     </div>
@@ -135,19 +135,26 @@ function ProjectModal({ isOpen, onClose, project }) {
                     </div>
                   </div>
                 ) : (
-                  <div className={`grid gap-4 ${project.samples.length === 1 ? 'grid-cols-1' : 'grid-cols-2 md:grid-cols-3'}`}>
+                  <div className={`grid gap-3 sm:gap-4 min-w-0 w-full ${project.samples.length === 1 ? 'grid-cols-1' : 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3'}`}>
                     {project.samples.map((sample, index) => (
-                      <div key={index} className={`project-modal-media-wrap ${project.samples.length === 1 ? 'max-w-4xl mx-auto' : ''} bg-white/10 rounded-lg overflow-hidden flex items-center justify-center max-h-[40vh]`}>
+                      <div
+                        key={index}
+                        className={`project-modal-media-wrap min-h-0 min-w-0 bg-white/10 rounded-lg overflow-hidden flex items-center justify-center p-2 sm:p-3 max-h-[min(50vh,80dvh)] sm:max-h-[min(55vh,85dvh)] md:max-h-[min(60vh,88dvh)] ${project.samples.length === 1 ? 'max-w-4xl mx-auto w-full' : ''}`}
+                      >
                         {sample.endsWith('.mp4') || sample.endsWith('.mov') || sample.endsWith('.webm') ? (
                           <video
                             src={sample}
                             controls
-                            className="max-w-full max-h-full object-contain"
+                            className="w-auto h-auto max-w-full max-h-[min(46vh,76dvh)] sm:max-h-[min(50vh,80dvh)] md:max-h-[min(56vh,84dvh)] object-contain object-center"
                           >
                             Your browser does not support the video tag.
                           </video>
                         ) : (
-                          <img src={sample} alt={`Sample ${index + 1}`} className="max-w-full max-h-full object-contain" />
+                          <img
+                            src={sample}
+                            alt={`Sample ${index + 1}`}
+                            className="w-auto h-auto max-w-full max-h-[min(46vh,76dvh)] sm:max-h-[min(50vh,80dvh)] md:max-h-[min(56vh,84dvh)] object-contain object-center"
+                          />
                         )}
                       </div>
                     ))}

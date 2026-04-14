@@ -8,7 +8,13 @@ const archViz7 = '/3DVISUALIZATION/7.jpg'
 const archViz8 = '/3DVISUALIZATION/8.jpg'
 const archViz9 = '/3DVISUALIZATION/9.jpg'
 const archViz10 = '/3DVISUALIZATION/10.jpg'
+const archViz11 = '/3DVISUALIZATION/11.png'
 const figmaAnimation = '/FIGMA/uiux.mp4'
+const figmaEasylife = '/FIGMA/easylife.png'
+const figmaUiEcommerce = '/FIGMA/eccomerce.png'
+const figmaNNLVS = '/FIGMA/NNLVS.png'
+const figmaPresentation = '/FIGMA/presentation.png'
+const figmaVS = '/FIGMA/VS.png'
 const gamedevImage = '/GAMEDEV/gamedev.png'
 const saasImage = '/SAAS/saas.png'
 const graphicArtist1 = '/GRAPHIC_ARTIST/Untitled-1.png'
@@ -177,7 +183,7 @@ const projectsData = {
       'Stronger marketing and presentation materials through graphic design integration',
       'Established a repeatable design and visualization workflow for future projects'
     ],
-    samples: [archViz2, archViz3, archViz4, archViz5, archViz6, archViz7, archViz8, archViz9, archViz10, graphicArtist1, graphicArtist2, graphicArtist3, graphicArtist4, graphicArtist5, graphicArtist6, graphicArtist7, graphicArtist8, graphicArtist9],
+    samples: [archViz2, archViz3, archViz4, archViz5, archViz6, archViz7, archViz8, archViz9, archViz10, archViz11, graphicArtist1, graphicArtist2, graphicArtist3, graphicArtist4, graphicArtist5, graphicArtist6, graphicArtist7, graphicArtist8, graphicArtist9],
     liveUrl: null,
     githubUrl: null
   },
@@ -256,7 +262,7 @@ const projectsData = {
       'Established organized Figma design systems for consistent workflows',
       'Streamlined collaboration with developers via Figma handoff'
     ],
-    samples: [figmaAnimation],
+    samples: [figmaAnimation, figmaEasylife, figmaUiEcommerce, figmaNNLVS, figmaPresentation, figmaVS],
     liveUrl: null,
     githubUrl: null
   },
@@ -345,11 +351,12 @@ const projectsData = {
       },
       {
         title: 'Development Approach',
-        content: 'Led the technical development of the game using Unreal Engine 5, focusing on performance optimization and gameplay innovation.',
+        content: 'I am developing this game in Unreal Engine 5, focusing on performance optimization and gameplay innovation. I also implement an AI system for NPCs.',
         bullets: [
           'Custom combat mechanics and skill systems',
           'Dynamic world generation and quest system',
           'Character customization and progression',
+          'AI system for NPC behavior and encounters',
           'Performance optimization for cross-platform deployment'
         ]
       },

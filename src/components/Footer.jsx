@@ -45,7 +45,7 @@ function Footer() {
             <div>
               <h4 className="text-white font-semibold mb-4">Contact Info</h4>
               <ul className="space-y-2 text-sm">
-                <li className="text-neutral-400 font-medium">Davao, PH</li>
+                <li className="text-neutral-400 font-medium">Manila, PH</li>
                 <li className="text-neutral-400 font-medium">lharc3395@gmail.com</li>
               </ul>
             </div>

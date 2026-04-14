@@ -47,7 +47,7 @@ function Profile() {
                 </div>
                 <div className="profile-contact-item flex items-center text-neutral-500 text-xs font-semibold">
                   <i className="fas fa-map-marker-alt mr-2 text-neutral-600"></i>
-                  <span>Davao, Philippines</span>
+                  <span>Manila, Philippines</span>
                 </div>
               </div>
 
