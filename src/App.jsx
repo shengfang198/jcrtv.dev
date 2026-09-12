@@ -1,6 +1,5 @@
 import './App.css'
 import { useState } from 'react'
-import Cover from './components/Cover.jsx'
 import Header from './components/Header.jsx'
 import Body from './components/Body.jsx'
 import Profile from './components/Profile.jsx'
@@ -33,7 +32,6 @@ function App() {
         aria-hidden="true"
       />
       <div className="relative z-[1]">
-        <Cover />
         <Header />
         <Body
           projectsData={projectsData}
