@@ -502,6 +502,47 @@ html {
   transform: translateY(0);
 }
 
+.brightness-control {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 3rem;
+  padding: 10px 0 8px;
+  border-radius: 9999px;
+  border: 1px solid rgba(15, 23, 42, 0.15);
+  background: color-mix(in srgb, var(--light-surface) 92%, transparent);
+  color: #1f2937;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.12);
+  backdrop-filter: blur(10px);
+}
+
+.brightness-control-value {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #334155;
+}
+
+.brightness-slider-wrap {
+  width: 18px;
+  height: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brightness-slider {
+  width: 6px;
+  height: 96px;
+  margin: 0;
+  writing-mode: vertical-lr;
+  direction: rtl;
+  accent-color: #2563eb;
+  cursor: pointer;
+  background: transparent;
+}
+
 a {
   font-weight: 500;
   color: #646cff;
@@ -553,6 +594,15 @@ button:focus-visible {
   outline: none;
 }
 
+.theme-toggle-btn,
+.theme-toggle-btn:hover,
+.theme-toggle-btn:focus,
+.theme-toggle-btn:focus-visible {
+  outline: none;
+  box-shadow: none;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
 /* Modern Vertical Capsule Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
@@ -588,6 +638,8 @@ button:focus-visible {
 
 html.theme-light {
   --background: #e4e9f2;
+  --light-surface: #ffffff;
+  --light-muted: #f3f4f6;
   --foreground: #111827;
   --card: #ffffff;
   --card-foreground: #111827;
@@ -606,7 +658,7 @@ html.theme-light {
 }
 
 html.theme-light .site-header-nav {
-  background: rgba(255, 255, 255, 0.9);
+  background: color-mix(in srgb, var(--light-surface) 90%, transparent);
   border-color: rgba(15, 23, 42, 0.1);
   backdrop-filter: blur(10px);
 }
@@ -633,10 +685,15 @@ html.theme-light .site-header-contact-btn:hover {
   background: rgba(15, 23, 42, 0.12);
 }
 
-html.theme-light .theme-toggle-btn {
+html.theme-light .theme-toggle-btn,
+html.theme-light .theme-toggle-btn:hover,
+html.theme-light .theme-toggle-btn:focus,
+html.theme-light .theme-toggle-btn:focus-visible {
   color: #1f2937;
   border-color: rgba(15, 23, 42, 0.15);
   background: rgba(15, 23, 42, 0.06);
+  outline: none;
+  box-shadow: none;
 }
 
 html.theme-light .theme-toggle-btn:hover {
@@ -644,7 +701,7 @@ html.theme-light .theme-toggle-btn:hover {
 }
 
 html.theme-light .theme-email-input {
-  background: #ffffff;
+  background: var(--light-surface);
   color: #111827;
   border-color: #d1d5db;
   box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
@@ -662,7 +719,7 @@ html.theme-light .theme-email-input:focus {
 html.theme-light .theme-minimize-btn {
   color: #334155;
   border-color: #cbd5e1;
-  background: #f1f5f9;
+  background: var(--light-muted);
   box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.04) inset;
 }
 
@@ -1010,7 +1067,7 @@ html.theme-light .flashlight-card,
 html.theme-light .gradient-tile[data-v-cdd6d5d1],
 html.theme-light .animate-on-scroll.bg-\[\#0C0D0F\],
 html.theme-light .bg-\[\#0C0D0F\] {
-  background: #ffffff;
+  background: var(--light-surface);
   border-color: #e5e7eb;
   box-shadow: 0 10px 25px rgba(15, 23, 42, 0.05);
 }
@@ -1040,7 +1097,7 @@ html.theme-light .border-white\/20 {
 
 html.theme-light .bg-neutral-800\/20,
 html.theme-light .bg-neutral-800\/30 {
-  background-color: #f8fafc;
+  background-color: var(--light-muted);
 }
 
 html.theme-light .border-neutral-700\/50,
@@ -1212,7 +1269,7 @@ html.theme-light .project-modal-overlay {
 }
 
 html.theme-light .project-modal-container {
-  background: #ffffff;
+  background: var(--light-surface);
   border-color: #d1d5db;
   box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.22);
 }
@@ -1251,7 +1308,7 @@ html.theme-light .project-modal-dot {
 }
 
 html.theme-light .project-modal-panel {
-  background: #f8fafc;
+  background: var(--light-muted);
   border-color: #dbe3ed;
 }
 
