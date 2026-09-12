@@ -1015,6 +1015,11 @@ html.theme-light .bg-\[\#0C0D0F\] {
   box-shadow: 0 10px 25px rgba(15, 23, 42, 0.05);
 }
 
+html.theme-light .progress-bar {
+  background: #2563eb;
+  backdrop-filter: none;
+}
+
 html.theme-light .bg-white\/5 {
   background-color: rgba(15, 23, 42, 0.1);
 }
