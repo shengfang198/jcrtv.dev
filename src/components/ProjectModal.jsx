@@ -132,20 +132,42 @@ function ProjectModal({ isOpen, onClose, project, projectsData, onSelectProject 
 
           <p className="project-modal-text text-lg mb-6">{project.description}</p>
 
-          {project.id === 'saas-platform' && (
-            <div className="mb-6">
-              <a
-                href={saasDemoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="project-modal-saas-top-link inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 rounded-full font-semibold transition-colors"
-              >
-                Open SaaS App
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M7 17 17 7" />
-                  <path d="M7 7h10v10" />
-                </svg>
-              </a>
+          {(project.liveUrl || project.videoUrl || project.id === 'saas-platform') && (
+            <div className="mb-6 flex gap-3 flex-wrap">
+              {project.liveUrl && (
+                <a
+                  href={project.liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="project-modal-action-btn px-6 py-3 rounded-full font-medium transition-colors border"
+                >
+                  View Live Project
+                </a>
+              )}
+              {project.videoUrl && (
+                <a
+                  href={project.videoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="project-modal-video-btn px-6 py-3 rounded-full font-medium transition-colors border"
+                >
+                  {project.id === 'saas-platform' ? 'View SaaS Demo' : 'View Game Video'}
+                </a>
+              )}
+              {project.id === 'saas-platform' && (
+                <a
+                  href={saasDemoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="project-modal-saas-top-link inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 rounded-full font-semibold transition-colors"
+                >
+                  Open SaaS App
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M7 17 17 7" />
+                    <path d="M7 7h10v10" />
+                  </svg>
+                </a>
+              )}
             </div>
           )}
 
@@ -248,50 +270,6 @@ function ProjectModal({ isOpen, onClose, project, projectsData, onSelectProject 
               ))}
             </div>
           </div>
-
-          {(project.liveUrl || project.videoUrl) && (
-            <div className="project-modal-section-divider mt-8 pt-6 border-t">
-              <div className="flex gap-4 flex-wrap">
-                {project.liveUrl && (
-                  <a
-                    href={project.liveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="project-modal-action-btn px-6 py-3 rounded-full font-medium transition-colors border"
-                  >
-                    View Live Project
-                  </a>
-                )}
-                {project.videoUrl && (
-                  <a
-                    href={project.videoUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="project-modal-video-btn px-6 py-3 rounded-full font-medium transition-colors border"
-                  >
-                    {project.id === 'saas-platform' ? 'View SaaS Demo' : 'View Game Video'}
-                  </a>
-                )}
-              </div>
-            </div>
-          )}
-
-          {project.id === 'saas-platform' && (
-            <div className="mt-6">
-              <a
-                href={saasDemoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="project-modal-saas-bottom-link inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-full font-semibold transition-colors"
-              >
-                Launch SaaS Platform
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M7 17 17 7" />
-                  <path d="M7 7h10v10" />
-                </svg>
-              </a>
-            </div>
-          )}
         </div>
         </div>
       </div>
