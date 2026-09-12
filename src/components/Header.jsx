@@ -32,7 +32,7 @@ function Header() {
           <a href="#" className="site-header-link text-white hover:text-indigo-400 transition-colors scroll-smooth">Overview</a>
           <a href="#about" className="site-header-link text-white hover:text-indigo-400 transition-colors scroll-smooth">Profile</a>
           <a href="#skills" className="site-header-link text-white hover:text-indigo-400 transition-colors scroll-smooth">Expertise</a>
-          <a href="#projects" className="site-header-link hidden sm:inline text-white hover:text-indigo-400 transition-colors scroll-smooth">Projects</a>
+          <a href="#projects" className="site-header-link text-white hover:text-indigo-400 transition-colors scroll-smooth">Projects</a>
           <a href="#resume" className="site-header-link hidden md:inline text-white hover:text-indigo-400 transition-colors scroll-smooth px-2 py-1">Career</a>
         </div>
 
@@ -62,7 +62,7 @@ function Header() {
               </svg>
             )}
           </button>
-          <a href="#footer" className="site-header-contact-btn hover:bg-white/10 focus:bg-blue-100 focus:text-blue-900 focus:outline-none transition-all flex text-sm font-medium text-neutral-200 bg-gradient-to-b from-white/30 via-white/0 to-white/10 rounded-full px-2 sm:px-4 py-1.5 sm:py-2 shadow-[0px_1px_0px_0px_rgba(255,255,255,0.1)_inset] gap-x-2 gap-y-2 items-center scroll-smooth" style={{ position: 'relative', '--border-gradient': 'linear-gradient(180deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.1))', '--border-radius-before': '9999px' }}>
+          <a href="#footer" className="site-header-contact-btn hover:bg-white/10 focus:outline-none transition-colors flex text-sm font-medium text-neutral-200 bg-white/10 border border-white/10 rounded-full px-2 sm:px-4 py-1.5 sm:py-2 gap-x-2 gap-y-2 items-center scroll-smooth">
             <span className="hidden md:inline text-xs font-semibold tracking-tight">Contact me</span>
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-neutral-400">
               <path d="M5 12h14"></path>

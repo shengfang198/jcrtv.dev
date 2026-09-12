@@ -2,9 +2,9 @@ import React from 'react';
 
 function Career() {
   return (
-    <section id="resume" className="py-20">
+    <section id="resume" className="py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
+        <div className="text-center mb-8">
           <div className="px-3 py-1 bg-white/5 rounded-full border border-white/5 text-xs text-neutral-400 font-semibold uppercase tracking-wider mb-4">
             My Professional
           </div>
@@ -39,7 +39,7 @@ function Career() {
               <div className="space-y-6 mb-8">
                 <div>
                   <div className="flex items-center gap-2 mb-4">
-                    <svg className="w-5 h-5 text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <svg className="theme-accent-svg w-5 h-5 text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                       <rect width="20" height="14" x="2" y="3" rx="2" ry="2" strokeWidth={2} />
                       <line x1="2" x2="22" y1="8" y2="8" strokeWidth={2} />
                       <rect width="4" height="4" x="18" y="10" rx="1" strokeWidth={2} />
@@ -48,11 +48,30 @@ function Career() {
                   </div>
                   <div className="space-y-3 ml-7">
                     <div className="flex items-start gap-3 p-3 rounded-lg bg-neutral-800/20 border border-neutral-700/50">
-                      <div className="w-2 h-2 bg-cyan-400 rounded-full mt-2 flex-shrink-0"></div>
+                      <div className="theme-accent-dot w-2 h-2 bg-cyan-400 rounded-full mt-2 flex-shrink-0"></div>
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between mb-1">
+                          <h4 className="font-medium text-white">Shopify Developer</h4>
+                          <span className="theme-chip bg-cyan-600 text-white text-xs px-2 py-1 rounded-full">2025–2026</span>
+                        </div>
+                        <p className="text-neutral-400 text-sm mb-1">Shopify 2.0, Liquid, HTML, CSS, JavaScript</p>
+                        <p className="text-neutral-400 text-sm mb-1">Theme Development / Product Design / CMS</p>
+                        <ul className="text-neutral-400 text-sm space-y-1 mt-2">
+                          <li>• Delivered end-to-end Shopify store development from design and templates through CMS and launch</li>
+                          <li>• Built custom Shopify 2.0 storefronts with Liquid templates and Online Store 2.0 sections</li>
+                          <li>• Designed product pages, listings, and merchandising layouts</li>
+                          <li>• Created custom templates for home, collection, product, and cart pages</li>
+                          <li>• Set up CMS-driven sections and metafields for content updates without code</li>
+                          <li>• Developed cart and checkout-ready shopping flows with variant options</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3 p-3 rounded-lg bg-neutral-800/20 border border-neutral-700/50">
+                      <div className="theme-accent-dot w-2 h-2 bg-cyan-400 rounded-full mt-2 flex-shrink-0"></div>
                       <div className="flex-1">
                         <div className="flex items-center justify-between mb-1">
                           <h4 className="font-medium text-white">SaaS Developer / Web Platform Developer</h4>
-                          <span className="bg-cyan-600 text-white text-xs px-2 py-1 rounded-full">2024–Present</span>
+                          <span className="theme-chip bg-cyan-600 text-white text-xs px-2 py-1 rounded-full">2025</span>
                         </div>
                         <p className="text-neutral-400 text-sm mb-1">Next.js, React, Node.js, PostgreSQL, Tailwind CSS</p>
                         <p className="text-neutral-400 text-sm mb-1">Self-Initiated Project / Freelance / Independent</p>
@@ -67,11 +86,26 @@ function Career() {
                       </div>
                     </div>
                     <div className="flex items-start gap-3 p-3 rounded-lg bg-neutral-800/20 border border-neutral-700/50">
-                      <div className="w-2 h-2 bg-cyan-400 rounded-full mt-2 flex-shrink-0"></div>
+                      <div className="theme-accent-dot w-2 h-2 bg-cyan-400 rounded-full mt-2 flex-shrink-0"></div>
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between mb-1">
+                          <h4 className="font-medium text-white">Real Estate Editor</h4>
+                          <span className="theme-chip bg-cyan-600 text-white text-xs px-2 py-1 rounded-full">2025</span>
+                        </div>
+                        <p className="text-neutral-400 text-sm mb-1">Adobe Creative Cloud — Property Marketing & Design</p>
+                        <ul className="text-neutral-400 text-sm space-y-1 mt-2">
+                          <li>• Designed and edited marketing materials for real estate listings</li>
+                          <li>• Enhanced property visuals using professional photo and layout techniques</li>
+                          <li>• Maintained brand consistency across digital and print assets</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3 p-3 rounded-lg bg-neutral-800/20 border border-neutral-700/50">
+                      <div className="theme-accent-dot w-2 h-2 bg-cyan-400 rounded-full mt-2 flex-shrink-0"></div>
                       <div className="flex-1">
                         <div className="flex items-center justify-between mb-1">
                           <h4 className="font-medium text-white">UI Designer & Developer</h4>
-                          <span className="bg-cyan-600 text-white text-xs px-2 py-1 rounded-full">2024</span>
+                          <span className="theme-chip bg-cyan-600 text-white text-xs px-2 py-1 rounded-full">2024</span>
                         </div>
                         <p className="text-neutral-400 text-sm mb-1">Figma, React, JavaScript, C++, Node.js, PostgreSQL</p>
                         <ul className="text-neutral-400 text-sm space-y-1 mt-2">
@@ -85,17 +119,19 @@ function Career() {
                       </div>
                     </div>
                     <div className="flex items-start gap-3 p-3 rounded-lg bg-neutral-800/20 border border-neutral-700/50">
-                      <div className="w-2 h-2 bg-cyan-400 rounded-full mt-2 flex-shrink-0"></div>
+                      <div className="theme-accent-dot w-2 h-2 bg-cyan-400 rounded-full mt-2 flex-shrink-0"></div>
                       <div className="flex-1">
                         <div className="flex items-center justify-between mb-1">
-                          <h4 className="font-medium text-white">Real Estate Editor</h4>
-                          <span className="bg-cyan-600 text-white text-xs px-2 py-1 rounded-full">2025–Present</span>
+                          <h4 className="font-medium text-white">Game Developer</h4>
+                          <span className="theme-chip bg-cyan-600 text-white text-xs px-2 py-1 rounded-full">2023–2024</span>
                         </div>
-                        <p className="text-neutral-400 text-sm mb-1">Adobe Creative Cloud — Property Marketing & Design</p>
+                        <p className="text-neutral-400 text-sm mb-1">Unreal Engine 5, C++, Blueprint</p>
+                        <p className="text-neutral-400 text-sm mb-1">Self-Initiated Project / Freelance / Independent</p>
                         <ul className="text-neutral-400 text-sm space-y-1 mt-2">
-                          <li>• Designed and edited marketing materials for real estate listings</li>
-                          <li>• Enhanced property visuals using professional photo and layout techniques</li>
-                          <li>• Maintained brand consistency across digital and print assets</li>
+                          <li>• Developed a 3D action RPG in Unreal Engine 5 with combat and progression systems</li>
+                          <li>• Implemented gameplay logic, character control, and AI behavior in C++ and Blueprint</li>
+                          <li>• Built quest, skill, and encounter systems for an immersive game loop</li>
+                          <li>• Optimized performance for stable gameplay across target platforms</li>
                         </ul>
                       </div>
                     </div>
@@ -104,7 +140,7 @@ function Career() {
 
                 <div>
                   <div className="flex items-center gap-2 mb-4">
-                    <svg className="w-5 h-5 text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <svg className="theme-accent-svg w-5 h-5 text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l9-5-9-5-9 5 9 5z" />
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
                     </svg>
@@ -112,18 +148,18 @@ function Career() {
                   </div>
                   <div className="space-y-3 ml-7">
                     <div className="flex items-start gap-3 p-3 rounded-lg bg-neutral-800/20 border border-neutral-700/50">
-                      <div className="w-2 h-2 bg-indigo-400 rounded-full mt-2 flex-shrink-0"></div>
+                      <div className="theme-accent-dot w-2 h-2 bg-indigo-400 rounded-full mt-2 flex-shrink-0"></div>
                       <div className="flex-1">
                         <div className="flex items-center justify-between mb-1">
                           <h4 className="font-medium text-white">3D & Advanced C++ Programming</h4>
-                          <span className="bg-indigo-600 text-white text-xs px-2 py-1 rounded-full">2024</span>
+                          <span className="theme-chip bg-indigo-600 text-white text-xs px-2 py-1 rounded-full">2024</span>
                         </div>
                         <p className="text-neutral-400 text-sm">Udemy — Game Development & Advanced Programming</p>
                         <p className="text-neutral-500 text-xs mt-1">Focused on 3D systems, performance logic, and advanced C++ concepts for interactive applications</p>
                         <div className="mt-3">
                           <button
                             onClick={() => window.open('/cert.png', '_blank')}
-                            className="bg-indigo-600 text-white hover:bg-indigo-700 text-xs px-3 py-1.5 rounded-full font-medium transition-colors border border-indigo-600"
+                            className="theme-action-btn bg-indigo-600 text-white hover:bg-indigo-700 text-xs px-3 py-1.5 rounded-full font-medium transition-colors border border-indigo-600"
                           >
                             View Certificate
                           </button>
@@ -131,22 +167,22 @@ function Career() {
                       </div>
                     </div>
                     <div className="flex items-start gap-3 p-3 rounded-lg bg-neutral-800/20 border border-neutral-700/50">
-                      <div className="w-2 h-2 bg-indigo-400 rounded-full mt-2 flex-shrink-0"></div>
+                      <div className="theme-accent-dot w-2 h-2 bg-indigo-400 rounded-full mt-2 flex-shrink-0"></div>
                       <div className="flex-1">
                         <div className="flex items-center justify-between mb-1">
                           <h4 className="font-medium text-white">ICT / Multimedia Design</h4>
-                          <span className="bg-purple-600 text-white text-xs px-2 py-1 rounded-full">2016</span>
+                          <span className="theme-chip bg-purple-600 text-white text-xs px-2 py-1 rounded-full">2016</span>
                         </div>
                         <p className="text-neutral-400 text-sm">Specialized in Interaction Design and Visual Communication</p>
                         <p className="text-neutral-500 text-xs mt-1">Strong foundation in digital media, layout, and user-centered design</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-3 p-3 rounded-lg bg-neutral-800/20 border border-neutral-700/50">
-                      <div className="w-2 h-2 bg-indigo-400 rounded-full mt-2 flex-shrink-0"></div>
+                      <div className="theme-accent-dot w-2 h-2 bg-indigo-400 rounded-full mt-2 flex-shrink-0"></div>
                       <div className="flex-1">
                         <div className="flex items-center justify-between mb-1">
                           <h4 className="font-medium text-white">Bachelor of Science in Business Administration</h4>
-                          <span className="bg-indigo-600 text-white text-xs px-2 py-1 rounded-full">2014</span>
+                          <span className="theme-chip bg-indigo-600 text-white text-xs px-2 py-1 rounded-full">2014</span>
                         </div>
                         <p className="text-neutral-400 text-sm">Xavier University – Ateneo de Cagayan (CDO)</p>
                         <p className="text-neutral-500 text-xs mt-1">Equipped with foundational knowledge in business management, marketing, and operations</p>
@@ -162,7 +198,7 @@ function Career() {
                   href="https://www.linkedin.com/in/corales-edgar-jr-506324247/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-blue-600 text-white hover:bg-blue-700 focus:bg-blue-700 focus:text-white focus:outline-none text-sm px-5 py-2.5 rounded-full font-semibold transition-colors border border-blue-600"
+                  className="theme-action-btn bg-blue-600 text-white hover:bg-blue-700 focus:bg-blue-700 focus:text-white focus:outline-none text-sm px-5 py-2.5 rounded-full font-semibold transition-colors border border-blue-600"
                 >
                   View LinkedIn
                 </a>

@@ -2,9 +2,9 @@ import React from 'react';
 
 function Profile() {
   return (
-    <section id="about" className="py-20">
+    <section id="about" className="py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
+        <div className="text-center mb-8">
           <div className="px-3 py-1 bg-white/5 rounded-full border border-white/5 text-xs text-neutral-400 font-semibold uppercase tracking-wider mb-4">
             Get To Know Me
           </div>
@@ -56,7 +56,7 @@ function Profile() {
                   href="./resume__.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-indigo-500 hover:bg-indigo-600 focus:bg-blue-600 focus:outline-none text-white text-sm px-5 py-2.5 rounded-full font-semibold transition-colors border border-blue-500 inline-block"
+                  className="theme-action-btn bg-indigo-500 hover:bg-indigo-600 focus:bg-blue-600 focus:outline-none text-white text-sm px-5 py-2.5 rounded-full font-semibold transition-colors border border-blue-500 inline-block"
                 >
                   View CV
                 </a>

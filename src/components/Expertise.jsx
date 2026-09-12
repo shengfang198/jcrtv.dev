@@ -4,9 +4,9 @@ import React from 'react';
 function Expertise() {
 
   return (
-    <section id="skills" className="py-20">
+    <section id="skills" className="py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
+        <div className="text-center mb-8">
           <div className="px-3 py-1 bg-white/5 rounded-full border border-white/5 text-xs text-neutral-400 font-semibold uppercase tracking-wider mb-4">
             Discover My
           </div>

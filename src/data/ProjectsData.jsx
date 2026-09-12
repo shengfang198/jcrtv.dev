@@ -1,4 +1,6 @@
-const ecommerceSample = '/ECOMMERCE/eccomerce.png'
+const ecommerceSample = '/ECOMMERCE/thumbnailecommerce.png'
+const ecommerceCustomSample = '/ECOMMERCE/eccomerce.png'
+const archViz1 = '/3DVISUALIZATION/1.jpg'
 const archViz2 = '/3DVISUALIZATION/2.jpg'
 const archViz3 = '/3DVISUALIZATION/3.jpg'
 const archViz4 = '/3DVISUALIZATION/4.jpg'
@@ -8,29 +10,116 @@ const archViz7 = '/3DVISUALIZATION/7.jpg'
 const archViz8 = '/3DVISUALIZATION/8.jpg'
 const archViz9 = '/3DVISUALIZATION/9.jpg'
 const archViz10 = '/3DVISUALIZATION/10.jpg'
-const archViz11 = '/3DVISUALIZATION/11.png'
-const figmaAnimation = '/FIGMA/uiux.mp4'
+const figmaAnimation = 'https://drive.google.com/file/d/1KRrW8Bg9ccNf9I82qfNe2WUtX9wb9ffi/view?usp=sharing'
 const figmaEasylife = '/FIGMA/easylife.png'
 const figmaUiEcommerce = '/FIGMA/eccomerce.png'
 const figmaNNLVS = '/FIGMA/NNLVS.png'
 const figmaPresentation = '/FIGMA/presentation.png'
 const figmaVS = '/FIGMA/VS.png'
-const gamedevImage = '/GAMEDEV/gamedev.png'
-const saasImage = '/SAAS/saas.png'
+const gamedevImage = '/GAMEDEV/indiegame.jpeg'
+const saasImage = '/SAAS/thumbnail.png'
 const graphicArtist1 = '/GRAPHIC_ARTIST/Untitled-1.png'
 const graphicArtist2 = '/GRAPHIC_ARTIST/2.png'
-const graphicArtist3 = '/GRAPHIC_ARTIST/Astro.jpg'
-const graphicArtist4 = '/GRAPHIC_ARTIST/Front.jpg'
 const graphicArtist5 = '/GRAPHIC_ARTIST/MindSole.jpg'
-const graphicArtist6 = '/GRAPHIC_ARTIST/Mockup.png'
-const graphicArtist7 = '/GRAPHIC_ARTIST/processart_.png'
 const graphicArtist8 = '/GRAPHIC_ARTIST/Samuraipng.png'
 const graphicArtist9 = '/GRAPHIC_ARTIST/Skullpng.png'
+const graphicArtboard = '/GRAPHIC_ARTIST/Artboard 1.png'
+const graphicProduct = '/GRAPHIC_ARTIST/productdesign.jpg'
 
 // Project Data
 const projectsData = {
   'ecommerce': {
     id: 'ecommerce',
+    title: 'Shopify E-commerce Store',
+    description: 'End-to-end Shopify 2.0 development covering product design, custom templates, CMS, merchandising, and checkout.',
+    category: 'Shopify 2.0 · End-to-End Development · Custom Templates · CMS',
+    color: 'bg-indigo-500/20',
+    badgeColor: 'bg-indigo-500/20 text-indigo-300',
+    client: 'Self-Initiated',
+    duration: 'Self-Initiated Project',
+    tech: ['Shopify 2.0', 'Liquid', 'Custom Templates', 'Shopify CMS', 'HTML5', 'CSS', 'JavaScript', 'Theme Sections'],
+    icon: <svg className="w-5 h-5 text-indigo-300" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 7v10a4 4 0 004 4h10"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 5a2 2 0 012 2v8"></path><circle cx="9" cy="9" r="2" strokeWidth={1.5}></circle><circle cx="9" cy="15" r="2" strokeWidth={1.5}></circle></svg>,
+    caseStudy: [
+      {
+        title: 'Project Overview',
+        content: 'End-to-end Shopify 2.0 development from store concept and product design through custom templates, CMS setup, merchandising, and checkout. I designed the store UI and built Liquid templates, Online Store 2.0 sections, and Shopify-native cart, product, and checkout flows.'
+      },
+      {
+        title: 'Key Features',
+        content: '',
+        bullets: [
+          'End-to-end Shopify store development from design to launch',
+          'Custom Shopify 2.0 storefront and brand design',
+          'Product design for listings, variants, and merchandising',
+          'Custom Liquid templates for home, collection, product, and cart pages',
+          'CMS-driven Online Store 2.0 sections and theme editor content',
+          'Reusable custom sections and blocks for campaigns',
+          'Shopify cart drawer and checkout integration',
+          'Metafields for product details and structured content',
+          'Responsive layout for desktop and mobile'
+        ]
+      },
+      {
+        title: 'Tech Stack',
+        content: 'Shopify theme, template, and CMS stack for storefront design and store operations.',
+        bullets: [
+          'Platform: Shopify 2.0 / Online Store 2.0',
+          'Templating: Liquid custom templates',
+          'CMS: Shopify theme editor, sections, and metafields',
+          'Frontend: HTML5, CSS, JavaScript',
+          'Commerce: Shopify products, collections, cart, and checkout'
+        ]
+      },
+      {
+        title: 'Problem Statement',
+        content: 'Template Shopify themes limited brand identity and merchandising control. The goal was a custom Shopify store that kept native commerce features while giving full control over design, product presentation, and shopping flow.'
+      },
+      {
+        title: 'Solution Approach',
+        content: 'An end-to-end Shopify build covering design, templates, CMS, and store operations.',
+        bullets: [
+          'Owned the storefront from concept through theme development and launch',
+          'Designed a custom storefront and product presentation system',
+          'Built custom Liquid templates for home, collection, product, and cart pages',
+          'Set up CMS-managed sections so store content can be updated without code',
+          'Used Shopify checkout, payments, and order handling instead of a custom server'
+        ]
+      },
+      {
+        title: 'Design & Technical Challenges',
+        content: '',
+        bullets: [
+          'Challenge: Custom UI without breaking Shopify cart and checkout',
+          'Solution: Built theme components on Shopify 2.0 sections and native cart APIs',
+          'Challenge: Flexible product content for clothing variants',
+          'Solution: Used metafields and variant options for size, color, and product details'
+        ]
+      },
+      {
+        title: 'Key Outcomes',
+        content: 'Results from the Shopify storefront build.',
+        bullets: [
+          'End-to-end Shopify store development from design to launch',
+          'Custom Shopify 2.0 theme with product design and brand layout',
+          'Custom templates for key store pages',
+          'CMS-ready sections for merchandising and content updates',
+          'Native cart, checkout, and order handling'
+        ]
+      }
+    ],
+    results: [
+      'End-to-end Shopify store development from design to launch',
+      'Custom Shopify 2.0 theme with product design and brand layout',
+      'Custom templates for home, collection, product, and cart pages',
+      'CMS-managed sections for ongoing content updates',
+      'Native cart, checkout, and order handling'
+    ],
+    samples: [ecommerceSample],
+    liveUrl: 'https://3citiesdesign.net/',
+    githubUrl: null
+  },
+  'ecommerce-custom': {
+    id: 'ecommerce-custom',
     title: 'E-commerce Clothing Platform',
     description: 'A self-built e-commerce prototype developed for a future clothing business. The project showcases end-to-end product design, interactive shopping flows, and backend-supported authentication and cart functionality.',
     category: 'UI/UX Design · Full-Stack Development · Self-Initiated Project',
@@ -110,15 +199,15 @@ const projectsData = {
       'Clean, modern UI tailored for a fashion brand',
       'Strong foundation for future payment and order systems'
     ],
-    samples: [ecommerceSample],
+    samples: [ecommerceCustomSample],
     liveUrl: 'https://nnlvsstore.onrender.com/index.html',
     githubUrl: 'https://github.com/jaycreative/ecommerce-platform'
   },
   '3d-visualization': {
     id: '3d-visualization',
-    title: '3D Visualization and Graphic Design',
-    description: 'High-quality, photorealistic 3D visualizations combined with practical interior design and supporting graphic design assets for residential and commercial projects.',
-    category: 'Interior Design · Architectural Visualization · Graphic Design',
+    title: '3D Visualization',
+    description: 'Photorealistic 3D visualizations and interior design presentations for residential and commercial spaces.',
+    category: 'Interior Design · Architectural Visualization',
     color: 'bg-purple-500/20',
     badgeColor: 'bg-purple-500/20 text-purple-300',
     client: 'Architect Studio',
@@ -128,7 +217,7 @@ const projectsData = {
     caseStudy: [
       {
         title: 'Overview',
-        content: 'I provide end-to-end interior design, 3D visualization, and graphic design services, helping clients clearly understand how a space will look, feel, and function before construction begins. My work bridges design, visualization, and visual communication, ensuring that every concept is visually compelling, practically buildable, and presentation-ready.'
+        content: 'I provide end-to-end interior design and 3D visualization, helping clients understand how a space will look, feel, and function before construction begins.'
       },
       {
         title: 'Services Provided',
@@ -139,8 +228,7 @@ const projectsData = {
           '3D modeling for interior and exterior spaces',
           'Photorealistic rendering for presentations and marketing',
           'Material, furniture, and lighting selection',
-          'Design visualization based on real construction constraints',
-          'Graphic design support for presentations, boards, and marketing materials'
+          'Design visualization based on real construction constraints'
         ]
       },
       {
@@ -156,19 +244,18 @@ const projectsData = {
       },
       {
         title: 'Client Challenge',
-        content: 'An architecture firm needed clear, realistic visualizations and interior concepts to help clients fully understand proposed designs. They also required professionally designed presentation materials to communicate ideas effectively during approvals and marketing—beyond raw 3D renders.'
+        content: 'An architecture firm needed clear, realistic visualizations and interior concepts so clients could understand proposed designs before construction and approvals.'
       },
       {
         title: 'Design & Technical Implementation',
-        content: 'I developed a complete interior design, 3D visualization, and graphic design pipeline, starting from architectural plans and ending with polished, client-ready presentations.',
+        content: 'I developed a complete interior design and 3D visualization pipeline, starting from architectural plans and ending with photorealistic, client-ready presentations.',
         bullets: [
           'Created detailed 3D models based on AutoCAD drawings',
           'Designed practical interior layouts with correct proportions and circulation',
           'Developed realistic materials and textures matching real-world finishes',
           'Built advanced lighting setups to simulate natural and artificial light',
           'Produced photorealistic interior and exterior renders',
-          'Applied post-processing to enhance realism, mood, and clarity',
-          'Designed presentation boards, layouts, and visual assets to support design storytelling'
+          'Applied post-processing to enhance realism, mood, and clarity'
         ]
       },
       {
@@ -180,10 +267,76 @@ const projectsData = {
       'Delivered 15+ high-quality interior and exterior visualizations',
       'Improved client understanding of design intent and spatial layout',
       'Faster approvals due to clearer, more realistic presentations',
-      'Stronger marketing and presentation materials through graphic design integration',
       'Established a repeatable design and visualization workflow for future projects'
     ],
-    samples: [archViz2, archViz3, archViz4, archViz5, archViz6, archViz7, archViz8, archViz9, archViz10, archViz11, graphicArtist1, graphicArtist2, graphicArtist3, graphicArtist4, graphicArtist5, graphicArtist6, graphicArtist7, graphicArtist8, graphicArtist9],
+    samples: [archViz1, archViz2, archViz3, archViz4, archViz5, archViz6, archViz7, archViz8, archViz9, archViz10],
+    liveUrl: null,
+    githubUrl: null
+  },
+  'graphic-product-design': {
+    id: 'graphic-product-design',
+    title: 'Graphic Design and Product Design',
+    description: 'Graphic design and product design for branding, visual communication, packaging, and product presentation.',
+    category: 'Graphic Design · Product Design',
+    color: 'bg-purple-500/20',
+    badgeColor: 'bg-purple-500/20 text-purple-300',
+    client: 'Various Clients',
+    duration: 'Ongoing Projects',
+    tech: ['Adobe Photoshop', 'Adobe Illustrator', 'Blender', 'Figma'],
+    icon: <svg className="w-5 h-5 text-purple-300" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="7.5 4.27 16.5 9.73" strokeWidth={1.5}></polyline><line x1="2.0" y1="11.1" x2="22" y2="11.1" strokeWidth={1.5}></line></svg>,
+    caseStudy: [
+      {
+        title: 'Overview',
+        content: 'I combine graphic design and product design to build brand visuals, layouts, and product presentations that are clear, consistent, and ready for marketing or production.'
+      },
+      {
+        title: 'Services Provided',
+        content: '',
+        bullets: [
+          'Brand and visual identity design',
+          'Poster, apparel, and campaign graphics',
+          'Layout, typography, and print-ready artwork',
+          'Product design concepts and form studies',
+          'Packaging visuals and product hero shots',
+          '3D product modeling, materials, and presentation'
+        ]
+      },
+      {
+        title: 'Tech Stack',
+        content: '',
+        bullets: [
+          'Adobe Photoshop – retouching, mockups, and campaign art',
+          'Adobe Illustrator – vector graphics, logos, and print assets',
+          'Blender – product modeling and presentation renders',
+          'Figma – layout exploration and design systems'
+        ]
+      },
+      {
+        title: 'Client Challenge',
+        content: 'Clients needed brand-ready graphic assets and product visuals that communicated form, material, and identity before manufacturing or launch.'
+      },
+      {
+        title: 'Design & Technical Implementation',
+        content: 'I built a graphic and product design workflow from concept through presentation-ready assets.',
+        bullets: [
+          'Developed graphic systems for brand, apparel, and campaign use',
+          'Created product form, packaging, and surface-detail studies',
+          'Rendered product hero shots with accurate materials and lighting',
+          'Prepared print-ready and digital artwork for production'
+        ]
+      },
+      {
+        title: 'Workflow Optimization',
+        content: 'Reusable mockup templates, product lighting setups, and graphic layouts reduced turnaround time while keeping brand and product presentation consistent.'
+      }
+    ],
+    results: [
+      'Delivered graphic and product design assets for branding and marketing',
+      'Product concepts presented with clear form, materials, and hero shots',
+      'Stronger visual identity across print, apparel, and digital use',
+      'Faster production handoff through organized artwork and mockups'
+    ],
+    samples: [graphicProduct, graphicArtist8, graphicArtist9, graphicArtist1, graphicArtist2, graphicArtboard, graphicArtist5],
     liveUrl: null,
     githubUrl: null
   },
@@ -329,7 +482,7 @@ const projectsData = {
       'Self-Initiated / Production-Ready SaaS Project Prepared for deployment and future commercial use.'
     ],
     samples: [saasImage],
-    liveUrl: null,
+    liveUrl: 'https://virtual-editor-dsel.onrender.com/',
     githubUrl: null,
     videoUrl: 'https://drive.google.com/file/d/1esW-PrXno8xpOhAgaIc_tsoMrLbQD8Ye/view?usp=sharing'
   },
@@ -366,9 +519,9 @@ const projectsData = {
       }
     ],
     results: [
-      'Received positive reviews from players and gaming publications',
-      'Reached strong early adoption and steady player engagement',
-      'Built an active community that contributed feedback and mods over time'
+      'Completed a self-initiated 3D action RPG prototype in Unreal Engine 5',
+      'Implemented combat, progression, quest, and NPC AI systems in C++ and Blueprint',
+      'Optimized gameplay performance for a stable single-player experience'
     ],
     liveUrl: null,
     githubUrl: null,

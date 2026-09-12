@@ -38,7 +38,9 @@ function Footer() {
                 <li><span className="text-neutral-400 font-medium">UI/UX Design</span></li>
                 <li><span className="text-neutral-400 font-medium">Web Development</span></li>
                 <li><span className="text-neutral-400 font-medium">3D Modeling</span></li>
-                <li><span className="text-neutral-400 font-medium">Branding</span></li>
+                <li><span className="text-neutral-400 font-medium">Shopify 2.0 Liquid</span></li>
+                <li><span className="text-neutral-400 font-medium">Product Design</span></li>
+                <li><span className="text-neutral-400 font-medium">SaaS</span></li>
               </ul>
             </div>
 
@@ -55,17 +57,11 @@ function Footer() {
             <div className="flex flex-col md:flex-row justify-between items-center">
               <p className="text-neutral-400 font-medium text-sm">&copy; 2024 Jay Creative. All rights reserved.</p>
               <div className="flex space-x-4 mt-4 md:mt-0">
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                <a href="https://github.com/shengfang198" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
                   <i className="fab fa-github"></i>
                 </a>
                 <a href="https://www.linkedin.com/in/corales-edgar-jr-506324247/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
                   <i className="fab fa-linkedin-in"></i>
-                </a>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                  <i className="fab fa-behance"></i>
-                </a>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                  <i className="fab fa-discord"></i>
                 </a>
               </div>
             </div>

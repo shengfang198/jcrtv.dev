@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-function ProjectModal({ isOpen, onClose, project }) {
+function ProjectModal({ isOpen, onClose, project, projectsData, onSelectProject }) {
   const [currentSampleIndex, setCurrentSampleIndex] = useState(0);
   const saasDemoUrl = 'https://virtual-editor-dsel.onrender.com/';
+
+  useEffect(() => {
+    setCurrentSampleIndex(0);
+  }, [project?.id]);
 
   if (!isOpen || !project) return null;
 
@@ -28,36 +32,105 @@ function ProjectModal({ isOpen, onClose, project }) {
     }
   };
 
+  const getDrivePreviewUrl = (url) => {
+    const match = url.match(/\/file\/d\/([^/]+)/);
+    return match ? `https://drive.google.com/file/d/${match[1]}/preview` : url;
+  };
+
+  const isDriveLink = (url) => url.includes('drive.google.com');
+  const isVideoFile = (url) =>
+    url.endsWith('.mp4') || url.endsWith('.mov') || url.endsWith('.webm');
+
+  const renderSampleMedia = (sample, alt) => {
+    if (isDriveLink(sample)) {
+      return (
+        <iframe
+          src={getDrivePreviewUrl(sample)}
+          title={alt}
+          className="project-modal-sample-media"
+          allow="autoplay"
+        />
+      );
+    }
+
+    if (isVideoFile(sample)) {
+      return (
+        <video src={sample} controls className="project-modal-sample-media">
+          Your browser does not support the video tag.
+        </video>
+      );
+    }
+
+    return <img src={sample} alt={alt} className="project-modal-sample-media" />;
+  };
+
+  const variantGroups = [
+    {
+      ids: ['ecommerce', 'ecommerce-custom'],
+      options: [
+        { id: 'ecommerce', label: 'Shopify' },
+        { id: 'ecommerce-custom', label: 'Custom Store' }
+      ]
+    },
+    {
+      ids: ['3d-visualization', 'graphic-product-design'],
+      options: [
+        { id: '3d-visualization', label: '3D Visualization' },
+        { id: 'graphic-product-design', label: 'Graphics & Product Design' }
+      ]
+    }
+  ];
+  const activeVariantGroup = variantGroups.find((group) => group.ids.includes(project.id));
+
   return (
-    <div className="project-modal-overlay fixed inset-0 bg-black/30 backdrop-blur-md z-50 flex items-center justify-center p-4" onClick={handleOverlayClick}>
-      <div className="project-modal-container bg-white/10 backdrop-blur-xl rounded-[2rem] border border-white/20 shadow-2xl max-w-4xl w-full max-h-[85vh] overflow-hidden">
-        <div className="project-modal-scroll max-h-[85vh] overflow-y-auto overflow-x-hidden">
-        <div className="p-8 border-b border-white/5 project-modal-section-divider">
-          <div className="flex justify-between items-start mb-6">
+    <div className="project-modal-overlay fixed inset-0 z-[60] flex items-center justify-center p-4" onClick={handleOverlayClick}>
+      <div className="project-modal-container relative max-w-4xl w-full max-h-[85vh]">
+        <button
+          type="button"
+          onClick={onClose}
+          className="project-modal-close-btn"
+          aria-label="Close modal"
+        >
+          <svg className="project-modal-close-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M18 6L6 18" />
+            <path d="M6 6l12 12" />
+          </svg>
+        </button>
+        <div className="project-modal-scroll">
+        <div className="project-modal-section-divider p-8 pr-12 border-b">
+          {activeVariantGroup && projectsData && onSelectProject && (
+            <div className="flex flex-wrap gap-2 mb-5">
+              {activeVariantGroup.options.map((option) => (
+                <button
+                  key={option.id}
+                  type="button"
+                  className={`ecommerce-option-btn${project.id === option.id ? ' is-active' : ''}`}
+                  onClick={() => {
+                    const nextProject = projectsData[option.id];
+                    if (nextProject) onSelectProject(nextProject);
+                  }}
+                >
+                  {option.label}
+                </button>
+              ))}
+            </div>
+          )}
+
+          <div className="flex items-start mb-6 pr-8">
             <div className="flex items-center gap-3">
-              <div className={`w-12 h-12 rounded-full ${project.color} flex items-center justify-center`}>
+              <div className={`theme-accent-icon w-12 h-12 rounded-full ${project.color} flex items-center justify-center`}>
                 {project.icon}
               </div>
               <div>
-                <h2 className="project-modal-title text-2xl font-bold text-white">{project.title}</h2>
-                <span className={`${project.badgeColor} text-xs px-3 py-1 rounded-full font-medium`}>
+                <h2 className="project-modal-title text-2xl font-bold">{project.title}</h2>
+                <span className={`theme-chip ${project.badgeColor} text-xs px-3 py-1 rounded-full font-medium`}>
                   {project.category}
                 </span>
               </div>
             </div>
-            <button
-              onClick={onClose}
-              className="project-modal-close-btn text-neutral-400 hover:text-white transition-colors w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/10 backdrop-blur-sm"
-              aria-label="Close modal"
-            >
-              <svg className="project-modal-close-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M18 6L6 18" />
-                <path d="M6 6l12 12" />
-              </svg>
-            </button>
           </div>
 
-          <p className="project-modal-text text-lg text-neutral-400 mb-6">{project.description}</p>
+          <p className="project-modal-text text-lg mb-6">{project.description}</p>
 
           {project.id === 'saas-platform' && (
             <div className="mb-6">
@@ -77,55 +150,46 @@ function ProjectModal({ isOpen, onClose, project }) {
           )}
 
           <div className="mb-6">
-            <div className="project-modal-panel bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10 mb-4">
-              <div className="project-modal-label text-xs text-neutral-400 font-semibold uppercase tracking-wider mb-3">Tech Stack</div>
+            <div className="project-modal-panel rounded-xl p-6 border mb-4">
+              <div className="project-modal-label text-xs font-semibold uppercase tracking-wider mb-3">Tech Stack</div>
               <div className="flex flex-wrap gap-2">
                 {project.tech.map((tech, index) => (
-                  <span key={index} className="project-modal-chip bg-white/10 text-white text-sm px-3 py-1 rounded-full font-medium">
+                  <span key={index} className="project-modal-chip text-sm px-3 py-1 rounded-full font-medium">
                     {tech}
                   </span>
                 ))}
               </div>
             </div>
 
-            <div className="project-modal-panel bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10">
-              <div className="project-modal-label text-xs text-neutral-400 font-semibold uppercase tracking-wider mb-3">Project Samples</div>
+            <div className="project-modal-panel rounded-xl p-6 border">
+              <div className="project-modal-label text-xs font-semibold uppercase tracking-wider mb-3">Project Samples</div>
               {project.samples ? (
                 project.samples.length > 3 ? (
                   <div className="relative w-full min-w-0">
-                    <div className="project-modal-media-wrap w-full max-w-4xl mx-auto min-h-0 min-w-0 bg-white/10 rounded-lg overflow-hidden flex items-center justify-center p-2 sm:p-3 md:p-4 max-h-[min(58vh,85dvh)] sm:max-h-[min(65vh,88dvh)] md:max-h-[min(72vh,90dvh)]">
-                      {project.samples[currentSampleIndex].endsWith('.mp4') || project.samples[currentSampleIndex].endsWith('.mov') || project.samples[currentSampleIndex].endsWith('.webm') ? (
-                        <video
-                          src={project.samples[currentSampleIndex]}
-                          controls
-                          className="w-auto h-auto max-w-full max-h-[min(54vh,80dvh)] sm:max-h-[min(60vh,84dvh)] md:max-h-[min(68vh,86dvh)] object-contain object-center transition-all duration-300"
-                        >
-                          Your browser does not support the video tag.
-                        </video>
-                      ) : (
-                        <img
-                          src={project.samples[currentSampleIndex]}
-                          alt={`Sample ${currentSampleIndex + 1}`}
-                          className="w-auto h-auto max-w-full max-h-[min(54vh,80dvh)] sm:max-h-[min(60vh,84dvh)] md:max-h-[min(68vh,86dvh)] object-contain object-center transition-all duration-300"
-                        />
+                    <div className="project-modal-media-wrap project-modal-sample-frame rounded-lg">
+                      {renderSampleMedia(
+                        project.samples[currentSampleIndex],
+                        `Sample ${currentSampleIndex + 1}`
                       )}
                     </div>
                     <div className="flex justify-between items-center mt-4">
                       <button
+                        type="button"
                         onClick={prevSample}
-                        className="project-modal-nav-btn bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-full font-medium transition-colors border border-white/10 flex items-center gap-2"
+                        className="project-modal-nav-btn px-4 py-2 rounded-full font-medium transition-colors border flex items-center gap-2"
                       >
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                           <path d="M15 18l-6-6 6-6"/>
                         </svg>
                         Previous
                       </button>
-                      <span className="project-modal-text text-neutral-400 text-sm">
+                      <span className="project-modal-text text-sm">
                         {currentSampleIndex + 1} / {project.samples.length}
                       </span>
                       <button
+                        type="button"
                         onClick={nextSample}
-                        className="project-modal-nav-btn bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-full font-medium transition-colors border border-white/10 flex items-center gap-2"
+                        className="project-modal-nav-btn px-4 py-2 rounded-full font-medium transition-colors border flex items-center gap-2"
                       >
                         Next
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -135,50 +199,36 @@ function ProjectModal({ isOpen, onClose, project }) {
                     </div>
                   </div>
                 ) : (
-                  <div className={`grid gap-3 sm:gap-4 min-w-0 w-full ${project.samples.length === 1 ? 'grid-cols-1' : 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3'}`}>
+                  <div className={`project-modal-sample-grid grid gap-3 sm:gap-4 min-w-0 w-full ${project.samples.length === 1 ? 'grid-cols-1' : 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3'}`}>
                     {project.samples.map((sample, index) => (
                       <div
                         key={index}
-                        className={`project-modal-media-wrap min-h-0 min-w-0 bg-white/10 rounded-lg overflow-hidden flex items-center justify-center p-2 sm:p-3 max-h-[min(50vh,80dvh)] sm:max-h-[min(55vh,85dvh)] md:max-h-[min(60vh,88dvh)] ${project.samples.length === 1 ? 'max-w-4xl mx-auto w-full' : ''}`}
+                        className="project-modal-media-wrap project-modal-sample-frame rounded-lg"
                       >
-                        {sample.endsWith('.mp4') || sample.endsWith('.mov') || sample.endsWith('.webm') ? (
-                          <video
-                            src={sample}
-                            controls
-                            className="w-auto h-auto max-w-full max-h-[min(46vh,76dvh)] sm:max-h-[min(50vh,80dvh)] md:max-h-[min(56vh,84dvh)] object-contain object-center"
-                          >
-                            Your browser does not support the video tag.
-                          </video>
-                        ) : (
-                          <img
-                            src={sample}
-                            alt={`Sample ${index + 1}`}
-                            className="w-auto h-auto max-w-full max-h-[min(46vh,76dvh)] sm:max-h-[min(50vh,80dvh)] md:max-h-[min(56vh,84dvh)] object-contain object-center"
-                          />
-                        )}
+                        {renderSampleMedia(sample, `Sample ${index + 1}`)}
                       </div>
                     ))}
                   </div>
                 )
               ) : (
-                <div className="project-modal-text text-neutral-400 text-sm">No samples available</div>
+                <div className="project-modal-text text-sm">No samples available</div>
               )}
             </div>
           </div>
         </div>
 
         <div className="p-8 pr-8">
-          <h3 className="project-modal-title text-xl font-bold text-white mb-6">Case Study</h3>
+          <h3 className="project-modal-title text-xl font-bold mb-6">Case Study</h3>
 
           {project.caseStudy.map((section, index) => (
             <div key={index} className="mb-8">
-              <h4 className="project-modal-title text-lg font-semibold text-white mb-3">{section.title}</h4>
-              <p className="project-modal-text text-neutral-400 leading-relaxed">{section.content}</p>
+              <h4 className="project-modal-title text-lg font-semibold mb-3">{section.title}</h4>
+              <p className="project-modal-text leading-relaxed">{section.content}</p>
               {section.bullets && (
                 <ul className="mt-4 space-y-2">
                   {section.bullets.map((bullet, bulletIndex) => (
-                    <li key={bulletIndex} className="project-modal-text text-neutral-400 flex items-start gap-2">
-                      <span className="text-white/50 mt-1">•</span>
+                    <li key={bulletIndex} className="project-modal-text flex items-start gap-2">
+                      <span className="project-modal-bullet mt-1">•</span>
                       <span>{bullet}</span>
                     </li>
                   ))}
@@ -187,27 +237,27 @@ function ProjectModal({ isOpen, onClose, project }) {
             </div>
           ))}
 
-          <div className="project-modal-section-divider border-t border-white/5 pt-6">
-            <h4 className="project-modal-title text-lg font-semibold text-white mb-4">Key Results</h4>
+          <div className="project-modal-section-divider border-t pt-6">
+            <h4 className="project-modal-title text-lg font-semibold mb-4">Key Results</h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {project.results.map((result, index) => (
                 <div key={index} className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-white rounded-full"></div>
-                  <span className="project-modal-text text-neutral-400">{result}</span>
+                  <div className="project-modal-dot w-2 h-2 rounded-full"></div>
+                  <span className="project-modal-text">{result}</span>
                 </div>
               ))}
             </div>
           </div>
 
           {(project.liveUrl || project.videoUrl) && (
-            <div className="project-modal-section-divider mt-8 pt-6 border-t border-white/5">
+            <div className="project-modal-section-divider mt-8 pt-6 border-t">
               <div className="flex gap-4 flex-wrap">
                 {project.liveUrl && (
                   <a
                     href={project.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="project-modal-action-btn bg-white/10 hover:bg-white/20 text-white px-6 py-3 rounded-full font-medium transition-colors border border-white/10"
+                    className="project-modal-action-btn px-6 py-3 rounded-full font-medium transition-colors border"
                   >
                     View Live Project
                   </a>
@@ -217,7 +267,7 @@ function ProjectModal({ isOpen, onClose, project }) {
                     href={project.videoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="project-modal-video-btn bg-green-500/20 hover:bg-green-500/30 text-green-300 hover:text-green-200 px-6 py-3 rounded-full font-medium transition-colors border border-green-500/30"
+                    className="project-modal-video-btn px-6 py-3 rounded-full font-medium transition-colors border"
                   >
                     {project.id === 'saas-platform' ? 'View SaaS Demo' : 'View Game Video'}
                   </a>

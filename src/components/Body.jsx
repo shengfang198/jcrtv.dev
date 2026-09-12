@@ -6,6 +6,22 @@ import Career from './Career.jsx';
 import Footer from './Footer.jsx';
 import moneyCashGif from '../assets/money-cash.gif';
 
+function HamburgerToggle({ isOpen, onClick, label }) {
+  return (
+    <button
+      type="button"
+      className={`theme-minimize-btn hamburger-toggle${isOpen ? ' is-x' : ''}`}
+      onClick={onClick}
+      aria-label={label}
+      aria-expanded={isOpen}
+    >
+      <span className="hamburger-toggle-line" />
+      <span className="hamburger-toggle-line" />
+      <span className="hamburger-toggle-line" />
+    </button>
+  );
+}
+
 function Body(props) {
   const [typedText, setTypedText] = useState('');
   const [showCursor, setShowCursor] = useState(false);
@@ -26,7 +42,6 @@ function Body(props) {
   const [designReviewMinimized, setDesignReviewMinimized] = useState(false);
   const [growthMinimized, setGrowthMinimized] = useState(false);
   const [seoSearchTerm, setSeoSearchTerm] = useState('');
-  const [seoSearchVisible, setSeoSearchVisible] = useState(false);
   const [referenceMinimized, setReferenceMinimized] = useState(false);
   const [runnerStarted, setRunnerStarted] = useState(false);
   const [runnerGameOver, setRunnerGameOver] = useState(false);
@@ -71,39 +86,82 @@ function Body(props) {
 
   // A-Z Development Terms & Tools Data
   const devTerms = [
-    { letter: 'A', items: 'API integration, Agile methodology, Authentication' },
-    { letter: 'B', items: 'Backend development, Bug tracking, Build automation' },
-    { letter: 'C', items: 'CI/CD pipelines, Cloud deployment, Code review' },
-    { letter: 'D', items: 'Database design, Debugging, Docker' },
-    { letter: 'E', items: 'Event-driven architecture, Error handling, End-to-end testing' },
-    { letter: 'F', items: 'Frontend frameworks (React, Vue, Angular), Functional programming, Firebase' },
-    { letter: 'G', items: 'Git/GitHub, GraphQL, GUI design' },
-    { letter: 'H', items: 'HTML5, Hosting solutions, HTTP/HTTPS' },
-    { letter: 'I', items: 'Integration testing, IDE (VS Code, IntelliJ), Infrastructure as Code' },
-    { letter: 'J', items: 'JavaScript, JSON, JWT authentication' },
-    { letter: 'K', items: 'Kubernetes, Kotlin, Key performance metrics' },
-    { letter: 'L', items: 'Linux server management, Load balancing, Linting' },
-    { letter: 'M', items: 'Microservices, Mobile development, Modular code' },
-    { letter: 'N', items: 'Node.js, Networking, NoSQL databases' },
-    { letter: 'O', items: 'Object-oriented programming, OAuth, Optimization' },
-    { letter: 'P', items: 'Python, PHP, Progressive Web Apps (PWA)' },
-    { letter: 'Q', items: 'Query optimization, QA testing, Queue management' },
-    { letter: 'R', items: 'RESTful APIs, React, Responsive design' },
-    { letter: 'S', items: 'SQL, Security best practices, Serverless architecture' },
-    { letter: 'T', items: 'TypeScript, Testing frameworks (Jest, Mocha), Templating engines' },
-    { letter: 'U', items: 'UI/UX implementation, Unit testing, User authentication' },
-    { letter: 'V', items: 'Version control, Vue.js, Virtualization' },
-    { letter: 'W', items: 'Webpack, Web development, WebSockets' },
-    { letter: 'X', items: 'XML parsing, XSS protection, Xcode (iOS development)' },
-    { letter: 'Y', items: 'YAML configurations, YARN package manager, Yearly code review' },
-    { letter: 'Z', items: 'Zero downtime deployment, Zeplin (UI collaboration), Z-index (CSS layering)' },
+    { letter: 'A', items: 'API integration, Agile methodology, Authentication', description: 'Connecting services, iterating in sprints, and verifying who can access a system.' },
+    { letter: 'B', items: 'Backend development, Bug tracking, Build automation', description: 'Server logic, issue tracking, and automated builds that keep releases consistent.' },
+    { letter: 'C', items: 'CI/CD pipelines, Cloud deployment, Code review', description: 'Automated shipping, cloud hosting, and peer review before code goes live.' },
+    { letter: 'D', items: 'Database design, Debugging, Docker', description: 'Structuring data, finding defects, and packaging apps in containers.' },
+    { letter: 'E', items: 'Event-driven architecture, Error handling, End-to-end testing', description: 'Reacting to events, failing safely, and testing full user flows.' },
+    { letter: 'F', items: 'Frontend frameworks (React, Vue, Angular), Functional programming, Firebase', description: 'UI frameworks, function-based code, and hosted app backends.' },
+    { letter: 'G', items: 'Git/GitHub, GraphQL, GUI design', description: 'Version control, flexible APIs, and visual interface layout.' },
+    { letter: 'H', items: 'HTML5, Hosting solutions, HTTP/HTTPS', description: 'Page structure, where sites live, and secure web requests.' },
+    { letter: 'I', items: 'Integration testing, IDE (VS Code, IntelliJ), Infrastructure as Code', description: 'Testing connected parts, coding tools, and servers defined in files.' },
+    { letter: 'J', items: 'JavaScript, JSON, JWT authentication', description: 'Web scripting, data format, and token-based login.' },
+    { letter: 'K', items: 'Kubernetes, Kotlin, Key performance metrics', description: 'Container orchestration, JVM language, and measurable product health.' },
+    { letter: 'L', items: 'Linux server management, Load balancing, Linting', description: 'Running servers, spreading traffic, and catching code issues early.' },
+    { letter: 'M', items: 'Microservices, Mobile development, Modular code', description: 'Small services, phone apps, and reusable isolated modules.' },
+    { letter: 'N', items: 'Node.js, Networking, NoSQL databases', description: 'JavaScript on the server, network basics, and flexible data stores.' },
+    { letter: 'O', items: 'Object-oriented programming, OAuth, Optimization', description: 'Class-based design, delegated login, and making software faster.' },
+    { letter: 'P', items: 'Python, PHP, Progressive Web Apps (PWA)', description: 'Scripting languages and installable web apps that work offline.' },
+    { letter: 'Q', items: 'Query optimization, QA testing, Queue management', description: 'Faster data lookups, quality checks, and background job queues.' },
+    { letter: 'R', items: 'RESTful APIs, React, Responsive design', description: 'Standard web APIs, component UIs, and layouts that fit any screen.' },
+    { letter: 'S', items: 'SQL, Security best practices, Serverless architecture', description: 'Relational queries, safer systems, and functions that run on demand.' },
+    { letter: 'T', items: 'TypeScript, Testing frameworks (Jest, Mocha), Templating engines', description: 'Typed JavaScript, automated tests, and HTML generated from data.' },
+    { letter: 'U', items: 'UI/UX implementation, Unit testing, User authentication', description: 'Building usable interfaces, testing small units, and signing users in.' },
+    { letter: 'V', items: 'Version control, Vue.js, Virtualization', description: 'Tracking changes, a lightweight UI framework, and isolated environments.' },
+    { letter: 'W', items: 'Webpack, Web development, WebSockets', description: 'Bundling assets, building websites, and live two-way connections.' },
+    { letter: 'X', items: 'XML parsing, XSS protection, Xcode (iOS development)', description: 'Reading XML, blocking script injection, and Apple app tooling.' },
+    { letter: 'Y', items: 'YAML configurations, YARN package manager, Yearly code review', description: 'Readable config files, JS packages, and periodic codebase checks.' },
+    { letter: 'Z', items: 'Zero downtime deployment, Zeplin (UI collaboration), Z-index (CSS layering)', description: 'Releases without outages, design handoff, and stacking UI layers.' },
   ];
 
-  // Filter terms based on search - only show terms when searching
-  const filteredTerms = seoSearchTerm.trim() !== '' ? devTerms.filter(term =>
-    term.letter.toLowerCase().includes(seoSearchTerm.toLowerCase()) ||
-    term.items.toLowerCase().includes(seoSearchTerm.toLowerCase())
-  ) : [];
+  const searchQuery = seoSearchTerm.trim().toLowerCase();
+
+  const siteSearchIndex = [
+    { type: 'Page', title: 'Overview', text: 'Jay Creative work showcase contact email', href: '#' },
+    { type: 'Page', title: 'Profile', text: 'about full-stack developer Manila experience CV', href: '#about' },
+    { type: 'Page', title: 'Expertise', text: 'skills UI UX graphic design frontend backend Unreal React Node', href: '#skills' },
+    { type: 'Page', title: 'Projects', text: 'Shopify ecommerce visualization graphics SaaS game', href: '#projects' },
+    { type: 'Page', title: 'Career', text: 'experience resume Shopify SaaS game developer real estate', href: '#resume' },
+    { type: 'Page', title: 'Contact', text: 'email footer get in touch', href: '#footer' },
+    { type: 'Experience', title: 'Shopify Developer', text: 'Liquid CMS custom templates product design theme', href: '#resume' },
+    { type: 'Experience', title: 'SaaS Developer', text: 'Next.js React Node PostgreSQL platform', href: '#resume' },
+    { type: 'Experience', title: 'Real Estate Editor', text: 'Adobe property marketing design', href: '#resume' },
+    { type: 'Experience', title: 'UI Designer & Developer', text: 'Figma React JavaScript C++', href: '#resume' },
+    { type: 'Experience', title: 'Game Developer', text: 'Unreal Engine C++ Blueprint action RPG', href: '#resume' },
+    ...Object.values(props.projectsData || {}).map((project) => ({
+      type: 'Project',
+      title: project.title,
+      text: `${project.description} ${project.category} ${(project.tech || []).join(' ')}`,
+      href: '#projects',
+      project
+    }))
+  ];
+
+  const globalResults = searchQuery
+    ? siteSearchIndex.filter((item) =>
+        `${item.title} ${item.text} ${item.type}`.toLowerCase().includes(searchQuery)
+      )
+    : [];
+
+  const filteredTerms = searchQuery
+    ? devTerms.filter((term) =>
+        term.letter.toLowerCase().includes(searchQuery) ||
+        term.items.toLowerCase().includes(searchQuery) ||
+        term.description.toLowerCase().includes(searchQuery)
+      )
+    : devTerms;
+
+  const openSearchResult = (result) => {
+    if (result.href === '#') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (result.href) {
+      const target = document.querySelector(result.href);
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+    }
+    if (result.project && props.onOpenModal) {
+      props.onOpenModal(result.project);
+    }
+  };
 
 
 
@@ -222,10 +280,17 @@ function Body(props) {
 
     // Generate vibrant tones for richer flashlight glow
     const getRandomColor = () => {
-      const colors = [18, 32, 48, 210, 262, 292, 328]; // orange to magenta-blue spectrum
+      const isLight = document.documentElement.classList.contains('theme-light');
+      const colors = isLight
+        ? [18, 32, 48, 210, 262, 292, 328]
+        : [8, 28, 48, 168, 195, 262, 292, 328];
       const hue = colors[Math.floor(Math.random() * colors.length)];
-      const saturation = 92 + Math.floor(Math.random() * 7); // 92-98
-      const lightness = 58 + Math.floor(Math.random() * 9); // 58-66
+      const saturation = isLight
+        ? 92 + Math.floor(Math.random() * 7)
+        : 100;
+      const lightness = isLight
+        ? 58 + Math.floor(Math.random() * 9)
+        : 66 + Math.floor(Math.random() * 8);
       return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
     };
 
@@ -881,7 +946,7 @@ function Body(props) {
   return (
     <main className="w-full pt-32 p-0 relative min-h-screen flex flex-col">
       {/* Hero Header */}
-      <div className="text-center max-w-5xl mx-auto mb-24">
+      <div className="text-center max-w-5xl mx-auto mb-10">
 
 
         <h1 className="animate-on-scroll md:text-8xl leading-[1] text-7xl font-medium text-white tracking-tight mb-8">
@@ -909,8 +974,7 @@ function Body(props) {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="group flex overflow-hidden transition-all duration-300 hover:from-white/10 hover:via-white/5 hover:to-white/10 focus:ring-2 focus:ring-white/20 focus:outline-none border border-white/20 sm:w-auto bg-gradient-to-b from-white/10 via-white/0 to-white/10 w-full h-[52px] rounded-full pt-3 pr-6 pb-3 pl-6 relative gap-x-2 gap-y-2 items-center justify-center backdrop-blur-2xl disabled:opacity-50 disabled:cursor-not-allowed"
-            style={{ boxShadow: '0 0 0 1px rgba(255, 255, 255, 0.08), 0 2px 8px rgba(0, 0, 0, 0.4)', filter: 'contrast(110%) brightness(110%)' }}>
+            className="theme-get-in-touch-btn group flex overflow-hidden transition-colors duration-300 focus:ring-2 focus:ring-white/20 focus:outline-none border border-white/20 sm:w-auto bg-white/10 w-full h-[52px] rounded-full pt-3 pr-6 pb-3 pl-6 relative gap-x-2 gap-y-2 items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed">
             <span className="text-sm font-semibold tracking-tight relative z-10 text-white/90 group-hover:text-white transition-colors">
               {isSubmitting ? 'Sending...' : 'Get In Touch'}
             </span>
@@ -942,26 +1006,106 @@ function Body(props) {
         </div>
       </div>
 
+      {/* SEO Optimization - A-Z Development Terms */}
+      <section>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <div className="max-w-7xl mx-auto">
+            <div className="animate-on-scroll bg-[#0C0D0F] rounded-[2rem] p-8 border border-white/5 relative overflow-hidden group hover:border-white/10 transition-colors">
+              {/* Header */}
+              <div className="flex justify-between items-start mb-6">
+                <div className="px-3 py-1 bg-white/5 rounded-full border border-white/5 text-xs text-neutral-400 font-semibold uppercase tracking-wider">Reference</div>
+                <HamburgerToggle
+                  isOpen={!referenceMinimized}
+                  onClick={() => setReferenceMinimized(!referenceMinimized)}
+                  label={referenceMinimized ? 'Expand Reference' : 'Collapse Reference'}
+                />
+              </div>
+
+              {!referenceMinimized && (
+                <>
+                  {/* Title */}
+                  <div className="mb-6">
+                    <h3 className="text-2xl text-white mb-4 font-medium tracking-tight">SEO</h3>
+
+                    <div className="relative max-w-xl mx-auto mb-4">
+                      <svg className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-500" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="11" cy="11" r="8"/>
+                        <path d="m21 21-4.3-4.3"/>
+                      </svg>
+                      <input
+                        type="search"
+                        placeholder="Search pages, projects, experience, and reference..."
+                        value={seoSearchTerm}
+                        onChange={(e) => setSeoSearchTerm(e.target.value)}
+                        className="theme-email-input w-full h-12 rounded-full bg-white/5 border border-white/10 pl-11 pr-4 text-sm text-white placeholder-neutral-500 focus:bg-white/10 focus:border-white/20 outline-none transition-colors"
+                      />
+                    </div>
+
+                    <p className="text-sm text-neutral-500 font-medium mb-6">Site search and development reference guide</p>
+                  </div>
+
+                  {searchQuery && (
+                    <div className="mb-6">
+                      <p className="text-xs text-neutral-500 font-semibold uppercase tracking-wider mb-3">Site results</p>
+                      {globalResults.length > 0 ? (
+                        <div className="space-y-2">
+                          {globalResults.map((result) => (
+                            <button
+                              key={`${result.type}-${result.title}`}
+                              type="button"
+                              onClick={() => openSearchResult(result)}
+                              className="w-full text-left bg-white/5 rounded-xl p-4 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-colors"
+                            >
+                              <span className="text-[10px] uppercase tracking-wider text-neutral-500 font-semibold">{result.type}</span>
+                              <p className="text-sm text-white font-medium mt-1">{result.title}</p>
+                            </button>
+                          ))}
+                        </div>
+                      ) : (
+                        <p className="text-sm text-neutral-500">No matching pages or projects.</p>
+                      )}
+                    </div>
+                  )}
+
+                  <p className="text-xs text-neutral-500 font-semibold uppercase tracking-wider mb-3">Reference guide</p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-h-96 overflow-y-auto">
+                    {filteredTerms.map((term, index) => (
+                      <div key={term.letter} className="bg-white/5 rounded-xl p-4 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-colors">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-lg font-bold text-white">{term.letter}</span>
+                          <span className="text-xs text-neutral-500 bg-white/5 px-2 py-1 rounded">{index + 1}</span>
+                        </div>
+                        <p className="text-sm text-neutral-300 leading-relaxed mb-2">{term.items}</p>
+                        <p className="text-xs text-neutral-500 leading-relaxed">{term.description}</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="mt-6 pt-4 border-t border-white/10">
+                    <p className="text-xs text-neutral-500 text-center">
+                      {filteredTerms.length} of {devTerms.length} reference sections
+                      {searchQuery && ` • ${globalResults.length} site result${globalResults.length === 1 ? '' : 's'} for "${seoSearchTerm}"`}
+                    </p>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Design Review */}
       <section>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="max-w-7xl mx-auto">
             <div className="animate-on-scroll bg-[#0C0D0F] rounded-[2rem] p-8 border border-white/5 relative overflow-hidden group hover:border-white/10 transition-colors">
               <div className="flex justify-between items-start mb-6">
                 <div className="px-3 py-1 bg-white/5 rounded-full border border-white/5 text-xs text-neutral-400 font-semibold uppercase tracking-wider">Insights</div>
-                <button
-                  className="theme-minimize-btn text-neutral-600 hover:text-neutral-300 transition-colors"
+                <HamburgerToggle
+                  isOpen={!designReviewMinimized}
                   onClick={() => setDesignReviewMinimized(!designReviewMinimized)}
-                >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="12" r="10"/>
-                    {designReviewMinimized ? (
-                      <path d="M9 12h6"/>
-                    ) : (
-                      <path d="M15 9L9 15"/>
-                    )}
-                  </svg>
-                </button>
+                  label={designReviewMinimized ? 'Expand Insights' : 'Collapse Insights'}
+                />
               </div>
 
               {!designReviewMinimized && (
@@ -1011,113 +1155,18 @@ function Body(props) {
         </div>
       </section>
 
-      {/* SEO Optimization - A-Z Development Terms */}
-      <section>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-          <div className="max-w-7xl mx-auto">
-            <div className="animate-on-scroll bg-[#0C0D0F] rounded-[2rem] p-8 border border-white/5 relative overflow-hidden group hover:border-white/10 transition-colors">
-              {/* Header */}
-              <div className="flex justify-between items-start mb-6">
-                <div className="px-3 py-1 bg-white/5 rounded-full border border-white/5 text-xs text-neutral-400 font-semibold uppercase tracking-wider">Reference</div>
-                <button
-                  className="theme-minimize-btn text-neutral-600 hover:text-neutral-300 transition-colors"
-                  onClick={() => setReferenceMinimized(!referenceMinimized)}
-                >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="12" r="10"/>
-                    {referenceMinimized ? (
-                      <path d="M9 12h6"/>
-                    ) : (
-                      <path d="M15 9L9 15"/>
-                    )}
-                  </svg>
-                </button>
-              </div>
-
-              {!referenceMinimized && (
-                <>
-                  {/* Title */}
-                  <div className="mb-6">
-                    <h3 className="text-2xl text-white mb-4 font-medium tracking-tight">SEO</h3>
-
-                    {/* Controls - moved to top */}
-                    <div className="flex gap-2 items-center justify-center mb-2">
-                      {seoSearchVisible && (
-                        <div className="relative">
-                          <input
-                            type="text"
-                            placeholder="Search terms..."
-                            value={seoSearchTerm}
-                            onChange={(e) => setSeoSearchTerm(e.target.value)}
-                            className="w-48 h-10 rounded-xl bg-white/5 border border-white/10 px-3 pr-10 text-sm text-white placeholder-neutral-400 focus:bg-white/10 focus:border-white/20 transition-colors"
-                            autoFocus
-                          />
-                        </div>
-                      )}
-                      <button
-                        onClick={() => setSeoSearchVisible(!seoSearchVisible)}
-                        className="w-auto min-w-[80px] h-10 rounded-xl bg-white/5 border border-white/5 flex items-center gap-2 px-3 text-neutral-400 hover:bg-white/10 hover:text-white transition-colors"
-                      >
-                        <svg width="18" height="18" className="text-neutral-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                          <circle cx="11" cy="11" r="8"/>
-                          <path d="m21 21-4.3-4.3"/>
-                        </svg>
-                        <span className="text-xs text-neutral-500 font-medium">Search</span>
-                      </button>
-                    </div>
-
-                    <p className="text-sm text-neutral-500 font-medium">Comprehensive development reference guide</p>
-                  </div>
-
-                  {/* Terms Grid */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-h-96 overflow-y-auto">
-                    {filteredTerms.map((term, index) => (
-                      <div key={index} className="bg-white/5 rounded-xl p-4 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-colors">
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="text-lg font-bold text-white">{term.letter}</span>
-                          <span className="text-xs text-neutral-500 bg-white/5 px-2 py-1 rounded">{index + 1}</span>
-                        </div>
-                        <p className="text-sm text-neutral-300 leading-relaxed">{term.items}</p>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Footer - only show when there are results */}
-                  {filteredTerms.length > 0 && (
-                    <div className="mt-6 pt-4 border-t border-white/10">
-                      <p className="text-xs text-neutral-500 text-center">
-                        {filteredTerms.length} of {devTerms.length} sections displayed
-                        {seoSearchTerm && ` • Filtered by: "${seoSearchTerm}"`}
-                      </p>
-                    </div>
-                  )}
-                </>
-              )}
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Growth */}
       <section>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <div className="animate-on-scroll h-full bg-[#0C0D0F] rounded-[2.5rem] p-8 border border-white/5 relative overflow-hidden group hover:border-white/10 transition-colors">
               <div className="relative z-10">
                 <div className="flex justify-between items-start mb-6">
                   <div className="px-3 py-1 bg-white/5 rounded-full border border-white/5 text-xs text-neutral-400 font-semibold uppercase tracking-wider">Performance</div>
-                  <button
-                    className="theme-minimize-btn text-neutral-600 hover:text-neutral-300 transition-colors"
+                  <HamburgerToggle
+                    isOpen={!growthMinimized}
                     onClick={() => setGrowthMinimized(!growthMinimized)}
-                  >
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round">
-                      <circle cx="12" cy="12" r="10"/>
-                      {growthMinimized ? (
-                        <path d="M9 12h6"/>
-                      ) : (
-                        <path d="M15 9L9 15"/>
-                      )}
-                    </svg>
-                  </button>
+                    label={growthMinimized ? 'Expand Performance' : 'Collapse Performance'}
+                  />
                 </div>
 
                 {!growthMinimized && (
@@ -1187,6 +1236,7 @@ function Body(props) {
                           <span>2023</span>
                           <span>2024</span>
                           <span>2025</span>
+                          <span>2026</span>
                         </div>
                       </div>
                     </div>
@@ -1205,7 +1255,7 @@ function Body(props) {
 
       {/* Mini Runner Game */}
       <section>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="animate-on-scroll runner-card rounded-[2.5rem] border border-white/5 relative overflow-hidden group hover:border-white/10 transition-colors bg-transparent">
             <div className="runner-card-surface bg-[#0C0D0F] p-8 pb-4 rounded-t-[2.5rem]">
               <div className="flex items-center justify-between mb-6">
@@ -1282,7 +1332,7 @@ function Body(props) {
 
       {/* Dashboard Card */}
       <section>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="max-w-[30%] mx-auto">
             <div className="animate-on-scroll relative flex items-center justify-center bg-white/[0.02] rounded-[2.5rem] border border-white/5 border-dashed">
               <div className="text-center py-8">
