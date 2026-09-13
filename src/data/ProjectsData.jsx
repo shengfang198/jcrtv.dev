@@ -18,6 +18,7 @@ const figmaPresentation = '/FIGMA/presentation.png'
 const figmaVS = '/FIGMA/VS.png'
 const gamedevImage = '/GAMEDEV/indiegame.jpeg'
 const saasImage = '/SAAS/thumbnail.png'
+const bridgehubImage = '/BRIDGEHUB/bridge-hub-thumbnail.png'
 const graphicArtist1 = '/GRAPHIC_ARTIST/Untitled-1.png'
 const graphicArtist2 = '/GRAPHIC_ARTIST/2.png'
 const graphicArtist5 = '/GRAPHIC_ARTIST/MindSole.jpg'
@@ -586,6 +587,7 @@ const projectsData = {
       'Aggregated listings from three public job-board APIs in one UI',
       'Gave users keyword search, source status, and direct apply links'
     ],
+    samples: [bridgehubImage],
     liveUrl: 'https://bridgehub-hp5e.onrender.com/',
     githubUrl: null
   }
