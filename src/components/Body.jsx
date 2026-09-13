@@ -149,7 +149,7 @@ function Body(props) {
         term.items.toLowerCase().includes(searchQuery) ||
         term.description.toLowerCase().includes(searchQuery)
       )
-    : devTerms;
+    : [];
 
   const openSearchResult = (result) => {
     if (result.href === '#') {
@@ -1044,49 +1044,57 @@ function Body(props) {
                     <p className="text-sm text-neutral-500 font-medium mb-6">Site search and development reference guide</p>
                   </div>
 
-                  {searchQuery && (
-                    <div className="mb-6">
-                      <p className="text-xs text-neutral-500 font-semibold uppercase tracking-wider mb-3">Site results</p>
-                      {globalResults.length > 0 ? (
-                        <div className="space-y-2">
-                          {globalResults.map((result) => (
-                            <button
-                              key={`${result.type}-${result.title}`}
-                              type="button"
-                              onClick={() => openSearchResult(result)}
-                              className="w-full text-left bg-white/5 rounded-xl p-4 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-colors"
-                            >
-                              <span className="text-[10px] uppercase tracking-wider text-neutral-500 font-semibold">{result.type}</span>
-                              <p className="text-sm text-white font-medium mt-1">{result.title}</p>
-                            </button>
+                  {searchQuery ? (
+                    <>
+                      <div className="mb-6">
+                        <p className="text-xs text-neutral-500 font-semibold uppercase tracking-wider mb-3">Site results</p>
+                        {globalResults.length > 0 ? (
+                          <div className="space-y-2">
+                            {globalResults.map((result) => (
+                              <button
+                                key={`${result.type}-${result.title}`}
+                                type="button"
+                                onClick={() => openSearchResult(result)}
+                                className="w-full text-left bg-white/5 rounded-xl p-4 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-colors"
+                              >
+                                <span className="text-[10px] uppercase tracking-wider text-neutral-500 font-semibold">{result.type}</span>
+                                <p className="text-sm text-white font-medium mt-1">{result.title}</p>
+                              </button>
+                            ))}
+                          </div>
+                        ) : (
+                          <p className="text-sm text-neutral-500">No matching pages or projects.</p>
+                        )}
+                      </div>
+
+                      <p className="text-xs text-neutral-500 font-semibold uppercase tracking-wider mb-3">Reference guide</p>
+                      {filteredTerms.length > 0 ? (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-h-96 overflow-y-auto">
+                          {filteredTerms.map((term, index) => (
+                            <div key={term.letter} className="bg-white/5 rounded-xl p-4 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-colors">
+                              <div className="flex items-center justify-between mb-2">
+                                <span className="text-lg font-bold text-white">{term.letter}</span>
+                                <span className="text-xs text-neutral-500 bg-white/5 px-2 py-1 rounded">{index + 1}</span>
+                              </div>
+                              <p className="text-sm text-neutral-300 leading-relaxed mb-2">{term.items}</p>
+                              <p className="text-xs text-neutral-500 leading-relaxed">{term.description}</p>
+                            </div>
                           ))}
                         </div>
                       ) : (
-                        <p className="text-sm text-neutral-500">No matching pages or projects.</p>
+                        <p className="text-sm text-neutral-500">No matching reference sections.</p>
                       )}
-                    </div>
-                  )}
 
-                  <p className="text-xs text-neutral-500 font-semibold uppercase tracking-wider mb-3">Reference guide</p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-h-96 overflow-y-auto">
-                    {filteredTerms.map((term, index) => (
-                      <div key={term.letter} className="bg-white/5 rounded-xl p-4 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-colors">
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="text-lg font-bold text-white">{term.letter}</span>
-                          <span className="text-xs text-neutral-500 bg-white/5 px-2 py-1 rounded">{index + 1}</span>
-                        </div>
-                        <p className="text-sm text-neutral-300 leading-relaxed mb-2">{term.items}</p>
-                        <p className="text-xs text-neutral-500 leading-relaxed">{term.description}</p>
+                      <div className="mt-6 pt-4 border-t border-white/10">
+                        <p className="text-xs text-neutral-500 text-center">
+                          {filteredTerms.length} of {devTerms.length} reference sections
+                          {` • ${globalResults.length} site result${globalResults.length === 1 ? '' : 's'} for "${seoSearchTerm}"`}
+                        </p>
                       </div>
-                    ))}
-                  </div>
-
-                  <div className="mt-6 pt-4 border-t border-white/10">
-                    <p className="text-xs text-neutral-500 text-center">
-                      {filteredTerms.length} of {devTerms.length} reference sections
-                      {searchQuery && ` • ${globalResults.length} site result${globalResults.length === 1 ? '' : 's'} for "${seoSearchTerm}"`}
-                    </p>
-                  </div>
+                    </>
+                  ) : (
+                    <p className="text-sm text-neutral-500">Type in the search bar to see site results and the reference guide.</p>
+                  )}
                 </>
               )}
             </div>
