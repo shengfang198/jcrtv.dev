@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-const DEFAULT_BRIGHTNESS = 100;
+const DEFAULT_BRIGHTNESS = 90;
 const MIN_BRIGHTNESS = 60;
 const MAX_BRIGHTNESS = 140;
 
@@ -43,8 +43,11 @@ function Footer() {
     () => typeof document !== 'undefined' && document.documentElement.classList.contains('theme-light')
   );
   const [brightness, setBrightness] = useState(() => {
-    const saved = Number(localStorage.getItem('lightBrightness'));
-    if (!Number.isFinite(saved)) return DEFAULT_BRIGHTNESS;
+    const savedRaw = localStorage.getItem('lightBrightness');
+    const saved = Number(savedRaw);
+    if (savedRaw === null || savedRaw === '' || !Number.isFinite(saved)) {
+      return DEFAULT_BRIGHTNESS;
+    }
     return Math.min(MAX_BRIGHTNESS, Math.max(MIN_BRIGHTNESS, saved));
   });
 

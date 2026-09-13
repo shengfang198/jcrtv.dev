@@ -1,16 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 function Header() {
-  const [theme, setTheme] = useState('dark');
-
-  useEffect(() => {
+  const [theme, setTheme] = useState(() => {
     const storedTheme = localStorage.getItem('theme');
-    const preferredLight = window.matchMedia('(prefers-color-scheme: light)').matches;
-    const initialTheme = storedTheme || (preferredLight ? 'light' : 'dark');
-
-    setTheme(initialTheme);
+    const initialTheme = storedTheme === 'dark' || storedTheme === 'light' ? storedTheme : 'light';
     document.documentElement.classList.toggle('theme-light', initialTheme === 'light');
-  }, []);
+    return initialTheme;
+  });
 
   const toggleTheme = () => {
     const nextTheme = theme === 'dark' ? 'light' : 'dark';

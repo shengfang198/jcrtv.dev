@@ -1,10 +1,21 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="theme-light">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/FAVICON/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Jay Creative | Showcase</title>
+    <script>
+      (function () {
+        try {
+          if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.classList.remove('theme-light');
+          }
+        } catch (_error) {
+          // Keep the light default if storage is unavailable.
+        }
+      })();
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link
       rel="stylesheet"
