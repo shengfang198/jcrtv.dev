@@ -228,6 +228,29 @@ function Projects({ projectsData, onOpenModal, selectedProject, isModalOpen, onC
                       </button>
                     </div>
                   </div>
+
+                  <div className="flex items-start gap-4 p-4 rounded-xl bg-neutral-800/20 border border-neutral-700/50">
+                    <div className="theme-accent-icon w-8 h-8 rounded-full bg-orange-600 flex items-center justify-center">
+                      <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <rect x="2" y="7" width="20" height="14" rx="2" strokeWidth={2} />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
+                        <path strokeLinecap="round" strokeWidth={2} d="M2 13h20" />
+                      </svg>
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center justify-between mb-1">
+                        <h4 className="font-semibold text-white">Bridgehub</h4>
+                        <span className="theme-chip bg-orange-600 text-white text-xs px-2 py-1 rounded-full">Job Marketplace · API</span>
+                      </div>
+                      <p className="text-neutral-400 text-sm">API-powered job marketplace that searches and aggregates live listings from multiple public job-board APIs.</p>
+                      <button
+                        onClick={() => openProjectModal('bridgehub')}
+                        className="theme-action-btn mt-2 bg-orange-600 text-white px-3 py-1.5 rounded-full text-xs font-medium hover:bg-orange-700 transition-colors"
+                      >
+                        View Project
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

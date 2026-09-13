@@ -120,7 +120,7 @@ function Body(props) {
     { type: 'Page', title: 'Overview', text: 'Jay Creative work showcase contact email', href: '#' },
     { type: 'Page', title: 'Profile', text: 'about full-stack developer Manila experience CV', href: '#about' },
     { type: 'Page', title: 'Expertise', text: 'skills UI UX graphic design frontend backend Unreal React Node', href: '#skills' },
-    { type: 'Page', title: 'Projects', text: 'Shopify ecommerce visualization graphics SaaS game', href: '#projects' },
+    { type: 'Page', title: 'Projects', text: 'Shopify ecommerce visualization graphics SaaS game Bridgehub job marketplace API', href: '#projects' },
     { type: 'Page', title: 'Career', text: 'experience resume Shopify SaaS game developer real estate', href: '#resume' },
     { type: 'Page', title: 'Contact', text: 'email footer get in touch', href: '#footer' },
     { type: 'Experience', title: 'Shopify Developer', text: 'Liquid CMS custom templates product design theme', href: '#resume' },

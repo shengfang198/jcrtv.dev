@@ -527,6 +527,67 @@ const projectsData = {
     githubUrl: null,
     samples: [gamedevImage],
     videoUrl: 'https://drive.google.com/file/d/1JV07gceyZxg9YEmryIJA2s7oUIwGK76X/view?usp=sharing'
+  },
+  'bridgehub': {
+    id: 'bridgehub',
+    title: 'Bridgehub',
+    description: 'API-powered job marketplace that searches and aggregates live listings from multiple public job-board APIs into one search experience.',
+    category: 'Job Marketplace · API Integration',
+    color: 'bg-orange-500/20',
+    badgeColor: 'bg-orange-500/20 text-orange-300',
+    client: 'Self-Initiated',
+    duration: 'Self-Initiated Project',
+    tech: ['React', 'Vite', 'REST APIs', 'Arbeitnow API', 'Remotive API', 'RemoteOK API', 'OnRender'],
+    icon: <svg className="w-5 h-5 text-orange-300" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="7" width="20" height="14" rx="2" strokeWidth={1.5}></rect><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"></path><path strokeLinecap="round" strokeWidth={1.5} d="M2 13h20"></path></svg>,
+    caseStudy: [
+      {
+        title: 'Project Overview',
+        content: 'Bridgehub is a job-search marketplace that pulls listings from public job APIs and presents them in a single interface. Users can search by job title, keywords, or company, review role details, and open the original posting to apply.'
+      },
+      {
+        title: 'Key Features',
+        content: '',
+        bullets: [
+          'Unified search across multiple job-board APIs',
+          'Live listings from Arbeitnow, Remotive, and RemoteOK',
+          'Search by job title, keywords, or company',
+          'Source status so users can see which APIs are loading or failed',
+          'Job cards with company, location, and tags',
+          'Detail view with description and an apply link to the original posting',
+          'Pagination for browsing large result sets'
+        ]
+      },
+      {
+        title: 'Tech Stack',
+        content: 'Frontend job marketplace that consumes public REST job-board APIs and deploys as a cloud web app.',
+        bullets: [
+          'Frontend: React and Vite',
+          'Data: Arbeitnow, Remotive, and RemoteOK job APIs',
+          'Integration: client-side REST fetches with normalized listing records',
+          'Hosting: OnRender'
+        ]
+      },
+      {
+        title: 'Problem Statement',
+        content: 'Job seekers have to check several boards to find remote and international roles. The goal was one search surface that combines those feeds without forcing users to visit each source separately.'
+      },
+      {
+        title: 'Solution Approach',
+        content: 'I built a React search app that requests listings from each API, maps them into a shared job model, and filters results by the query in the search bar.',
+        bullets: [
+          'Normalized title, company, location, tags, description, and apply URL from each source',
+          'Tracked per-source loading and error state while results stream in',
+          'Kept apply actions on the original listing URL so applications stay on the source site'
+        ]
+      }
+    ],
+    results: [
+      'Shipped a live job-search marketplace on OnRender',
+      'Aggregated listings from three public job-board APIs in one UI',
+      'Gave users keyword search, source status, and direct apply links'
+    ],
+    liveUrl: 'https://bridgehub-hp5e.onrender.com/',
+    githubUrl: null
   }
 };
 
