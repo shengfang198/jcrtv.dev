@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" class="theme-light">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/FAVICON/favicon.png" />
@@ -8,11 +8,11 @@
     <script>
       (function () {
         try {
-          if (localStorage.getItem('theme') === 'dark') {
-            document.documentElement.classList.remove('theme-light');
+          if (localStorage.getItem('theme') === 'light') {
+            document.documentElement.classList.add('theme-light');
           }
         } catch (_error) {
-          // Keep the light default if storage is unavailable.
+          // Keep the dark default if storage is unavailable.
         }
       })();
     </script>
