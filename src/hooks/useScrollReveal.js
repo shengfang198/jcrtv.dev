@@ -2,40 +2,58 @@ import { useEffect } from 'react';
 
 /**
  * Observes .animate-on-scroll / .underline-expand across the whole page.
- * Re-scans on DOM changes so production timing (e.g. OnRender) cannot miss elements.
+ * Uses a strict intersection check and keyframe-friendly class toggling
+ * so the ease-up plays when the section enters view (including on OnRender).
  */
 function useScrollReveal() {
   useEffect(() => {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const observedAnimate = new WeakSet();
     const observedUnderline = new WeakSet();
+
+    const reveal = (el) => {
+      if (el.classList.contains('animate')) return;
+      // Force starting styles to commit before the reveal class (helps production CSS timing)
+      void el.offsetWidth;
+      el.classList.add('animate');
+    };
 
     const animateObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate');
-          }
+          if (!entry.isIntersecting) return;
+          reveal(entry.target);
+          animateObserver.unobserve(entry.target);
         });
       },
-      { threshold: 0.08, rootMargin: '0px 0px -4% 0px' }
+      {
+        threshold: [0.15, 0.25],
+        rootMargin: '0px 0px -12% 0px'
+      }
     );
 
     const underlineObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.style.width = '100%';
-            entry.target.classList.add('wave-animated');
-          }
+          if (!entry.isIntersecting) return;
+          entry.target.style.width = '100%';
+          entry.target.classList.add('wave-animated');
+          underlineObserver.unobserve(entry.target);
         });
       },
-      { threshold: 0.35 }
+      { threshold: 0.4, rootMargin: '0px 0px -8% 0px' }
     );
 
     const scan = () => {
       document.querySelectorAll('.animate-on-scroll').forEach((el) => {
         if (observedAnimate.has(el)) return;
         observedAnimate.add(el);
+
+        if (reducedMotion) {
+          el.classList.add('animate');
+          return;
+        }
+
         animateObserver.observe(el);
       });
 
@@ -46,12 +64,26 @@ function useScrollReveal() {
       });
     };
 
-    scan();
-    const rafId = requestAnimationFrame(scan);
-    const timeoutId = window.setTimeout(scan, 400);
-
-    const mutationObserver = new MutationObserver(() => {
+    // Wait for layout + stylesheets so the hidden starting state is applied first
+    const start = () => {
       scan();
+      requestAnimationFrame(() => {
+        requestAnimationFrame(scan);
+      });
+    };
+
+    if (document.readyState === 'complete') {
+      start();
+    } else {
+      window.addEventListener('load', start, { once: true });
+      // Fallback if load is slow but DOM is ready
+      window.setTimeout(start, 0);
+    }
+
+    let scanTimer = 0;
+    const mutationObserver = new MutationObserver(() => {
+      window.clearTimeout(scanTimer);
+      scanTimer = window.setTimeout(scan, 80);
     });
     mutationObserver.observe(document.body, {
       childList: true,
@@ -59,8 +91,8 @@ function useScrollReveal() {
     });
 
     return () => {
-      cancelAnimationFrame(rafId);
-      window.clearTimeout(timeoutId);
+      window.clearTimeout(scanTimer);
+      window.removeEventListener('load', start);
       mutationObserver.disconnect();
       animateObserver.disconnect();
       underlineObserver.disconnect();

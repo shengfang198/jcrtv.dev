@@ -193,16 +193,37 @@ html {
   }
 }
 
+@keyframes scroll-reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .animate-on-scroll {
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform: translateY(28px);
+  will-change: opacity, transform;
 }
 
 .animate-on-scroll.animate {
-  opacity: 1;
-  transform: translateY(0);
+  animation: scroll-reveal-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-on-scroll {
+    opacity: 1;
+    transform: none;
+    will-change: auto;
+  }
+
+  .animate-on-scroll.animate {
+    animation: none;
+  }
 }
 
 /* Shimmer animation for progress bars */
