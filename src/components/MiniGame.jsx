@@ -283,7 +283,7 @@ function MiniGame() {
             <div className="relative h-72">
               <div className="runner-track-hole absolute inset-0 rounded-2xl" aria-hidden="true" />
               <div ref={runnerTrackRef} className="runner-track relative z-[1] h-72 rounded-2xl border border-white/10 overflow-hidden">
-                <div className="absolute bottom-6 left-0 right-0 h-[2px] bg-white/20" />
+                <div className="runner-ground-line absolute bottom-6 left-0 right-0 h-[2px] bg-white/20" />
                 <div
                   ref={runnerPlayerElRef}
                   className="runner-player absolute bottom-6 left-[72px] w-[50px] h-[50px]"

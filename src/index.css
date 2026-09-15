@@ -1191,9 +1191,17 @@ html.theme-light .runner-card-surface {
   box-shadow: none;
 }
 
+html.theme-light .runner-track-hole {
+  display: none;
+}
+
 html.theme-light .runner-track {
-  background: transparent;
-  border-color: #dbe3ed;
+  background: #e5e7eb;
+  border-color: #d1d5db;
+}
+
+html.theme-light .runner-ground-line {
+  background: #6b7280;
 }
 
 html.theme-light .runner-card .text-white {
@@ -1509,10 +1517,24 @@ html.theme-light .flashlight-active li {
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.55);
 }
 
+html.theme-light .flashlight-active span {
+  color: #334155;
+  text-shadow: none;
+}
+
+html.theme-light .flashlight-active .performance-years,
+html.theme-light .flashlight-active .performance-years span {
+  color: #64748b;
+  text-shadow: none;
+}
+
 html.theme-light .flashlight-active span.text-neutral-400,
-html.theme-light .flashlight-active span.text-sm.text-neutral-400 {
-  color: #1e293b;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.45);
+html.theme-light .flashlight-active span.text-sm.text-neutral-400,
+html.theme-light .flashlight-active .text-neutral-500,
+html.theme-light .flashlight-active .text-neutral-500 span,
+html.theme-light .flashlight-active span.text-neutral-500 {
+  color: #475569;
+  text-shadow: none;
 }
 
 html.theme-light .hover\:text-white:hover {

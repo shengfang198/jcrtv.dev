@@ -356,7 +356,7 @@ function OverviewPanels({ projectsData, onOpenModal }) {
                   </svg>
                 </div>
 
-                <div className="flex justify-between text-[10px] sm:text-xs text-neutral-500 font-medium mb-2 md:mb-3">
+                <div className="performance-years flex justify-between text-[10px] sm:text-xs text-neutral-500 font-medium mb-2 md:mb-3">
                   <span>2023</span>
                   <span>2024</span>
                   <span>2025</span>

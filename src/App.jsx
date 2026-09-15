@@ -11,10 +11,12 @@ import OverviewPanels from './components/OverviewPanels.jsx'
 import Clock from './components/Clock.jsx'
 import Footer from './components/Footer.jsx'
 import projectsData from './data/ProjectsData.jsx'
+import useScrollReveal from './hooks/useScrollReveal.js'
 
 function App() {
   const [selectedProject, setSelectedProject] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  useScrollReveal();
 
   const openProjectModal = (project) => {
     setSelectedProject(project);

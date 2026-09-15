@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 function Body(props) {
   const [typedText, setTypedText] = useState('');
@@ -73,41 +73,6 @@ function Body(props) {
       script.onload = initParticles;
       document.body.appendChild(script);
     }
-
-    // Auto-trigger scroll animations on mount
-    const triggerAnimations = () => {
-      const elements = document.querySelectorAll('.animate-on-scroll');
-      const underlines = document.querySelectorAll('.underline-expand');
-
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('animate');
-            }
-          });
-        },
-        { threshold: 0.1 }
-      );
-
-      const underlineObserver = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.style.width = '100%';
-              entry.target.classList.add('wave-animated');
-            }
-          });
-        },
-        { threshold: 0.5 }
-      );
-
-      elements.forEach((el) => observer.observe(el));
-      underlines.forEach((underline) => underlineObserver.observe(underline));
-    };
-
-    // Delayed animation trigger for better UX
-    setTimeout(triggerAnimations, 200);
 
     // Typing animation for hero text
     const fullText = "Work Showcase";
