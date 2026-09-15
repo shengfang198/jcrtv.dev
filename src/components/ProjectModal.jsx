@@ -73,10 +73,17 @@ function ProjectModal({ isOpen, onClose, project, projectsData, onSelectProject 
       ]
     },
     {
-      ids: ['3d-visualization', 'graphic-product-design'],
+      ids: ['graphic-product-design', 'product-design'],
       options: [
-        { id: '3d-visualization', label: '3D Visualization' },
-        { id: 'graphic-product-design', label: 'Graphics & Product Design' }
+        { id: 'graphic-product-design', label: 'Graphic Design' },
+        { id: 'product-design', label: 'Product Design' }
+      ]
+    },
+    {
+      ids: ['bridgehub', 'writely'],
+      options: [
+        { id: 'bridgehub', label: 'Bridgehub' },
+        { id: 'writely', label: 'Writely' }
       ]
     }
   ];
@@ -99,20 +106,27 @@ function ProjectModal({ isOpen, onClose, project, projectsData, onSelectProject 
         <div className="project-modal-scroll">
         <div className="project-modal-section-divider p-8 pr-12 border-b">
           {activeVariantGroup && projectsData && onSelectProject && (
-            <div className="flex flex-wrap gap-2 mb-5">
-              {activeVariantGroup.options.map((option) => (
-                <button
-                  key={option.id}
-                  type="button"
-                  className={`ecommerce-option-btn${project.id === option.id ? ' is-active' : ''}`}
-                  onClick={() => {
-                    const nextProject = projectsData[option.id];
-                    if (nextProject) onSelectProject(nextProject);
-                  }}
-                >
-                  {option.label}
-                </button>
-              ))}
+            <div className="mb-5">
+              {activeVariantGroup.ids.includes('bridgehub') && (
+                <p className="project-modal-label text-xs font-semibold uppercase tracking-wider mb-3">
+                  More projects
+                </p>
+              )}
+              <div className="flex flex-wrap gap-2">
+                {activeVariantGroup.options.map((option) => (
+                  <button
+                    key={option.id}
+                    type="button"
+                    className={`ecommerce-option-btn${project.id === option.id ? ' is-active' : ''}`}
+                    onClick={() => {
+                      const nextProject = projectsData[option.id];
+                      if (nextProject) onSelectProject(nextProject);
+                    }}
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </div>
             </div>
           )}
 
@@ -186,7 +200,7 @@ function ProjectModal({ isOpen, onClose, project, projectsData, onSelectProject 
             <div className="project-modal-panel rounded-xl p-6 border">
               <div className="project-modal-label text-xs font-semibold uppercase tracking-wider mb-3">Project Samples</div>
               {project.samples ? (
-                project.samples.length > 3 ? (
+                project.samples.length > 1 ? (
                   <div className="relative w-full min-w-0">
                     <div className="project-modal-media-wrap project-modal-sample-frame rounded-lg">
                       {renderSampleMedia(
@@ -221,7 +235,7 @@ function ProjectModal({ isOpen, onClose, project, projectsData, onSelectProject 
                     </div>
                   </div>
                 ) : (
-                  <div className={`project-modal-sample-grid grid gap-3 sm:gap-4 min-w-0 w-full ${project.samples.length === 1 ? 'grid-cols-1' : 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3'}`}>
+                  <div className="project-modal-sample-grid grid gap-3 sm:gap-4 min-w-0 w-full grid-cols-1">
                     {project.samples.map((sample, index) => (
                       <div
                         key={index}

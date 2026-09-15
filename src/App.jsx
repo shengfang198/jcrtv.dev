@@ -6,6 +6,9 @@ import Profile from './components/Profile.jsx'
 import Expertise from './components/Expertise.jsx'
 import Projects from './components/Projects.jsx'
 import Career from './components/Career.jsx'
+import MiniGame from './components/MiniGame.jsx'
+import OverviewPanels from './components/OverviewPanels.jsx'
+import Clock from './components/Clock.jsx'
 import Footer from './components/Footer.jsx'
 import projectsData from './data/ProjectsData.jsx'
 
@@ -41,7 +44,7 @@ function App() {
           onCloseModal={closeProjectModal}
         />
         <Profile />
-        <Expertise />
+        <Clock />
         <Projects
           projectsData={projectsData}
           onOpenModal={openProjectModal}
@@ -49,7 +52,13 @@ function App() {
           isModalOpen={isModalOpen}
           onCloseModal={closeProjectModal}
         />
+        <Expertise />
         <Career />
+        <MiniGame />
+        <OverviewPanels
+          projectsData={projectsData}
+          onOpenModal={openProjectModal}
+        />
         <Footer />
       </div>
     </div>

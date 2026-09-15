@@ -1,5 +1,5 @@
 const ecommerceSample = '/ECOMMERCE/thumbnailecommerce.png'
-const ecommerceCustomSample = '/ECOMMERCE/eccomerce.png'
+const ecommerceCustomSample = '/ECOMMERCE/eccomerce2.png'
 const archViz1 = '/3DVISUALIZATION/1.jpg'
 const archViz2 = '/3DVISUALIZATION/2.jpg'
 const archViz3 = '/3DVISUALIZATION/3.jpg'
@@ -11,7 +11,6 @@ const archViz8 = '/3DVISUALIZATION/8.jpg'
 const archViz9 = '/3DVISUALIZATION/9.jpg'
 const archViz10 = '/3DVISUALIZATION/10.jpg'
 const figmaAnimation = 'https://drive.google.com/file/d/1KRrW8Bg9ccNf9I82qfNe2WUtX9wb9ffi/view?usp=sharing'
-const figmaEasylife = '/FIGMA/easylife.png'
 const figmaUiEcommerce = '/FIGMA/eccomerce.png'
 const figmaNNLVS = '/FIGMA/NNLVS.png'
 const figmaPresentation = '/FIGMA/presentation.png'
@@ -19,6 +18,7 @@ const figmaVS = '/FIGMA/VS.png'
 const gamedevImage = '/GAMEDEV/indiegame.jpeg'
 const saasImage = '/SAAS/thumbnail.png'
 const bridgehubImage = '/BRIDGEHUB/bridge-hub-thumbnail.png'
+const writelyImage = '/OTHER PROJECTS/WRITELY.png'
 const graphicArtist1 = '/GRAPHIC_ARTIST/Untitled-1.png'
 const graphicArtist2 = '/GRAPHIC_ARTIST/2.png'
 const graphicArtist5 = '/GRAPHIC_ARTIST/MindSole.jpg'
@@ -26,6 +26,7 @@ const graphicArtist8 = '/GRAPHIC_ARTIST/Samuraipng.png'
 const graphicArtist9 = '/GRAPHIC_ARTIST/Skullpng.png'
 const graphicArtboard = '/GRAPHIC_ARTIST/Artboard 1.png'
 const graphicProduct = '/GRAPHIC_ARTIST/productdesign.jpg'
+const graphicProductThumb2 = '/GRAPHIC_ARTIST/thumbnail2.png'
 
 // Project Data
 const projectsData = {
@@ -276,19 +277,19 @@ const projectsData = {
   },
   'graphic-product-design': {
     id: 'graphic-product-design',
-    title: 'Graphic Design and Product Design',
-    description: 'Graphic design and product design for branding, visual communication, packaging, and product presentation.',
-    category: 'Graphic Design · Product Design',
+    title: 'Graphic Design',
+    description: 'Graphic design for branding, apparel, campaign art, and visual communication.',
+    category: 'Graphic Design',
     color: 'bg-cyan-500/20',
     badgeColor: 'bg-cyan-500/20 text-cyan-300',
     client: 'Various Clients',
     duration: 'Ongoing Projects',
-    tech: ['Adobe Photoshop', 'Adobe Illustrator', 'Blender', 'Figma'],
-    icon: <svg className="w-5 h-5 text-cyan-300" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="7.5 4.27 16.5 9.73" strokeWidth={1.5}></polyline><line x1="2.0" y1="11.1" x2="22" y2="11.1" strokeWidth={1.5}></line></svg>,
+    tech: ['Adobe Photoshop', 'Adobe Illustrator', 'Figma'],
+    icon: <svg className="w-5 h-5 text-cyan-300" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 19l7-7 3 3-7 7-3-3z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><circle cx="11" cy="11" r="2" strokeWidth={1.5}></circle></svg>,
     caseStudy: [
       {
         title: 'Overview',
-        content: 'I combine graphic design and product design to build brand visuals, layouts, and product presentations that are clear, consistent, and ready for marketing or production.'
+        content: 'I create brand visuals, apparel graphics, and campaign artwork that are clear, consistent, and ready for print or digital use.'
       },
       {
         title: 'Services Provided',
@@ -296,7 +297,64 @@ const projectsData = {
         bullets: [
           'Brand and visual identity design',
           'Poster, apparel, and campaign graphics',
-          'Layout, typography, and print-ready artwork',
+          'Layout, typography, and print-ready artwork'
+        ]
+      },
+      {
+        title: 'Tech Stack',
+        content: '',
+        bullets: [
+          'Adobe Photoshop – retouching, mockups, and campaign art',
+          'Adobe Illustrator – vector graphics, logos, and print assets',
+          'Figma – layout exploration and design systems'
+        ]
+      },
+      {
+        title: 'Client Challenge',
+        content: 'Clients needed brand-ready graphic assets that communicated identity across print, apparel, and digital channels.'
+      },
+      {
+        title: 'Design & Technical Implementation',
+        content: 'I built a graphic design workflow from concept through production-ready assets.',
+        bullets: [
+          'Developed graphic systems for brand, apparel, and campaign use',
+          'Prepared print-ready and digital artwork for production'
+        ]
+      },
+      {
+        title: 'Workflow Optimization',
+        content: 'Reusable mockup templates and graphic layouts reduced turnaround time while keeping brand presentation consistent.'
+      }
+    ],
+    results: [
+      'Delivered graphic design assets for branding and marketing',
+      'Stronger visual identity across print, apparel, and digital use',
+      'Faster production handoff through organized artwork and mockups'
+    ],
+    samples: [graphicArtist8, graphicArtist9, graphicArtist1, graphicArtist2, graphicArtist5],
+    liveUrl: null,
+    githubUrl: null
+  },
+  'product-design': {
+    id: 'product-design',
+    title: 'Product Design',
+    description: 'Product design for form studies, packaging, and presentation-ready product visuals.',
+    category: 'Product Design',
+    color: 'bg-cyan-500/20',
+    badgeColor: 'bg-cyan-500/20 text-cyan-300',
+    client: 'Various Clients',
+    duration: 'Ongoing Projects',
+    tech: ['Blender', 'Adobe Photoshop', 'Adobe Illustrator'],
+    icon: <svg className="w-5 h-5 text-cyan-300" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12"></path></svg>,
+    caseStudy: [
+      {
+        title: 'Overview',
+        content: 'I design product concepts and presentations that communicate form, material, and identity before manufacturing or launch.'
+      },
+      {
+        title: 'Services Provided',
+        content: '',
+        bullets: [
           'Product design concepts and form studies',
           'Packaging visuals and product hero shots',
           '3D product modeling, materials, and presentation'
@@ -306,38 +364,33 @@ const projectsData = {
         title: 'Tech Stack',
         content: '',
         bullets: [
-          'Adobe Photoshop – retouching, mockups, and campaign art',
-          'Adobe Illustrator – vector graphics, logos, and print assets',
           'Blender – product modeling and presentation renders',
-          'Figma – layout exploration and design systems'
+          'Adobe Photoshop – retouching and campaign mockups',
+          'Adobe Illustrator – packaging layouts and vector assets'
         ]
       },
       {
         title: 'Client Challenge',
-        content: 'Clients needed brand-ready graphic assets and product visuals that communicated form, material, and identity before manufacturing or launch.'
+        content: 'Clients needed product visuals that communicated form, material, and identity before manufacturing or launch.'
       },
       {
         title: 'Design & Technical Implementation',
-        content: 'I built a graphic and product design workflow from concept through presentation-ready assets.',
+        content: 'I built a product design workflow from concept through presentation-ready assets.',
         bullets: [
-          'Developed graphic systems for brand, apparel, and campaign use',
           'Created product form, packaging, and surface-detail studies',
-          'Rendered product hero shots with accurate materials and lighting',
-          'Prepared print-ready and digital artwork for production'
+          'Rendered product hero shots with accurate materials and lighting'
         ]
       },
       {
         title: 'Workflow Optimization',
-        content: 'Reusable mockup templates, product lighting setups, and graphic layouts reduced turnaround time while keeping brand and product presentation consistent.'
+        content: 'Reusable product lighting setups and mockup templates reduced turnaround time while keeping presentation consistent.'
       }
     ],
     results: [
-      'Delivered graphic and product design assets for branding and marketing',
       'Product concepts presented with clear form, materials, and hero shots',
-      'Stronger visual identity across print, apparel, and digital use',
       'Faster production handoff through organized artwork and mockups'
     ],
-    samples: [graphicProduct, graphicArtist8, graphicArtist9, graphicArtist1, graphicArtist2, graphicArtboard, graphicArtist5],
+    samples: [graphicArtboard, graphicProduct, graphicProductThumb2],
     liveUrl: null,
     githubUrl: null
   },
@@ -416,7 +469,7 @@ const projectsData = {
       'Established organized Figma design systems for consistent workflows',
       'Streamlined collaboration with developers via Figma handoff'
     ],
-    samples: [figmaAnimation, figmaEasylife, figmaUiEcommerce, figmaNNLVS, figmaPresentation, figmaVS],
+    samples: [figmaNNLVS, figmaAnimation, figmaUiEcommerce, figmaPresentation, figmaVS],
     liveUrl: null,
     githubUrl: null
   },
@@ -589,6 +642,64 @@ const projectsData = {
     ],
     samples: [bridgehubImage],
     liveUrl: 'https://bridgehub-hp5e.onrender.com/',
+    githubUrl: null
+  },
+  'writely': {
+    id: 'writely',
+    title: 'Writely',
+    description: 'AI-powered docs editor and notes app for drafting, organizing, and refining writing in one place.',
+    category: 'Docs Editor · Notes · AI',
+    color: 'bg-cyan-500/20',
+    badgeColor: 'bg-cyan-500/20 text-cyan-300',
+    client: 'Self-Initiated',
+    duration: 'Self-Initiated Project',
+    tech: ['React', 'AI', 'OnRender', 'Docs Editor', 'Notes'],
+    icon: <svg className="w-5 h-5 text-cyan-300" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 20h9"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg>,
+    caseStudy: [
+      {
+        title: 'Project Overview',
+        content: 'Writely is a docs editor and notes workspace powered by AI. It helps users capture ideas, structure documents, and refine writing with AI assistance in a clean, focused interface.'
+      },
+      {
+        title: 'Key Features',
+        content: '',
+        bullets: [
+          'Document and notes editing in one workspace',
+          'AI-assisted drafting and refinement',
+          'Organized writing flow for docs and notes',
+          'Cloud-hosted live demo on OnRender'
+        ]
+      },
+      {
+        title: 'Tech Stack',
+        content: 'Web-based writing app with AI-assisted editing and cloud deployment.',
+        bullets: [
+          'Frontend: React',
+          'Capabilities: docs editing, notes, AI assistance',
+          'Hosting: OnRender'
+        ]
+      },
+      {
+        title: 'Problem Statement',
+        content: 'Writers and builders often split notes, drafts, and AI tools across separate apps. Writely brings docs, notes, and AI help into one editor.'
+      },
+      {
+        title: 'Solution Approach',
+        content: 'I built a focused writing environment where users can create notes and documents while using AI to support drafting and iteration.',
+        bullets: [
+          'Unified docs and notes experience',
+          'AI support for writing and refinement',
+          'Deployed as a live web app for easy access'
+        ]
+      }
+    ],
+    results: [
+      'Shipped a live AI-powered docs and notes editor',
+      'Combined document writing and note-taking in one product',
+      'Made the app available as a hosted demo on OnRender'
+    ],
+    samples: [writelyImage],
+    liveUrl: 'https://writely-uly4.onrender.com/',
     githubUrl: null
   }
 };

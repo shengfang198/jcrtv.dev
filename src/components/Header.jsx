@@ -24,12 +24,13 @@ function Header() {
           <span className="text-base md:text-lg font-bold tracking-tight text-white">jcrtv<span className="site-header-brand-muted hidden sm:inline text-white/40">.dev</span></span>
         </div>
 
-        <div className="flex items-center justify-center gap-2 sm:gap-3 md:gap-6 text-[11px] sm:text-xs md:text-sm font-medium whitespace-nowrap">
-          <a href="#" className="site-header-link text-white hover:text-indigo-400 transition-colors scroll-smooth">Overview</a>
+        <div className="flex items-center justify-center gap-1.5 sm:gap-3 md:gap-5 text-[10px] sm:text-xs md:text-sm font-medium whitespace-nowrap">
+          <a href="#overview" className="site-header-link text-white hover:text-indigo-400 transition-colors scroll-smooth">Overview</a>
           <a href="#about" className="site-header-link text-white hover:text-indigo-400 transition-colors scroll-smooth">Profile</a>
-          <a href="#skills" className="site-header-link text-white hover:text-indigo-400 transition-colors scroll-smooth">Expertise</a>
           <a href="#projects" className="site-header-link text-white hover:text-indigo-400 transition-colors scroll-smooth">Projects</a>
-          <a href="#resume" className="site-header-link hidden md:inline text-white hover:text-indigo-400 transition-colors scroll-smooth px-2 py-1">Career</a>
+          <a href="#skills" className="site-header-link text-white hover:text-indigo-400 transition-colors scroll-smooth">Expertise</a>
+          <a href="#resume" className="site-header-link hidden sm:inline text-white hover:text-indigo-400 transition-colors scroll-smooth">Career</a>
+          <a href="#insights" className="site-header-link text-white hover:text-indigo-400 transition-colors scroll-smooth">Insights</a>
         </div>
 
         <div className="flex items-center justify-end gap-2 text-sm font-medium">

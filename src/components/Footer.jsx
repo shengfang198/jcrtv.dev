@@ -106,31 +106,33 @@ function Footer() {
     <>
       <footer id="footer" className="py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-8">
             <div>
               <div className="footer-brand text-2xl font-bold mb-4">
                 Jay Creative
               </div>
             </div>
 
-            <div>
-              <h4 className="text-white font-semibold mb-4">Services</h4>
-              <ul className="space-y-2 text-sm">
-                <li><span className="text-neutral-400 font-medium">UI/UX Design</span></li>
-                <li><span className="text-neutral-400 font-medium">Web Development</span></li>
-                <li><span className="text-neutral-400 font-medium">3D Modeling</span></li>
-                <li><span className="text-neutral-400 font-medium">Shopify 2.0 Liquid</span></li>
-                <li><span className="text-neutral-400 font-medium">Product Design</span></li>
-                <li><span className="text-neutral-400 font-medium">SaaS</span></li>
-              </ul>
-            </div>
+            <div className="flex flex-row gap-10 sm:gap-16">
+              <div>
+                <h4 className="text-white font-semibold mb-4">Services</h4>
+                <ul className="space-y-2 text-sm">
+                  <li><span className="text-neutral-400 font-medium">UI/UX Design</span></li>
+                  <li><span className="text-neutral-400 font-medium">Web Development</span></li>
+                  <li><span className="text-neutral-400 font-medium">3D Modeling</span></li>
+                  <li><span className="text-neutral-400 font-medium">Shopify 2.0 Liquid</span></li>
+                  <li><span className="text-neutral-400 font-medium">Product Design</span></li>
+                  <li><span className="text-neutral-400 font-medium">SaaS</span></li>
+                </ul>
+              </div>
 
-            <div>
-              <h4 className="text-white font-semibold mb-4">Contact Info</h4>
-              <ul className="space-y-2 text-sm">
-                <li className="text-neutral-400 font-medium">Manila, PH</li>
-                <li className="text-neutral-400 font-medium">lharc3395@gmail.com</li>
-              </ul>
+              <div>
+                <h4 className="text-white font-semibold mb-4">Contact Info</h4>
+                <ul className="space-y-2 text-sm">
+                  <li className="text-neutral-400 font-medium">Manila, PH</li>
+                  <li className="text-neutral-400 font-medium">lharc3395@gmail.com</li>
+                </ul>
+              </div>
             </div>
           </div>
 

@@ -309,7 +309,7 @@ html {
     radial-gradient(ellipse var(--e4w, 124%) var(--e4h, 96%) at var(--g4x, 64%) var(--g4y, 58%), var(--flashlight-quaternary), transparent 60%),
     radial-gradient(ellipse var(--e5w, 72%) var(--e5h, 98%) at var(--g5x, 16%) var(--g5y, 60%), var(--flashlight-primary), transparent 48%);
   opacity: 0;
-  filter: blur(78px) saturate(140%) brightness(118%);
+  filter: blur(86px) saturate(155%) brightness(104%);
   transform: translate(
       calc(var(--translate-x, 0px) + var(--scatter-a-x, 0px)),
       calc(var(--translate-y, 0px) + var(--scatter-a-y, 0px))
@@ -317,7 +317,7 @@ html {
     rotate(var(--blob-rot-a, 0deg))
     scale(var(--flash-scale, 1));
   transform-origin: center center;
-  transition: opacity 0.32s ease-out;
+  transition: opacity 0.42s ease-out;
   width: 1380px;
   height: 1380px;
   mix-blend-mode: screen;
@@ -325,7 +325,7 @@ html {
 }
 
 .flashlight-card.flashlight-initial-enter:before {
-  transition: opacity 0.32s ease-out;
+  transition: opacity 0.42s ease-out;
 }
 
 /* Secondary scattered blob — different random outline + rotation */
@@ -339,7 +339,7 @@ html {
     radial-gradient(ellipse var(--e6w, 118%) var(--e6h, 92%) at var(--g6x, 42%) var(--g6y, 48%), var(--flashlight-tertiary), transparent 52%),
     radial-gradient(ellipse var(--e7w, 88%) var(--e7h, 112%) at var(--g7x, 72%) var(--g7y, 52%), var(--flashlight-secondary), transparent 54%);
   opacity: 0;
-  filter: blur(69px) saturate(125%) brightness(110%);
+  filter: blur(76px) saturate(145%) brightness(102%);
   /* +150px aligns secondary 1080px box center with 1380px main (half-difference) */
   transform: translate(
       calc(var(--translate-x, 0px) + var(--scatter-b-x, 0px) + 150px),
@@ -348,7 +348,7 @@ html {
     rotate(var(--blob-rot-b, 0deg))
     scale(calc(var(--flash-scale, 1) * 0.78));
   transform-origin: center center;
-  transition: opacity 0.32s ease-out;
+  transition: opacity 0.48s ease-out;
   width: 1080px;
   height: 1080px;
   mix-blend-mode: screen;
@@ -356,11 +356,11 @@ html {
 }
 
 .flashlight-active:before {
-  opacity: 0.62;
+  opacity: 0.46;
 }
 
 .flashlight-active:after {
-  opacity: 0.44;
+  opacity: 0.32;
 }
 
 /* Keep text readable while glow is active */
@@ -401,6 +401,112 @@ html {
   position: relative;
   overflow: hidden;
   z-index: 10;
+}
+
+.project-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.project-grid-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.project-grid-card-media {
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.04);
+  position: relative;
+}
+
+.project-grid-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.project-grid-card:hover .project-grid-card-media img {
+  transform: scale(1.04);
+}
+
+.project-grid-card-media-rotator .project-grid-card-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: scale(1.03);
+  transition: opacity 0.7s ease, transform 0.9s ease;
+  pointer-events: none;
+}
+
+.project-grid-card-media-rotator .project-grid-card-slide.is-active {
+  opacity: 1;
+  transform: scale(1);
+  z-index: 1;
+}
+
+.project-grid-card-slide-label {
+  position: absolute;
+  left: 0.75rem;
+  bottom: 0.75rem;
+  z-index: 2;
+  padding: 0.3rem 0.65rem;
+  border-radius: 9999px;
+  background: rgba(12, 13, 15, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.project-grid-card-slide-dots {
+  position: absolute;
+  right: 0.75rem;
+  bottom: 0.85rem;
+  z-index: 2;
+  display: flex;
+  gap: 0.3rem;
+}
+
+.project-grid-card-slide-dot {
+  width: 0.35rem;
+  height: 0.35rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.28);
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.project-grid-card-slide-dot.is-active {
+  background: rgba(255, 255, 255, 0.9);
+  transform: scale(1.15);
+}
+
+.project-grid-card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 1.25rem;
+}
+
+@media (max-width: 639px) {
+  .project-card-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .theme-attendee-avatar {
@@ -470,6 +576,62 @@ html {
 
 .hamburger-toggle.is-x .hamburger-toggle-line:nth-child(3) {
   transform: translateY(-4.5px) rotate(-45deg);
+}
+
+.collapsible-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.collapsible-panel.is-open {
+  grid-template-rows: 1fr;
+}
+
+.collapsible-panel-inner {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.collapsible-panel-content {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.28s ease, transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.collapsible-panel.is-open .collapsible-panel-content {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.06s;
+}
+
+.overview-tab-btn {
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.05);
+  color: #a3a3a3;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.overview-tab-btn:hover,
+.overview-tab-btn:focus,
+.overview-tab-btn:focus-visible {
+  outline: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.overview-tab-btn.is-active {
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.28);
 }
 
 .ecommerce-option-btn {
@@ -956,6 +1118,68 @@ html.theme-light .theme-review-badge {
   background: #1d4ed8;
 }
 
+.runner-card-surface {
+  background: #0c0d0f;
+}
+
+.runner-card-shell {
+  isolation: isolate;
+}
+
+.runner-track-hole {
+  background: #000;
+  mix-blend-mode: destination-out;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.runner-track {
+  background: transparent;
+}
+
+.analytics-chart {
+  transform: scaleY(0.08);
+  transform-origin: center bottom;
+  opacity: 0.35;
+  transition: transform 1.15s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.45s ease-out;
+}
+
+.analytics-chart.is-visible {
+  transform: scaleY(1);
+  opacity: 1;
+}
+
+.analytics-line {
+  stroke-dasharray: 720;
+  stroke-dashoffset: 720;
+}
+
+.analytics-chart.is-visible .analytics-line-blue {
+  animation: analytics-draw 1.2s ease-out forwards;
+}
+
+.analytics-chart.is-visible .analytics-line-green {
+  animation: analytics-draw 1.2s ease-out 0.18s forwards;
+}
+
+@keyframes analytics-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .analytics-chart,
+  .analytics-chart.is-visible .analytics-line-blue,
+  .analytics-chart.is-visible .analytics-line-green {
+    transition: none;
+    animation: none;
+    transform: none;
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+}
+
 html.theme-light .runner-card {
   background: transparent;
   border-color: #e5e7eb;
@@ -963,7 +1187,7 @@ html.theme-light .runner-card {
 }
 
 html.theme-light .runner-card-surface {
-  background: #ffffff;
+  background: var(--light-surface, #ffffff);
   box-shadow: none;
 }
 
@@ -1083,6 +1307,10 @@ html.theme-light .bg-\[\#0C0D0F\] {
   box-shadow: 0 10px 25px rgba(15, 23, 42, 0.05);
 }
 
+html.theme-light .project-grid-card-media {
+  background: rgba(15, 23, 42, 0.06);
+}
+
 html.theme-light .progress-bar {
   background: #2563eb;
   backdrop-filter: none;
@@ -1128,6 +1356,26 @@ html.theme-light .text-white\/80 {
 
 .theme-get-in-touch-btn:hover {
   background: rgba(255, 255, 255, 0.16);
+}
+
+html.theme-light .overview-tab-btn {
+  background: rgba(15, 23, 42, 0.06);
+  border-color: rgba(15, 23, 42, 0.18);
+  color: #475569;
+}
+
+html.theme-light .overview-tab-btn:hover,
+html.theme-light .overview-tab-btn:focus,
+html.theme-light .overview-tab-btn:focus-visible {
+  background: rgba(15, 23, 42, 0.1);
+  border-color: rgba(15, 23, 42, 0.28);
+  color: #0f172a;
+}
+
+html.theme-light .overview-tab-btn.is-active {
+  background: #0f172a;
+  border-color: #0f172a;
+  color: #ffffff;
 }
 
 html.theme-light .ecommerce-option-btn {

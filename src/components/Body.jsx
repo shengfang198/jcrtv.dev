@@ -1,26 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import Profile from './Profile.jsx';
-import Expertise from './Expertise.jsx';
-import Projects from './Projects.jsx';
-import Career from './Career.jsx';
-import Footer from './Footer.jsx';
-import moneyCashGif from '../assets/money-cash.gif';
-
-function HamburgerToggle({ isOpen, onClick, label }) {
-  return (
-    <button
-      type="button"
-      className={`theme-minimize-btn hamburger-toggle${isOpen ? ' is-x' : ''}`}
-      onClick={onClick}
-      aria-label={label}
-      aria-expanded={isOpen}
-    >
-      <span className="hamburger-toggle-line" />
-      <span className="hamburger-toggle-line" />
-      <span className="hamburger-toggle-line" />
-    </button>
-  );
-}
+﻿import React, { useEffect, useState } from 'react';
 
 function Body(props) {
   const [typedText, setTypedText] = useState('');
@@ -28,142 +6,6 @@ function Body(props) {
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null); // null | 'success' | 'error'
-  const [currentTime, setCurrentTime] = useState(new Date().toUTCString());
-  const [extraAttendees, setExtraAttendees] = useState(() => {
-    // Load from localStorage with fallback to 87
-    const saved = localStorage.getItem('designReviewAttendees');
-    return saved ? parseInt(saved, 10) : 87;
-  });
-  const [reviewSubmitted, setReviewSubmitted] = useState(() => {
-    // Load from localStorage whether review was already submitted
-    const submitted = localStorage.getItem('designReviewSubmitted');
-    return submitted === 'true';
-  });
-  const [designReviewMinimized, setDesignReviewMinimized] = useState(false);
-  const [growthMinimized, setGrowthMinimized] = useState(false);
-  const [seoSearchTerm, setSeoSearchTerm] = useState('');
-  const [referenceMinimized, setReferenceMinimized] = useState(false);
-  const [runnerStarted, setRunnerStarted] = useState(false);
-  const [runnerGameOver, setRunnerGameOver] = useState(false);
-  const [runnerScore, setRunnerScore] = useState(0);
-  const [runnerHighScore, setRunnerHighScore] = useState(0);
-  const RUNNER_TRACK_HEIGHT = 304;
-  const RUNNER_GROUND_OFFSET = 24;
-  const RUNNER_PLAYER_SIZE = 50;
-  const RUNNER_TOP_PADDING = 4;
-  const getTopSpawnY = (trackHeight) => {
-    const playableHeight = trackHeight - RUNNER_GROUND_OFFSET;
-    return Math.max(playableHeight - RUNNER_PLAYER_SIZE - RUNNER_TOP_PADDING, 0);
-  };
-  const DEFAULT_TOP_SPAWN_Y = getTopSpawnY(RUNNER_TRACK_HEIGHT);
-  const [runnerObstacles, setRunnerObstacles] = useState([]);
-  const RUNNER_FLY_FORCE = 8.2;
-  const RUNNER_GRAVITY = 0.6;
-  const runnerTrackRef = useRef(null);
-  const runnerPlayerElRef = useRef(null);
-  const runnerObstacleElsRef = useRef(new Map());
-  const runnerRafRef = useRef(null);
-  const runnerLastFrameRef = useRef(null);
-  const runnerScoreLastUpdateRef = useRef(0);
-  const runnerObstacleIdRef = useRef(0);
-  const runnerStateRef = useRef({
-    playerY: DEFAULT_TOP_SPAWN_Y,
-    velocity: 0,
-    obstacles: [],
-    spawnCounter: 0,
-    score: 0,
-    isStarted: false,
-    isGameOver: false
-  });
-
-  // Ensure the player starts at the right vertical offset (before the first "reset").
-  useEffect(() => {
-    const playerEl = runnerPlayerElRef.current;
-    if (!playerEl) return;
-    const y = runnerStateRef.current.playerY;
-    playerEl.style.transform = `translateY(${-y}px)`;
-  }, []);
-
-  // A-Z Development Terms & Tools Data
-  const devTerms = [
-    { letter: 'A', items: 'API integration, Agile methodology, Authentication', description: 'Connecting services, iterating in sprints, and verifying who can access a system.' },
-    { letter: 'B', items: 'Backend development, Bug tracking, Build automation', description: 'Server logic, issue tracking, and automated builds that keep releases consistent.' },
-    { letter: 'C', items: 'CI/CD pipelines, Cloud deployment, Code review', description: 'Automated shipping, cloud hosting, and peer review before code goes live.' },
-    { letter: 'D', items: 'Database design, Debugging, Docker', description: 'Structuring data, finding defects, and packaging apps in containers.' },
-    { letter: 'E', items: 'Event-driven architecture, Error handling, End-to-end testing', description: 'Reacting to events, failing safely, and testing full user flows.' },
-    { letter: 'F', items: 'Frontend frameworks (React, Vue, Angular), Functional programming, Firebase', description: 'UI frameworks, function-based code, and hosted app backends.' },
-    { letter: 'G', items: 'Git/GitHub, GraphQL, GUI design', description: 'Version control, flexible APIs, and visual interface layout.' },
-    { letter: 'H', items: 'HTML5, Hosting solutions, HTTP/HTTPS', description: 'Page structure, where sites live, and secure web requests.' },
-    { letter: 'I', items: 'Integration testing, IDE (VS Code, IntelliJ), Infrastructure as Code', description: 'Testing connected parts, coding tools, and servers defined in files.' },
-    { letter: 'J', items: 'JavaScript, JSON, JWT authentication', description: 'Web scripting, data format, and token-based login.' },
-    { letter: 'K', items: 'Kubernetes, Kotlin, Key performance metrics', description: 'Container orchestration, JVM language, and measurable product health.' },
-    { letter: 'L', items: 'Linux server management, Load balancing, Linting', description: 'Running servers, spreading traffic, and catching code issues early.' },
-    { letter: 'M', items: 'Microservices, Mobile development, Modular code', description: 'Small services, phone apps, and reusable isolated modules.' },
-    { letter: 'N', items: 'Node.js, Networking, NoSQL databases', description: 'JavaScript on the server, network basics, and flexible data stores.' },
-    { letter: 'O', items: 'Object-oriented programming, OAuth, Optimization', description: 'Class-based design, delegated login, and making software faster.' },
-    { letter: 'P', items: 'Python, PHP, Progressive Web Apps (PWA)', description: 'Scripting languages and installable web apps that work offline.' },
-    { letter: 'Q', items: 'Query optimization, QA testing, Queue management', description: 'Faster data lookups, quality checks, and background job queues.' },
-    { letter: 'R', items: 'RESTful APIs, React, Responsive design', description: 'Standard web APIs, component UIs, and layouts that fit any screen.' },
-    { letter: 'S', items: 'SQL, Security best practices, Serverless architecture', description: 'Relational queries, safer systems, and functions that run on demand.' },
-    { letter: 'T', items: 'TypeScript, Testing frameworks (Jest, Mocha), Templating engines', description: 'Typed JavaScript, automated tests, and HTML generated from data.' },
-    { letter: 'U', items: 'UI/UX implementation, Unit testing, User authentication', description: 'Building usable interfaces, testing small units, and signing users in.' },
-    { letter: 'V', items: 'Version control, Vue.js, Virtualization', description: 'Tracking changes, a lightweight UI framework, and isolated environments.' },
-    { letter: 'W', items: 'Webpack, Web development, WebSockets', description: 'Bundling assets, building websites, and live two-way connections.' },
-    { letter: 'X', items: 'XML parsing, XSS protection, Xcode (iOS development)', description: 'Reading XML, blocking script injection, and Apple app tooling.' },
-    { letter: 'Y', items: 'YAML configurations, YARN package manager, Yearly code review', description: 'Readable config files, JS packages, and periodic codebase checks.' },
-    { letter: 'Z', items: 'Zero downtime deployment, Zeplin (UI collaboration), Z-index (CSS layering)', description: 'Releases without outages, design handoff, and stacking UI layers.' },
-  ];
-
-  const searchQuery = seoSearchTerm.trim().toLowerCase();
-
-  const siteSearchIndex = [
-    { type: 'Page', title: 'Overview', text: 'Jay Creative work showcase contact email', href: '#' },
-    { type: 'Page', title: 'Profile', text: 'about full-stack developer Manila experience CV', href: '#about' },
-    { type: 'Page', title: 'Expertise', text: 'skills UI UX graphic design frontend backend Unreal React Node', href: '#skills' },
-    { type: 'Page', title: 'Projects', text: 'Shopify ecommerce visualization graphics SaaS game Bridgehub job marketplace API', href: '#projects' },
-    { type: 'Page', title: 'Career', text: 'experience resume Shopify SaaS game developer real estate', href: '#resume' },
-    { type: 'Page', title: 'Contact', text: 'email footer get in touch', href: '#footer' },
-    { type: 'Experience', title: 'Shopify Developer', text: 'Liquid CMS custom templates product design theme', href: '#resume' },
-    { type: 'Experience', title: 'SaaS Developer', text: 'Next.js React Node PostgreSQL platform', href: '#resume' },
-    { type: 'Experience', title: 'Real Estate Editor', text: 'Adobe property marketing design', href: '#resume' },
-    { type: 'Experience', title: 'UI Designer & Developer', text: 'Figma React JavaScript C++', href: '#resume' },
-    { type: 'Experience', title: 'Game Developer', text: 'Unreal Engine C++ Blueprint action RPG', href: '#resume' },
-    ...Object.values(props.projectsData || {}).map((project) => ({
-      type: 'Project',
-      title: project.title,
-      text: `${project.description} ${project.category} ${(project.tech || []).join(' ')}`,
-      href: '#projects',
-      project
-    }))
-  ];
-
-  const globalResults = searchQuery
-    ? siteSearchIndex.filter((item) =>
-        `${item.title} ${item.text} ${item.type}`.toLowerCase().includes(searchQuery)
-      )
-    : [];
-
-  const filteredTerms = searchQuery
-    ? devTerms.filter((term) =>
-        term.letter.toLowerCase().includes(searchQuery) ||
-        term.items.toLowerCase().includes(searchQuery) ||
-        term.description.toLowerCase().includes(searchQuery)
-      )
-    : [];
-
-  const openSearchResult = (result) => {
-    if (result.href === '#') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else if (result.href) {
-      const target = document.querySelector(result.href);
-      if (target) target.scrollIntoView({ behavior: 'smooth' });
-    }
-    if (result.project && props.onOpenModal) {
-      props.onOpenModal(result.project);
-    }
-  };
-
-
 
   // Prevent background scrolling when modal is open
   useEffect(() => {
@@ -205,11 +47,13 @@ function Body(props) {
           window.particlesJS('particles-js', {
             particles: {
               number: { value: 80, density: { enable: true, value_area: 800 } },
-              color: { value: '#0096C7' },
+              color: {
+                value: ['#22d3ee', '#38bdf8', '#6366f1', '#a855f7', '#ec4899', '#34d399', '#fbbf24']
+              },
               shape: { type: 'circle', stroke: { width: 0, color: '#000000' }, polygon: { nb_sides: 5 } },
-              opacity: { value: 0.5, random: false, anim: { enable: false, speed: 1, opacity_min: 0.1, sync: false } },
+              opacity: { value: 0.55, random: false, anim: { enable: false, speed: 1, opacity_min: 0.1, sync: false } },
               size: { value: 3, random: true, anim: { enable: false, speed: 40, size_min: 0.1, sync: false } },
-              line_linked: { enable: true, distance: 150, color: '#0096C7', opacity: 0.4, width: 1 },
+              line_linked: { enable: true, distance: 150, color: '#94a3b8', opacity: 0.35, width: 1 },
               move: { enable: true, speed: 2, direction: 'none', random: false, straight: false, out_mode: 'out', bounce: false, attract: { enable: false, rotateX: 600, rotateY: 1200 } }
             },
             interactivity: {
@@ -278,7 +122,7 @@ function Body(props) {
       }
     }, 150);
 
-    // Generate vibrant tones for richer flashlight glow
+    // Generate vibrant tones for richer flashlight glow (saturated, not blown out)
     const getRandomColor = () => {
       const isLight = document.documentElement.classList.contains('theme-light');
       const colors = isLight
@@ -286,27 +130,29 @@ function Body(props) {
         : [8, 28, 48, 168, 195, 262, 292, 328];
       const hue = colors[Math.floor(Math.random() * colors.length)];
       const saturation = isLight
-        ? 92 + Math.floor(Math.random() * 7)
-        : 100;
+        ? 86 + Math.floor(Math.random() * 8)
+        : 88 + Math.floor(Math.random() * 8);
       const lightness = isLight
-        ? 58 + Math.floor(Math.random() * 9)
-        : 66 + Math.floor(Math.random() * 8);
+        ? 48 + Math.floor(Math.random() * 8)
+        : 52 + Math.floor(Math.random() * 8);
       return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
     };
 
-    // Flashlight effect for cards — grows from small to full; random scatter each hover
+    // Flashlight effect for cards â€” grows from small to full; random scatter each hover
     const addFlashlightEffect = () => {
       const cards = document.querySelectorAll('.flashlight-card');
-      const FLASH_HALF = 690; // half of 1380px main glow (3× 460 base; matches CSS)
+      const FLASH_HALF = 690; // half of 1380px main glow (3Ã— 460 base; matches CSS)
       let isScrolling = false;
       let scrollThrottle;
       let activeCards = new Set();
       const scaleRafByCard = new WeakMap();
-      /** Smoothed follow: { tx, ty, cx, cy, rafId } — glow eases toward cursor */
+      /** Smoothed follow: { tx, ty, cx, cy, rafId } â€” glow eases toward cursor */
       const flashStickyByCard = new WeakMap();
-      const STICKY_LERP = 0.065;
-      const STICKY_LERP_FAR = 0.11;
-      const STICKY_FAR_DIST2 = 405000;
+      // Lower lerp = stickier fluid trail across the card canvas
+      const STICKY_LERP = 0.032;
+      const STICKY_LERP_FAR = 0.058;
+      const STICKY_FAR_DIST2 = 280000;
+      const STICKY_VEL_DAMP = 0.82;
 
       const easeOutQuint = (t) => 1 - (1 - t) ** 5;
 
@@ -476,6 +322,8 @@ function Body(props) {
           ty: targetTy,
           cx: spawnTx,
           cy: spawnTy,
+          vx: 0,
+          vy: 0,
           rafId: null,
           entryEdge,
           paddingPx
@@ -498,6 +346,8 @@ function Body(props) {
             ty,
             cx: tx,
             cy: ty,
+            vx: 0,
+            vy: 0,
             rafId: null,
             entryEdge: edge,
             paddingPx
@@ -518,17 +368,28 @@ function Body(props) {
             if (st) st.rafId = null;
             return;
           }
-          const dist2 = (st.tx - st.cx) ** 2 + (st.ty - st.cy) ** 2;
+
+          const dx = st.tx - st.cx;
+          const dy = st.ty - st.cy;
+          const dist2 = dx * dx + dy * dy;
           const k = dist2 > STICKY_FAR_DIST2 ? STICKY_LERP_FAR : STICKY_LERP;
-          st.cx += (st.tx - st.cx) * k;
-          st.cy += (st.ty - st.cy) * k;
+
+          // Fluid sticky motion: ease toward cursor with soft velocity carry
+          st.vx = st.vx * STICKY_VEL_DAMP + dx * k;
+          st.vy = st.vy * STICKY_VEL_DAMP + dy * k;
+          st.cx += st.vx;
+          st.cy += st.vy;
+
           card.style.setProperty('--translate-x', `${st.cx}px`);
           card.style.setProperty('--translate-y', `${st.cy}px`);
-          if (dist2 > 0.2) {
+
+          if (dist2 > 0.35 || Math.abs(st.vx) + Math.abs(st.vy) > 0.08) {
             st.rafId = requestAnimationFrame(tick);
           } else {
             st.cx = st.tx;
             st.cy = st.ty;
+            st.vx = 0;
+            st.vy = 0;
             card.style.setProperty('--translate-x', `${st.cx}px`);
             card.style.setProperty('--translate-y', `${st.cy}px`);
             st.rafId = null;
@@ -664,237 +525,90 @@ function Body(props) {
     setTimeout(addFlashlightEffect, 100);
   }, []);
 
-  // Update the clock every second
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentTime(new Date().toUTCString());
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const resetRunnerState = useCallback(() => {
-    const trackHeight = runnerTrackRef.current?.clientHeight || RUNNER_TRACK_HEIGHT;
-    const playableHeight = trackHeight - RUNNER_GROUND_OFFSET;
-    const startY = Math.max(playableHeight - RUNNER_PLAYER_SIZE - RUNNER_TOP_PADDING, 0);
-
-    runnerObstacleElsRef.current.clear();
-    runnerObstacleIdRef.current = 0;
-
-    runnerStateRef.current = {
-      playerY: startY,
-      velocity: 0,
-      obstacles: [],
-      spawnCounter: 55,
-      score: 0,
-      isStarted: true,
-      isGameOver: false
-    };
-    setRunnerStarted(true);
-    setRunnerGameOver(false);
-    setRunnerScore(0);
-    setRunnerObstacles([]);
-
-    // Update DOM once; the RAF loop will take over afterwards.
-    if (runnerPlayerElRef.current) {
-      runnerPlayerElRef.current.style.transform = `translateY(${-startY}px)`;
-    }
-  }, []);
-
-  const flyRunner = useCallback(() => {
-    const s = runnerStateRef.current;
-    if (!s.isStarted || s.isGameOver) return;
-    // Flap-style fly input for sustained airtime.
-    s.velocity = RUNNER_FLY_FORCE;
-  }, []);
-
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.code === 'Space' || e.code === 'ArrowUp') {
-        e.preventDefault();
-        if (!runnerStarted || runnerGameOver) {
-          resetRunnerState();
-          return;
-        }
-        flyRunner();
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [runnerStarted, runnerGameOver, resetRunnerState, flyRunner]);
-
-  useEffect(() => {
-    if (!runnerStarted || runnerGameOver) return undefined;
-
-    const GRAVITY = RUNNER_GRAVITY;
-    const SPEED = 6; // px per "base frame" (roughly 60fps)
-    const SCORE_PER_FRAME = 0.12;
-    const BASE_FRAME_MS = 1000 / 60;
-    const PLAYER_SIZE = RUNNER_PLAYER_SIZE;
-    const PLAYER_X = 72;
-    const TRACK_HEIGHT = RUNNER_TRACK_HEIGHT;
-    const GROUND_OFFSET = RUNNER_GROUND_OFFSET;
-
-    const enemyColors = [
-      '#ef4444',
-      '#f97316',
-      '#eab308',
-      '#22c55e',
-      '#06b6d4',
-      '#3b82f6',
-      '#8b5cf6',
-      '#ec4899'
+    const palette = [
+      { r: 34, g: 211, b: 238 },
+      { r: 56, g: 189, b: 248 },
+      { r: 99, g: 102, b: 241 },
+      { r: 168, g: 85, b: 247 },
+      { r: 236, g: 72, b: 153 },
+      { r: 52, g: 211, b: 153 },
+      { r: 251, g: 191, b: 36 },
+      { r: 34, g: 211, b: 238 }
     ];
+    const lightColor = { r: 100, g: 116, b: 139 };
+    const lineColor = { r: 148, g: 163, b: 184 };
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let rafId = 0;
+    let waitId = 0;
+    let cancelled = false;
+    let lastTime = performance.now();
+    let colorT = 0;
 
-    const isEdgeCollision = (a, b) => {
-      const overlapX = a.left <= b.right && a.right >= b.left;
-      const overlapY = a.bottom <= b.top && a.top >= b.bottom;
-      return overlapX && overlapY;
+    const mixPaletteColor = (t) => {
+      const span = palette.length - 1;
+      const x = ((t % span) + span) % span;
+      const index = Math.floor(x);
+      const f = x - index;
+      const from = palette[index];
+      const to = palette[index + 1];
+      return {
+        r: Math.round(from.r + (to.r - from.r) * f),
+        g: Math.round(from.g + (to.g - from.g) * f),
+        b: Math.round(from.b + (to.b - from.b) * f)
+      };
     };
 
-    const loop = (now) => {
-      const s = runnerStateRef.current;
-      if (!s.isStarted || s.isGameOver) return;
-
-      const lastNow = runnerLastFrameRef.current ?? now;
-      const dtMs = Math.min(50, Math.max(0, now - lastNow));
-      const dtFrames = dtMs / BASE_FRAME_MS;
-      runnerLastFrameRef.current = now;
-
-      s.playerY += s.velocity * dtFrames;
-      s.velocity -= GRAVITY * dtFrames;
-
-      if (s.playerY < 0) {
-        s.playerY = 0;
-        s.velocity = 0;
+    const applyParticleColors = (t, uniformRgb = null) => {
+      const pJS = window.pJSDom?.[0]?.pJS;
+      if (!pJS) return;
+      pJS.particles.line_linked.color_rgb_line = uniformRgb || lineColor;
+      const dots = pJS.particles.array;
+      for (let i = 0; i < dots.length; i += 1) {
+        if (!dots[i].color) continue;
+        dots[i].color.rgb = uniformRgb || mixPaletteColor(t + i * 0.55);
       }
-
-      const trackHeight = runnerTrackRef.current?.clientHeight || TRACK_HEIGHT;
-      const playableHeight = trackHeight - GROUND_OFFSET;
-      const maxPlayerY = Math.max(playableHeight - PLAYER_SIZE, 0);
-      if (s.playerY > maxPlayerY) {
-        s.playerY = maxPlayerY;
-        s.velocity = 0;
-      }
-
-      s.spawnCounter -= dtFrames;
-      let didSpawn = false;
-
-      if (s.spawnCounter <= 0) {
-        const isTallBlock = Math.random() < 0.35;
-        const blockHeight = isTallBlock
-          ? Math.floor(playableHeight * (0.42 + Math.random() * 0.12))
-          : 26 + Math.floor(Math.random() * 20);
-        const blockWidth = isTallBlock
-          ? 30 + Math.floor(Math.random() * 18)
-          : blockHeight;
-        const trackWidth = runnerTrackRef.current?.clientWidth || 760;
-        const randomColor = enemyColors[Math.floor(Math.random() * enemyColors.length)];
-        const obstaclePosition = Math.random() < 0.5 ? 'bottom' : 'top';
-        const adjustedHeight = obstaclePosition === 'top'
-          ? Math.max(Math.floor(blockHeight * 0.7), 20)
-          : blockHeight;
-
-        const id = runnerObstacleIdRef.current++;
-        s.obstacles.push({
-          id,
-          x: trackWidth + blockWidth,
-          width: blockWidth,
-          height: adjustedHeight,
-          color: randomColor,
-          position: obstaclePosition
-        });
-
-        s.spawnCounter = 46 + Math.floor(Math.random() * 44);
-        didSpawn = true;
-      }
-
-      // Move obstacles + remove those that have passed the left edge.
-      const oldLen = s.obstacles.length;
-      for (let i = 0; i < s.obstacles.length; i += 1) {
-        s.obstacles[i].x -= SPEED * dtFrames;
-      }
-      s.obstacles = s.obstacles.filter((o) => o.x + o.width > -10);
-      const didRemove = s.obstacles.length !== oldLen;
-
-      const trackWidth = runnerTrackRef.current?.clientWidth || 760;
-      const playerRect = {
-        left: PLAYER_X,
-        right: PLAYER_X + PLAYER_SIZE,
-        bottom: s.playerY,
-        top: s.playerY + PLAYER_SIZE
-      };
-
-      const collidedWithBlock = s.obstacles.some((o) => {
-        const obstacleRect = {
-          left: o.x,
-          right: o.x + o.width,
-          bottom: o.position === 'top' ? playableHeight - o.height : 0,
-          top: o.position === 'top' ? playableHeight : o.height
-        };
-        return isEdgeCollision(playerRect, obstacleRect);
-      });
-
-      const groundRect = {
-        left: 0,
-        right: trackWidth,
-        bottom: -1,
-        top: 0
-      };
-      const collidedWithGround = isEdgeCollision(playerRect, groundRect);
-
-      if (collidedWithBlock || collidedWithGround) {
-        s.isGameOver = true;
-        setRunnerGameOver(true);
-        setRunnerStarted(false);
-
-        const finalScore = Math.floor(s.score);
-        setRunnerScore(finalScore);
-        if (finalScore > runnerHighScore) setRunnerHighScore(finalScore);
-        return;
-      }
-
-      s.score += SCORE_PER_FRAME * dtFrames;
-
-      // Update DOM positions directly to avoid per-frame React re-renders.
-      if (runnerPlayerElRef.current) {
-        runnerPlayerElRef.current.style.transform = `translateY(${-s.playerY}px)`;
-      }
-      for (let i = 0; i < s.obstacles.length; i += 1) {
-        const o = s.obstacles[i];
-        const el = runnerObstacleElsRef.current.get(o.id);
-        if (el) el.style.left = `${o.x}px`;
-      }
-
-      if (now - runnerScoreLastUpdateRef.current > 100) {
-        setRunnerScore(Math.floor(s.score));
-        runnerScoreLastUpdateRef.current = now;
-      }
-
-      if (didSpawn || didRemove) {
-        setRunnerObstacles([...s.obstacles]);
-      }
-
-      runnerRafRef.current = requestAnimationFrame(loop);
     };
 
-    runnerLastFrameRef.current = null;
-    runnerScoreLastUpdateRef.current = 0;
-    runnerRafRef.current = requestAnimationFrame(loop);
+    const tick = (now) => {
+      if (cancelled) return;
+      const isLight = document.documentElement.classList.contains('theme-light');
+      if (isLight) {
+        applyParticleColors(0, lightColor);
+      } else if (prefersReducedMotion) {
+        applyParticleColors(0);
+      } else {
+        const dt = Math.min(0.05, (now - lastTime) / 1000);
+        lastTime = now;
+        colorT += dt / 7;
+        applyParticleColors(colorT);
+      }
+      rafId = requestAnimationFrame(tick);
+    };
+
+    const start = () => {
+      if (cancelled) return;
+      lastTime = performance.now();
+      rafId = requestAnimationFrame(tick);
+    };
+
+    if (window.pJSDom?.[0]?.pJS) {
+      start();
+    } else {
+      waitId = window.setInterval(() => {
+        if (window.pJSDom?.[0]?.pJS) {
+          window.clearInterval(waitId);
+          start();
+        }
+      }, 120);
+    }
 
     return () => {
-      if (runnerRafRef.current) cancelAnimationFrame(runnerRafRef.current);
+      cancelled = true;
+      if (waitId) window.clearInterval(waitId);
+      if (rafId) cancelAnimationFrame(rafId);
     };
-  }, [runnerStarted, runnerGameOver, runnerHighScore]);
-
-  // When obstacles are added/removed, their `left` needs to be set once so they don't render at an incorrect position.
-  useEffect(() => {
-    for (let i = 0; i < runnerObstacles.length; i += 1) {
-      const o = runnerObstacles[i];
-      const el = runnerObstacleElsRef.current.get(o.id);
-      if (el) el.style.left = `${o.x}px`;
-    }
-  }, [runnerObstacles]);
+  }, []);
 
   // Form submission handler
   const handleFormSubmit = async (e) => {
@@ -944,7 +658,7 @@ function Body(props) {
   };
 
   return (
-    <main className="w-full pt-32 p-0 relative min-h-screen flex flex-col">
+    <main id="overview" className="w-full pt-32 p-0 relative flex flex-col">
       {/* Hero Header */}
       <div className="text-center max-w-5xl mx-auto mb-10">
 
@@ -1005,351 +719,6 @@ function Body(props) {
           <span>Available for Projects & Collaboration</span>
         </div>
       </div>
-
-      {/* SEO Optimization - A-Z Development Terms */}
-      <section>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="max-w-7xl mx-auto">
-            <div className="animate-on-scroll bg-[#0C0D0F] rounded-[2rem] p-8 border border-white/5 relative overflow-hidden group hover:border-white/10 transition-colors">
-              {/* Header */}
-              <div className="flex justify-between items-start mb-6">
-                <div className="px-3 py-1 bg-white/5 rounded-full border border-white/5 text-xs text-neutral-400 font-semibold uppercase tracking-wider">Reference</div>
-                <HamburgerToggle
-                  isOpen={!referenceMinimized}
-                  onClick={() => setReferenceMinimized(!referenceMinimized)}
-                  label={referenceMinimized ? 'Expand Reference' : 'Collapse Reference'}
-                />
-              </div>
-
-              {!referenceMinimized && (
-                <>
-                  {/* Title */}
-                  <div className="mb-6">
-                    <h3 className="text-2xl text-white mb-4 font-medium tracking-tight">SEO</h3>
-
-                    <div className="relative max-w-xl mx-auto mb-4">
-                      <svg className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-500" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <circle cx="11" cy="11" r="8"/>
-                        <path d="m21 21-4.3-4.3"/>
-                      </svg>
-                      <input
-                        type="search"
-                        placeholder="Search pages, projects, experience, and reference..."
-                        value={seoSearchTerm}
-                        onChange={(e) => setSeoSearchTerm(e.target.value)}
-                        className="theme-email-input w-full h-12 rounded-full bg-white/5 border border-white/10 pl-11 pr-4 text-sm text-white placeholder-neutral-500 focus:bg-white/10 focus:border-white/20 outline-none transition-colors"
-                      />
-                    </div>
-
-                    <p className="text-sm text-neutral-500 font-medium mb-6">Site search and development reference guide</p>
-                  </div>
-
-                  {searchQuery ? (
-                    <>
-                      <div className="mb-6">
-                        <p className="text-xs text-neutral-500 font-semibold uppercase tracking-wider mb-3">Site results</p>
-                        {globalResults.length > 0 ? (
-                          <div className="space-y-2">
-                            {globalResults.map((result) => (
-                              <button
-                                key={`${result.type}-${result.title}`}
-                                type="button"
-                                onClick={() => openSearchResult(result)}
-                                className="w-full text-left bg-white/5 rounded-xl p-4 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-colors"
-                              >
-                                <span className="text-[10px] uppercase tracking-wider text-neutral-500 font-semibold">{result.type}</span>
-                                <p className="text-sm text-white font-medium mt-1">{result.title}</p>
-                              </button>
-                            ))}
-                          </div>
-                        ) : (
-                          <p className="text-sm text-neutral-500">No matching pages or projects.</p>
-                        )}
-                      </div>
-
-                      <p className="text-xs text-neutral-500 font-semibold uppercase tracking-wider mb-3">Reference guide</p>
-                      {filteredTerms.length > 0 ? (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-h-96 overflow-y-auto">
-                          {filteredTerms.map((term, index) => (
-                            <div key={term.letter} className="bg-white/5 rounded-xl p-4 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-colors">
-                              <div className="flex items-center justify-between mb-2">
-                                <span className="text-lg font-bold text-white">{term.letter}</span>
-                                <span className="text-xs text-neutral-500 bg-white/5 px-2 py-1 rounded">{index + 1}</span>
-                              </div>
-                              <p className="text-sm text-neutral-300 leading-relaxed mb-2">{term.items}</p>
-                              <p className="text-xs text-neutral-500 leading-relaxed">{term.description}</p>
-                            </div>
-                          ))}
-                        </div>
-                      ) : (
-                        <p className="text-sm text-neutral-500">No matching reference sections.</p>
-                      )}
-
-                      <div className="mt-6 pt-4 border-t border-white/10">
-                        <p className="text-xs text-neutral-500 text-center">
-                          {filteredTerms.length} of {devTerms.length} reference sections
-                          {` • ${globalResults.length} site result${globalResults.length === 1 ? '' : 's'} for "${seoSearchTerm}"`}
-                        </p>
-                      </div>
-                    </>
-                  ) : (
-                    <p className="text-sm text-neutral-500">Type in the search bar to see site results and the reference guide.</p>
-                  )}
-                </>
-              )}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Design Review */}
-      <section>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="max-w-7xl mx-auto">
-            <div className="animate-on-scroll bg-[#0C0D0F] rounded-[2rem] p-8 border border-white/5 relative overflow-hidden group hover:border-white/10 transition-colors">
-              <div className="flex justify-between items-start mb-6">
-                <div className="px-3 py-1 bg-white/5 rounded-full border border-white/5 text-xs text-neutral-400 font-semibold uppercase tracking-wider">Insights</div>
-                <HamburgerToggle
-                  isOpen={!designReviewMinimized}
-                  onClick={() => setDesignReviewMinimized(!designReviewMinimized)}
-                  label={designReviewMinimized ? 'Expand Insights' : 'Collapse Insights'}
-                />
-              </div>
-
-              {!designReviewMinimized && (
-                <>
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center">
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M15.5 3H5a2 2 0 0 0-2 2v14c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2V8.5L15.5 3Z"/>
-                        <path d="M15 3v6h6"/>
-                        <path d="M2 13.5h20"/>
-                      </svg>
-                    </div>
-                    <span className="text-sm text-neutral-400 font-medium">Product Sync</span>
-                  </div>
-
-                  <h3 className="text-2xl text-white mb-2 font-medium tracking-tight">Design Review</h3>
-
-                  <div className="border-t border-white/5 pt-5 flex items-center justify-between">
-                    <div className="flex -space-x-3">
-                      <div className="theme-attendee-avatar theme-attendee-jd w-10 h-10 rounded-full border-[3px] flex items-center justify-center text-xs font-bold">JD</div>
-                      <div className="theme-attendee-avatar theme-attendee-as w-10 h-10 rounded-full border-[3px] flex items-center justify-center text-xs font-bold">AS</div>
-                      <div className="theme-attendee-avatar theme-attendee-count w-10 h-10 rounded-full border-[3px] flex items-center justify-center text-xs font-bold">+{extraAttendees}</div>
-                    </div>
-                    {reviewSubmitted ? (
-                      <div className="theme-review-badge bg-white/5 text-white text-sm px-5 py-2.5 rounded-full font-semibold border border-white/5">
-                        Thank you for the review!
-                      </div>
-                    ) : (
-                      <button
-                        className="theme-review-btn bg-white/5 text-white hover:bg-white/10 text-sm px-5 py-2.5 rounded-full font-semibold transition-colors border border-white/5"
-                        onClick={() => {
-                          const newCount = extraAttendees + 1;
-                          setExtraAttendees(newCount);
-                          setReviewSubmitted(true);
-                          localStorage.setItem('designReviewAttendees', newCount.toString());
-                          localStorage.setItem('designReviewSubmitted', 'true');
-                        }}
-                      >
-                        + Review
-                      </button>
-                    )}
-                  </div>
-                </>
-              )}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Growth */}
-      <section>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-            <div className="animate-on-scroll h-full bg-[#0C0D0F] rounded-[2.5rem] p-8 border border-white/5 relative overflow-hidden group hover:border-white/10 transition-colors">
-              <div className="relative z-10">
-                <div className="flex justify-between items-start mb-6">
-                  <div className="px-3 py-1 bg-white/5 rounded-full border border-white/5 text-xs text-neutral-400 font-semibold uppercase tracking-wider">Performance</div>
-                  <HamburgerToggle
-                    isOpen={!growthMinimized}
-                    onClick={() => setGrowthMinimized(!growthMinimized)}
-                    label={growthMinimized ? 'Expand Performance' : 'Collapse Performance'}
-                  />
-                </div>
-
-                {!growthMinimized && (
-                  <>
-                <div className="flex flex-col lg:flex-row gap-8 h-full">
-                  {/* Growth Content - Left Side */}
-                  <div className="flex-1 flex flex-col justify-between">
-                    <div>
-                      <div className="flex items-center gap-2 mb-4 opacity-80">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-white">
-                          <path d="M3 3v18h18"/>
-                          <path d="m19 9-5 5-4-4-3 3"/>
-                        </svg>
-                        <span className="text-xs font-bold uppercase tracking-wider text-neutral-400">Growth</span>
-                      </div>
-                      <h2 className="text-7xl text-white leading-none font-medium tracking-tight">10x</h2>
-                    </div>
-
-                    <div className="mt-12">
-                      <div className="flex mb-6 space-x-1.5">
-                        <div className="h-1.5 w-8 bg-neutral-800 rounded-full"></div>
-                        <div className="h-1.5 w-8 bg-neutral-700 rounded-full"></div>
-                        <div className="h-1.5 w-12 bg-white rounded-full shadow-none"></div>
-                      </div>
-                      <p className="text-xl text-neutral-200 leading-snug font-semibold tracking-tight">
-                        Iterative progress and improvement.
-                      </p>
-                      <p className="text-sm text-neutral-500 mt-3 font-medium">performance metrics.</p>
-                    </div>
-                  </div>
-
-                  {/* Analytics Chart - Right Side */}
-                  <div className="flex-1 flex flex-col">
-                    <div className="flex items-center gap-2 mb-6">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-white">
-                        <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
-                        <line x1="7" x2="17" y1="8" y2="8"/>
-                        <line x1="7" x2="17" y1="12" y2="12"/>
-                        <line x1="7" x2="13" y1="16" y2="16"/>
-                      </svg>
-                      <span className="text-xs font-bold uppercase tracking-wider text-neutral-400">Analytics</span>
-                    </div>
-
-                    <div className="flex-grow flex flex-col">
-                      <div className="flex-grow min-h-[300px] relative">
-                        <svg width="100%" height="90%" viewBox="0 0 400 270" preserveAspectRatio="none" className="absolute inset-0">
-                          {/* Growth Line */}
-                          <path
-                            d="M0,250 Q67,230 133,210 T267,170 T400,100"
-                            stroke="#3B82F6"
-                            strokeWidth="3"
-                            fill="none"
-                            strokeLinecap="round"
-                          />
-                          {/* Performance Line */}
-                          <path
-                            d="M0,245 Q67,220 133,195 T267,135 T400,40"
-                            stroke="#10B981"
-                            strokeWidth="3"
-                            fill="none"
-                            strokeLinecap="round"
-                          />
-                        </svg>
-
-                        {/* Year Labels */}
-                        <div className="absolute bottom-0 left-0 right-0 flex justify-between px-2 text-xs text-neutral-500 font-medium">
-                          <span>2023</span>
-                          <span>2024</span>
-                          <span>2025</span>
-                          <span>2026</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="mt-4">
-                      <p className="text-sm text-neutral-500 font-medium">Year-over-year analytics</p>
-                    </div>
-                  </div>
-                </div>
-                </>
-                )}
-              </div>
-            </div>
-        </div>
-      </section>
-
-      {/* Mini Runner Game */}
-      <section>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="animate-on-scroll runner-card rounded-[2.5rem] border border-white/5 relative overflow-hidden group hover:border-white/10 transition-colors bg-transparent">
-            <div className="runner-card-surface bg-[#0C0D0F] p-8 pb-4 rounded-t-[2.5rem]">
-              <div className="flex items-center justify-between mb-6">
-                <div className="px-3 py-1 bg-white/5 rounded-full border border-white/5 text-xs text-neutral-400 font-semibold uppercase tracking-wider">
-                  Mini Game
-                </div>
-                <div className="text-sm text-neutral-400 font-medium">
-                  Score: <span className="text-white">{runnerScore}</span> | Best: <span className="text-white">{runnerHighScore}</span>
-                </div>
-              </div>
-
-              <h3 className="text-2xl text-white mb-2 font-medium tracking-tight">Flappy Bills</h3>
-              <p className="text-neutral-400 mb-0">Press Play, then use Space or Up Arrow to fly.</p>
-            </div>
-
-            <div className="px-8">
-            <div ref={runnerTrackRef} className="runner-track relative h-72 rounded-2xl border border-white/10 bg-transparent overflow-hidden">
-              <div className="absolute bottom-6 left-0 right-0 h-[2px] bg-white/20" />
-              <div
-                ref={runnerPlayerElRef}
-                className="runner-player absolute bottom-6 left-[72px] w-[50px] h-[50px]"
-              >
-                <img
-                  src={moneyCashGif}
-                  alt="Runner character"
-                  className="w-full h-full object-contain runner-player-sprite"
-                />
-              </div>
-              {runnerObstacles.map((obstacle) => (
-                <div
-                  key={obstacle.id}
-                  ref={(el) => {
-                    if (el) runnerObstacleElsRef.current.set(obstacle.id, el);
-                    else runnerObstacleElsRef.current.delete(obstacle.id);
-                  }}
-                  className="runner-obstacle absolute rounded-sm"
-                  style={{
-                    width: `${obstacle.width}px`,
-                    height: `${obstacle.height}px`,
-                    ...(obstacle.position === 'top' ? { top: '0px' } : { bottom: '1.5rem' }),
-                    backgroundColor: obstacle.color,
-                    backgroundImage:
-                      'linear-gradient(rgba(255,255,255,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.2) 1px, transparent 1px)',
-                    backgroundSize: '6px 6px'
-                  }}
-                />
-              ))}
-            </div>
-            </div>
-
-            <div className="runner-card-surface bg-[#0C0D0F] p-8 pt-5 rounded-b-[2.5rem]">
-              <div className="flex items-center gap-3">
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (!runnerStarted) {
-                      resetRunnerState();
-                    } else {
-                      flyRunner();
-                    }
-                  }}
-                  className="runner-play-btn px-5 py-2.5 rounded-full font-semibold text-sm transition-colors"
-                >
-                  {!runnerStarted ? (runnerGameOver ? 'Play Again' : 'Play') : 'Fly'}
-                </button>
-                {runnerGameOver && (
-                  <span className="text-sm text-neutral-400">Game over. Press Play Again.</span>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Dashboard Card */}
-      <section>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="max-w-[30%] mx-auto">
-            <div className="animate-on-scroll relative flex items-center justify-center bg-white/[0.02] rounded-[2.5rem] border border-white/5 border-dashed">
-              <div className="text-center py-8">
-                <p className="text-white text-sm opacity-50">{currentTime}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
     </main>
   );
 }
