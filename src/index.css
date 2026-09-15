@@ -1566,6 +1566,37 @@ html.theme-light .hover\:bg-white\/10:hover {
   background-color: rgba(15, 23, 42, 0.1);
 }
 
+.particles-parallax-clip {
+  overflow: hidden;
+}
+
+.particles-parallax {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -120vh;
+  height: 340vh;
+  width: 100%;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+.particles-parallax canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .particles-parallax {
+    top: 0;
+    height: 100%;
+    will-change: auto;
+    transform: none !important;
+  }
+}
+
 html.theme-light #particles-js {
   opacity: 0.62;
   background: radial-gradient(ellipse 100% 70% at 50% 0%, rgba(148, 163, 184, 0.22) 0%, transparent 55%),

@@ -1,5 +1,5 @@
 import './App.css'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Header from './components/Header.jsx'
 import Body from './components/Body.jsx'
 import Profile from './components/Profile.jsx'
@@ -18,6 +18,47 @@ function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   useScrollReveal();
 
+  useEffect(() => {
+    const layer = document.getElementById('particles-js');
+    if (!layer) return undefined;
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reducedMotion) {
+      layer.style.transform = '';
+      return undefined;
+    }
+
+    let rafId = 0;
+    let targetY = 0;
+    let currentY = 0;
+
+    const tick = () => {
+      currentY += (targetY - currentY) * 0.08;
+      layer.style.transform = `translate3d(0, ${currentY.toFixed(2)}px, 0)`;
+      if (Math.abs(targetY - currentY) > 0.1) {
+        rafId = requestAnimationFrame(tick);
+      } else {
+        currentY = targetY;
+        layer.style.transform = `translate3d(0, ${currentY.toFixed(2)}px, 0)`;
+        rafId = 0;
+      }
+    };
+
+    const onScroll = () => {
+      // Clamp to the oversized buffer so top/bottom never show empty gaps
+      const maxShift = window.innerHeight * 1.05;
+      targetY = Math.min(window.scrollY * 0.2, maxShift);
+      if (!rafId) rafId = requestAnimationFrame(tick);
+    };
+
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
+  }, []);
+
   const openProjectModal = (project) => {
     setSelectedProject(project);
     setIsModalOpen(true);
@@ -30,12 +71,10 @@ function App() {
 
   return (
     <div className="w-full min-h-screen relative">
-      {/* Below all page content (sibling z-[1] wrapper) — was inside main z-10 and stacked on top of Profile/Projects/Footer */}
-      <div
-        id="particles-js"
-        className="fixed inset-0 pointer-events-none z-0"
-        aria-hidden="true"
-      />
+      {/* Clip wrapper keeps parallax edges covered; particles layer is oversized */}
+      <div className="particles-parallax-clip fixed inset-0 pointer-events-none z-0" aria-hidden="true">
+        <div id="particles-js" className="particles-parallax" />
+      </div>
       <div className="relative z-[1]">
         <Header />
         <Body
