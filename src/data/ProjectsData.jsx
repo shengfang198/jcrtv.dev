@@ -390,7 +390,7 @@ const projectsData = {
       'Product concepts presented with clear form, materials, and hero shots',
       'Faster production handoff through organized artwork and mockups'
     ],
-    samples: [graphicArtboard, graphicProduct, graphicProductThumb2],
+    samples: [graphicProduct, graphicArtboard, graphicProductThumb2],
     liveUrl: null,
     githubUrl: null
   },

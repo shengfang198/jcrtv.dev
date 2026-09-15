@@ -109,7 +109,7 @@ const projectCards = [
     title: 'Product Design',
     badge: 'Product Design',
     summary: 'Product concepts, packaging, and presentation-ready 3D product visuals.',
-    image: '/GRAPHIC_ARTIST/Artboard 1.png',
+    image: '/GRAPHIC_ARTIST/productdesign.jpg',
     icon: (
       <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
