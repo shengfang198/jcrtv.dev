@@ -424,6 +424,44 @@ html {
   z-index: 10;
 }
 
+/* Career content panels: frosted glass, muted flashlight bleed */
+.career-entry {
+  position: relative;
+  z-index: 1;
+  isolation: isolate;
+  background: rgba(16, 17, 20, 0.58);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+}
+
+.flashlight-active .career-entry {
+  background: rgba(16, 17, 20, 0.7);
+}
+
+.flashlight-active .career-entry :is(h3, h4, p, span, li) {
+  text-shadow: none;
+  filter: none;
+}
+
+.flashlight-active .career-entry h4 {
+  color: #ffffff;
+}
+
+.flashlight-active .career-entry p,
+.flashlight-active .career-entry li {
+  color: #a3a3a3;
+}
+
+.flashlight-active .career-entry p.text-neutral-500 {
+  color: #737373;
+}
+
+.flashlight-active .career-entry .theme-chip {
+  color: #ffffff;
+}
+
 .project-card-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1201,6 +1239,135 @@ html.theme-light .theme-review-badge {
   }
 }
 
+/* Skill bars grow like the Performance analytics chart */
+.skill-bar-fill {
+  position: relative;
+  overflow: hidden;
+  transform: scaleX(0.08);
+  transform-origin: left center;
+  opacity: 0.35;
+  transition: transform 1.15s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.45s ease-out;
+}
+
+.skill-bar-fill.is-visible {
+  transform: scaleX(1);
+  opacity: 1;
+}
+
+.skill-bar-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -45%;
+  width: 45%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.skill-bar-fill.is-visible::after {
+  animation: skill-bar-shine 1.15s ease-out 0.35s both;
+}
+
+.skill-row:hover .skill-bar-fill.is-visible {
+  filter: brightness(1.18);
+}
+
+.skill-row:hover .skill-bar-fill.is-visible::after {
+  animation: skill-bar-shine 0.8s ease-out;
+}
+
+@keyframes skill-bar-shine {
+  from {
+    transform: translateX(0);
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  to {
+    transform: translateX(280%);
+    opacity: 0;
+  }
+}
+
+.tech-card {
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(18px) scale(0.96);
+  transition:
+    opacity 0.45s ease-out,
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.tech-card.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.tech-card.is-visible:hover {
+  background-color: rgba(38, 38, 38, 0.35);
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+.tech-card-inner {
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.tech-card.is-visible:hover .tech-card-inner {
+  transform: translateY(-6px) scale(1.04);
+}
+
+.tech-card-icon {
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.tech-card.is-visible:hover .tech-card-icon {
+  transform: scale(1.12) rotate(-6deg);
+}
+
+.tech-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 30%, rgba(255, 255, 255, 0.12) 50%, transparent 70%);
+  transform: translateX(-120%);
+  pointer-events: none;
+}
+
+.tech-card.is-visible:hover::after {
+  animation: tech-card-shine 0.7s ease-out;
+}
+
+@keyframes tech-card-shine {
+  to {
+    transform: translateX(120%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skill-bar-fill,
+  .skill-bar-fill.is-visible,
+  .skill-bar-fill.is-visible::after,
+  .skill-row:hover .skill-bar-fill.is-visible::after,
+  .tech-card,
+  .tech-card.is-visible,
+  .tech-card-inner,
+  .tech-card.is-visible:hover .tech-card-inner,
+  .tech-card.is-visible:hover .tech-card-icon,
+  .tech-card.is-visible:hover::after {
+    transition: none;
+    animation: none;
+    transform: none;
+    opacity: 1;
+    filter: none;
+  }
+}
+
 html.theme-light .runner-card {
   background: transparent;
   border-color: #e5e7eb;
@@ -1345,6 +1512,11 @@ html.theme-light .progress-bar {
   backdrop-filter: none;
 }
 
+html.theme-light .tech-card.is-visible:hover {
+  background-color: var(--light-muted);
+  border-color: rgba(15, 23, 42, 0.28);
+}
+
 html.theme-light .bg-white\/5 {
   background-color: rgba(15, 23, 42, 0.1);
 }
@@ -1366,6 +1538,33 @@ html.theme-light .border-white\/20 {
 html.theme-light .bg-neutral-800\/20,
 html.theme-light .bg-neutral-800\/30 {
   background-color: var(--light-muted);
+}
+
+html.theme-light .career-entry {
+  background: rgba(255, 255, 255, 0.58);
+  border-color: rgba(15, 23, 42, 0.12);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+
+html.theme-light .flashlight-active .career-entry {
+  background: rgba(255, 255, 255, 0.72);
+}
+
+html.theme-light .flashlight-active .career-entry h4 {
+  color: #0f172a;
+}
+
+html.theme-light .flashlight-active .career-entry p,
+html.theme-light .flashlight-active .career-entry li {
+  color: #334155;
+}
+
+html.theme-light .flashlight-active .career-entry p.text-neutral-500 {
+  color: #475569;
+}
+
+html.theme-light .flashlight-active .career-entry .theme-chip {
+  color: #ffffff;
 }
 
 html.theme-light .border-neutral-700\/50,

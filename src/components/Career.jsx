@@ -47,7 +47,7 @@ function Career() {
                     <span className="font-semibold text-white">Experience</span>
                   </div>
                   <div className="space-y-3 ml-7">
-                    <div className="flex items-start gap-3 p-3 rounded-lg bg-neutral-800/20 border border-neutral-700/50">
+                    <div className="career-entry flex items-start gap-3 p-4 rounded-xl">
                       <div className="theme-accent-dot w-2 h-2 bg-cyan-400 rounded-full mt-2 flex-shrink-0"></div>
                       <div className="flex-1">
                         <div className="flex items-center justify-between mb-1">
@@ -66,7 +66,7 @@ function Career() {
                         </ul>
                       </div>
                     </div>
-                    <div className="flex items-start gap-3 p-3 rounded-lg bg-neutral-800/20 border border-neutral-700/50">
+                    <div className="career-entry flex items-start gap-3 p-4 rounded-xl">
                       <div className="theme-accent-dot w-2 h-2 bg-cyan-400 rounded-full mt-2 flex-shrink-0"></div>
                       <div className="flex-1">
                         <div className="flex items-center justify-between mb-1">
@@ -85,7 +85,7 @@ function Career() {
                         </ul>
                       </div>
                     </div>
-                    <div className="flex items-start gap-3 p-3 rounded-lg bg-neutral-800/20 border border-neutral-700/50">
+                    <div className="career-entry flex items-start gap-3 p-4 rounded-xl">
                       <div className="theme-accent-dot w-2 h-2 bg-cyan-400 rounded-full mt-2 flex-shrink-0"></div>
                       <div className="flex-1">
                         <div className="flex items-center justify-between mb-1">
@@ -100,7 +100,7 @@ function Career() {
                         </ul>
                       </div>
                     </div>
-                    <div className="flex items-start gap-3 p-3 rounded-lg bg-neutral-800/20 border border-neutral-700/50">
+                    <div className="career-entry flex items-start gap-3 p-4 rounded-xl">
                       <div className="theme-accent-dot w-2 h-2 bg-cyan-400 rounded-full mt-2 flex-shrink-0"></div>
                       <div className="flex-1">
                         <div className="flex items-center justify-between mb-1">
@@ -118,7 +118,7 @@ function Career() {
                         </ul>
                       </div>
                     </div>
-                    <div className="flex items-start gap-3 p-3 rounded-lg bg-neutral-800/20 border border-neutral-700/50">
+                    <div className="career-entry flex items-start gap-3 p-4 rounded-xl">
                       <div className="theme-accent-dot w-2 h-2 bg-cyan-400 rounded-full mt-2 flex-shrink-0"></div>
                       <div className="flex-1">
                         <div className="flex items-center justify-between mb-1">
@@ -147,7 +147,7 @@ function Career() {
                     <span className="font-semibold text-white">Education</span>
                   </div>
                   <div className="space-y-3 ml-7">
-                    <div className="flex items-start gap-3 p-3 rounded-lg bg-neutral-800/20 border border-neutral-700/50">
+                    <div className="career-entry flex items-start gap-3 p-4 rounded-xl">
                       <div className="theme-accent-dot w-2 h-2 bg-indigo-400 rounded-full mt-2 flex-shrink-0"></div>
                       <div className="flex-1">
                         <div className="flex items-center justify-between mb-1">
@@ -166,7 +166,7 @@ function Career() {
                         </div>
                       </div>
                     </div>
-                    <div className="flex items-start gap-3 p-3 rounded-lg bg-neutral-800/20 border border-neutral-700/50">
+                    <div className="career-entry flex items-start gap-3 p-4 rounded-xl">
                       <div className="theme-accent-dot w-2 h-2 bg-indigo-400 rounded-full mt-2 flex-shrink-0"></div>
                       <div className="flex-1">
                         <div className="flex items-center justify-between mb-1">
@@ -177,7 +177,7 @@ function Career() {
                         <p className="text-neutral-500 text-xs mt-1">Strong foundation in digital media, layout, and user-centered design</p>
                       </div>
                     </div>
-                    <div className="flex items-start gap-3 p-3 rounded-lg bg-neutral-800/20 border border-neutral-700/50">
+                    <div className="career-entry flex items-start gap-3 p-4 rounded-xl">
                       <div className="theme-accent-dot w-2 h-2 bg-indigo-400 rounded-full mt-2 flex-shrink-0"></div>
                       <div className="flex-1">
                         <div className="flex items-center justify-between mb-1">
