@@ -14,7 +14,7 @@ function Career() {
 
         <div className="max-w-7xl mx-auto">
           {/* Career Card */}
-          <div className="animate-on-scroll flashlight-card bg-[#0C0D0F] rounded-[2.5rem] p-8 border border-white/5 relative overflow-hidden group hover:border-white/10 transition-colors backdrop-blur-2xl">
+          <div className="animate-on-scroll flashlight-card bg-[#0C0D0F] rounded-[2.5rem] max-sm:rounded-[1.75rem] p-8 max-sm:p-5 border border-white/5 relative overflow-hidden group hover:border-white/10 transition-colors backdrop-blur-2xl">
             <div className="flex justify-between items-start mb-6">
               <div className="px-3 py-1 bg-white/5 rounded-full border border-white/5 text-[10px] text-neutral-400 font-semibold uppercase tracking-wider">Career</div>
             </div>
@@ -46,11 +46,11 @@ function Career() {
                     </svg>
                     <span className="font-semibold text-white">Experience</span>
                   </div>
-                  <div className="space-y-3 ml-7">
+                  <div className="space-y-3 ml-7 max-sm:space-y-5 max-sm:ml-0">
                     <div className="career-entry flex items-start gap-3 p-4 rounded-xl">
                       <div className="theme-accent-dot w-2 h-2 bg-fuchsia-400 rounded-full mt-2 flex-shrink-0"></div>
                       <div className="flex-1">
-                        <div className="flex items-center justify-between mb-1">
+                        <div className="career-entry-head">
                           <h4 className="font-medium text-white">Shopify Developer</h4>
                           <span className="theme-chip bg-fuchsia-600 text-white text-xs px-2 py-1 rounded-full">2025–2026</span>
                         </div>
@@ -69,7 +69,7 @@ function Career() {
                     <div className="career-entry flex items-start gap-3 p-4 rounded-xl">
                       <div className="theme-accent-dot w-2 h-2 bg-fuchsia-400 rounded-full mt-2 flex-shrink-0"></div>
                       <div className="flex-1">
-                        <div className="flex items-center justify-between mb-1">
+                        <div className="career-entry-head">
                           <h4 className="font-medium text-white">SaaS Developer / Web Platform Developer</h4>
                           <span className="theme-chip bg-fuchsia-600 text-white text-xs px-2 py-1 rounded-full">2025</span>
                         </div>
@@ -88,7 +88,7 @@ function Career() {
                     <div className="career-entry flex items-start gap-3 p-4 rounded-xl">
                       <div className="theme-accent-dot w-2 h-2 bg-fuchsia-400 rounded-full mt-2 flex-shrink-0"></div>
                       <div className="flex-1">
-                        <div className="flex items-center justify-between mb-1">
+                        <div className="career-entry-head">
                           <h4 className="font-medium text-white">Real Estate Editor</h4>
                           <span className="theme-chip bg-fuchsia-600 text-white text-xs px-2 py-1 rounded-full">2025</span>
                         </div>
@@ -103,7 +103,7 @@ function Career() {
                     <div className="career-entry flex items-start gap-3 p-4 rounded-xl">
                       <div className="theme-accent-dot w-2 h-2 bg-fuchsia-400 rounded-full mt-2 flex-shrink-0"></div>
                       <div className="flex-1">
-                        <div className="flex items-center justify-between mb-1">
+                        <div className="career-entry-head">
                           <h4 className="font-medium text-white">UI Designer & Developer</h4>
                           <span className="theme-chip bg-fuchsia-600 text-white text-xs px-2 py-1 rounded-full">2024</span>
                         </div>
@@ -121,7 +121,7 @@ function Career() {
                     <div className="career-entry flex items-start gap-3 p-4 rounded-xl">
                       <div className="theme-accent-dot w-2 h-2 bg-fuchsia-400 rounded-full mt-2 flex-shrink-0"></div>
                       <div className="flex-1">
-                        <div className="flex items-center justify-between mb-1">
+                        <div className="career-entry-head">
                           <h4 className="font-medium text-white">Game Developer</h4>
                           <span className="theme-chip bg-fuchsia-600 text-white text-xs px-2 py-1 rounded-full">2023–2024</span>
                         </div>
@@ -146,11 +146,11 @@ function Career() {
                     </svg>
                     <span className="font-semibold text-white">Education</span>
                   </div>
-                  <div className="space-y-3 ml-7">
+                  <div className="space-y-3 ml-7 max-sm:space-y-5 max-sm:ml-0">
                     <div className="career-entry flex items-start gap-3 p-4 rounded-xl">
                       <div className="theme-accent-dot w-2 h-2 bg-purple-400 rounded-full mt-2 flex-shrink-0"></div>
                       <div className="flex-1">
-                        <div className="flex items-center justify-between mb-1">
+                        <div className="career-entry-head">
                           <h4 className="font-medium text-white">3D & Advanced C++ Programming</h4>
                           <span className="theme-chip bg-purple-600 text-white text-xs px-2 py-1 rounded-full">2024</span>
                         </div>
@@ -169,7 +169,7 @@ function Career() {
                     <div className="career-entry flex items-start gap-3 p-4 rounded-xl">
                       <div className="theme-accent-dot w-2 h-2 bg-purple-400 rounded-full mt-2 flex-shrink-0"></div>
                       <div className="flex-1">
-                        <div className="flex items-center justify-between mb-1">
+                        <div className="career-entry-head">
                           <h4 className="font-medium text-white">ICT / Multimedia Design</h4>
                           <span className="theme-chip bg-purple-600 text-white text-xs px-2 py-1 rounded-full">2016</span>
                         </div>
@@ -180,7 +180,7 @@ function Career() {
                     <div className="career-entry flex items-start gap-3 p-4 rounded-xl">
                       <div className="theme-accent-dot w-2 h-2 bg-purple-400 rounded-full mt-2 flex-shrink-0"></div>
                       <div className="flex-1">
-                        <div className="flex items-center justify-between mb-1">
+                        <div className="career-entry-head">
                           <h4 className="font-medium text-white">Bachelor of Science in Business Administration</h4>
                           <span className="theme-chip bg-purple-600 text-white text-xs px-2 py-1 rounded-full">2014</span>
                         </div>

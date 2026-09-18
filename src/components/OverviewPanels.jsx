@@ -289,13 +289,13 @@ function OverviewPanels({ projectsData }) {
       {/* Performance */}
       <section>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="animate-on-scroll flashlight-card bg-[#0C0D0F] rounded-[2.5rem] p-8 border border-white/5 relative overflow-hidden group hover:border-white/10 transition-colors backdrop-blur-2xl">
+          <div className="animate-on-scroll flashlight-card bg-[#0C0D0F] rounded-[2.5rem] max-sm:rounded-[1.75rem] p-8 max-sm:p-5 border border-white/5 relative overflow-hidden group hover:border-white/10 transition-colors backdrop-blur-2xl">
             <div className="flex justify-between items-start mb-6">
               <div className="px-3 py-1 bg-white/5 rounded-full border border-white/5 text-xs text-neutral-400 font-semibold uppercase tracking-wider">Performance</div>
             </div>
 
-            <div className="flex flex-row gap-6 md:gap-8 items-stretch">
-              <div className="w-1/2 flex flex-col justify-between min-w-0">
+            <div className="flex flex-row max-sm:flex-col gap-6 md:gap-8 items-stretch">
+              <div className="w-1/2 max-sm:w-full flex flex-col justify-between min-w-0">
                 <div>
                   <div className="flex items-center gap-2 mb-4 opacity-80">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-white shrink-0">
@@ -320,7 +320,7 @@ function OverviewPanels({ projectsData }) {
                 </div>
               </div>
 
-              <div className="w-1/2 flex flex-col min-w-0">
+              <div className="w-1/2 max-sm:w-full flex flex-col min-w-0">
                 <div className="flex items-center gap-2 mb-4 md:mb-6">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-white shrink-0">
                     <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>

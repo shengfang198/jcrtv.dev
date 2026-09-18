@@ -115,7 +115,7 @@ function Expertise() {
           <div className="w-20 h-px bg-white/10 mx-auto transition-all duration-300 underline-expand"></div>
         </div>
 
-        <div className="animate-on-scroll flashlight-card bg-[#0C0D0F] rounded-[2.5rem] p-8 border border-white/5 relative overflow-hidden group hover:border-white/10 transition-colors backdrop-blur-2xl">
+        <div className="animate-on-scroll flashlight-card bg-[#0C0D0F] rounded-[2.5rem] max-sm:rounded-[1.75rem] p-8 max-sm:p-5 border border-white/5 relative overflow-hidden group hover:border-white/10 transition-colors backdrop-blur-2xl">
             <div className="flex justify-between items-start mb-6">
               <div className="px-3 py-1 bg-white/5 rounded-full border border-white/5 text-[10px] text-neutral-400 font-semibold uppercase tracking-wider">Expertise</div>
             </div>
@@ -155,16 +155,16 @@ function Expertise() {
                 <p className="text-neutral-400 mb-8">
                   I work with a wide range of technologies and tools to create the best possible solutions for my clients.
                 </p>
-                <div ref={techsRef} className="grid grid-cols-3 gap-4">
+                <div ref={techsRef} className="grid grid-cols-3 max-sm:grid-cols-2 gap-4 max-sm:gap-3">
                   {technologies.map((tech, index) => (
                     <div
                       key={tech.name}
-                      className={`tech-card bg-neutral-800/20 p-4 rounded-xl border border-neutral-700/50${techsInView ? ' is-visible' : ''}`}
+                      className={`tech-card bg-neutral-800/20 p-4 max-sm:p-3 rounded-xl border border-neutral-700/50${techsInView ? ' is-visible' : ''}`}
                       style={{ transitionDelay: `${index * 0.08}s` }}
                     >
                       <div className="tech-card-inner flex flex-col items-center justify-center text-center">
-                        <img src={tech.src} alt={tech.alt} className="tech-card-icon h-16 w-16" />
-                        <h4 className="font-medium text-white mt-3">{tech.name}</h4>
+                        <img src={tech.src} alt={tech.alt} className="tech-card-icon h-16 w-16 max-sm:h-12 max-sm:w-12" />
+                        <h4 className="font-medium text-white mt-3 max-sm:mt-2">{tech.name}</h4>
                       </div>
                     </div>
                   ))}

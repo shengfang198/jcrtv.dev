@@ -1,11 +1,53 @@
 import React, { useEffect, useState } from 'react';
 
 function ProjectSidebar({ projectsData, activeId }) {
+  const [menuOpen, setMenuOpen] = useState(false);
   const projects = Object.values(projectsData || {});
+
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [activeId]);
+
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [menuOpen]);
 
   return (
     <aside className="project-page-sidebar">
-      <div className="project-page-sidebar-card">
+      <button
+        type="button"
+        className="project-page-hamburger"
+        aria-expanded={menuOpen}
+        aria-controls="project-page-menu"
+        aria-label={menuOpen ? 'Close project list' : 'Open project list'}
+        onClick={() => setMenuOpen((open) => !open)}
+      >
+        {menuOpen ? (
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+            <path d="M18 6 6 18" />
+            <path d="m6 6 12 12" />
+          </svg>
+        ) : (
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+            <path d="M4 6h16" />
+            <path d="M4 12h16" />
+            <path d="M4 18h16" />
+          </svg>
+        )}
+        <span>Projects</span>
+      </button>
+      {menuOpen ? (
+        <button
+          type="button"
+          className="project-page-sidebar-backdrop"
+          aria-label="Close project list"
+          onClick={() => setMenuOpen(false)}
+        />
+      ) : null}
+      <div id="project-page-menu" className={`project-page-sidebar-card${menuOpen ? ' is-open' : ''}`}>
         <p className="project-modal-label text-xs font-semibold uppercase tracking-wider mb-4">
           Projects
         </p>
@@ -15,6 +57,7 @@ function ProjectSidebar({ projectsData, activeId }) {
               key={item.id}
               href={`#/project/${item.id}`}
               className={`project-page-sidebar-link ink-fill-btn${item.id === activeId ? ' is-active' : ''}`}
+              onClick={() => setMenuOpen(false)}
             >
               <span className="project-page-sidebar-title">{item.title}</span>
               <span className="project-page-sidebar-meta">{item.category}</span>
@@ -40,7 +83,7 @@ function ProjectPage({ project, projectsData }) {
         <div className="project-page-layout">
           <ProjectSidebar projectsData={projectsData} />
           <div className="project-page-inner project-modal-container">
-            <div className="p-8">
+            <div className="p-8 max-sm:p-5">
               <h1 className="project-modal-title text-2xl font-bold mb-4">Project not found</h1>
               <p className="project-modal-text mb-6">This project page is unavailable or the link is invalid.</p>
               <a href="#overview" className="project-modal-action-btn inline-flex px-6 py-3 rounded-full font-medium transition-colors border">
@@ -108,7 +151,7 @@ function ProjectPage({ project, projectsData }) {
       <ProjectSidebar projectsData={projectsData} activeId={project.id} />
       <div className="project-page-inner project-modal-container relative w-full">
         <div className="project-modal-scroll">
-        <div className="project-modal-section-divider p-8 border-b">
+        <div className="project-modal-section-divider p-8 max-sm:p-5 border-b">
           <a
             href="#overview"
             className="project-page-back"
@@ -239,7 +282,7 @@ function ProjectPage({ project, projectsData }) {
           </div>
         </div>
 
-        <div className="p-8">
+        <div className="p-8 max-sm:p-5">
           <h2 className="project-modal-title text-xl font-bold mb-6">Case Study</h2>
 
           {project.caseStudy.map((section, index) => (
