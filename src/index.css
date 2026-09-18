@@ -1125,6 +1125,11 @@ html.theme-light .theme-review-badge {
   top: 6.5rem;
 }
 
+.project-page-hamburger,
+.project-page-sidebar-backdrop {
+  display: none;
+}
+
 .project-page-sidebar-card {
   border-radius: 2rem;
   background: #0c0d0f;
@@ -1202,6 +1207,47 @@ html.theme-light .theme-review-badge {
 
   .project-page-sidebar {
     position: static;
+  }
+}
+
+@media (max-width: 767px) {
+  .project-page-hamburger {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    padding: 0.65rem 0.95rem;
+    border-radius: 9999px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.06);
+    color: #ffffff;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .project-page-sidebar-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    border: 0;
+    background: rgba(0, 0, 0, 0.55);
+    cursor: pointer;
+  }
+
+  .project-page-sidebar-card {
+    display: none;
+    position: fixed;
+    top: 5.5rem;
+    left: 1rem;
+    right: 1rem;
+    z-index: 50;
+    max-height: calc(100vh - 7rem);
+  }
+
+  .project-page-sidebar-card.is-open {
+    display: block;
   }
 }
 

@@ -9,6 +9,20 @@ function ProjectSidebar({ projectsData, activeId }) {
   }, [activeId]);
 
   useEffect(() => {
+    const media = window.matchMedia('(min-width: 768px)');
+    const closeOnDesktop = (event) => {
+      if (event.matches) {
+        setMenuOpen(false);
+      }
+    };
+    media.addEventListener('change', closeOnDesktop);
+    if (media.matches) {
+      setMenuOpen(false);
+    }
+    return () => media.removeEventListener('change', closeOnDesktop);
+  }, []);
+
+  useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : '';
     return () => {
       document.body.style.overflow = '';
