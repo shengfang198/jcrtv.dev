@@ -46,18 +46,31 @@ function OverviewPanels({ projectsData }) {
     const el = analyticsChartRef.current;
     if (!el) return undefined;
 
+    const reveal = () => setChartInView(true);
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setChartInView(true);
+          reveal();
           observer.disconnect();
         }
       },
-      { threshold: 0.35 }
+      { threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
     );
 
     observer.observe(el);
-    return () => observer.disconnect();
+
+    const fallback = window.setTimeout(() => {
+      const rect = el.getBoundingClientRect();
+      if (rect.bottom > 0 && rect.top < window.innerHeight) {
+        reveal();
+      }
+    }, 700);
+
+    return () => {
+      observer.disconnect();
+      window.clearTimeout(fallback);
+    };
   }, []);
 
   const searchQuery = seoSearchTerm.trim().toLowerCase();
@@ -332,30 +345,36 @@ function OverviewPanels({ projectsData }) {
                 </div>
 
                 <div ref={analyticsChartRef} className="relative h-40 sm:h-48 md:h-56 mb-3 md:mb-4 flex-1 overflow-hidden">
-                  <svg
-                    width="100%"
-                    height="100%"
-                    viewBox="0 0 400 220"
-                    preserveAspectRatio="none"
-                    className={`analytics-chart absolute inset-0${chartInView ? ' is-visible' : ''}`}
-                  >
-                    <path
-                      className="analytics-line analytics-line-blue"
-                      d="M0,200 Q67,180 133,160 T267,120 T400,70"
-                      stroke="#3B82F6"
-                      strokeWidth="3"
-                      fill="none"
-                      strokeLinecap="round"
-                    />
-                    <path
-                      className="analytics-line analytics-line-green"
-                      d="M0,195 Q67,170 133,145 T267,95 T400,30"
-                      stroke="#10B981"
-                      strokeWidth="3"
-                      fill="none"
-                      strokeLinecap="round"
-                    />
-                  </svg>
+                  <div className={`analytics-chart absolute inset-0${chartInView ? ' is-visible' : ''}`}>
+                    <svg
+                      width="100%"
+                      height="100%"
+                      viewBox="0 0 400 220"
+                      preserveAspectRatio="none"
+                      className="analytics-chart-svg"
+                    >
+                      <path
+                        className="analytics-line analytics-line-blue"
+                        d="M0,200 Q67,180 133,160 T267,120 T400,70"
+                        pathLength="1"
+                        stroke="#3B82F6"
+                        strokeWidth="4"
+                        vectorEffect="non-scaling-stroke"
+                        fill="none"
+                        strokeLinecap="round"
+                      />
+                      <path
+                        className="analytics-line analytics-line-green"
+                        d="M0,195 Q67,170 133,145 T267,95 T400,30"
+                        pathLength="1"
+                        stroke="#10B981"
+                        strokeWidth="4"
+                        vectorEffect="non-scaling-stroke"
+                        fill="none"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                  </div>
                 </div>
 
                 <div className="performance-years flex justify-between text-[10px] sm:text-xs text-neutral-500 font-medium mb-2 md:mb-3">

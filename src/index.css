@@ -1416,6 +1416,8 @@ html.theme-light .theme-review-badge {
 }
 
 .analytics-chart {
+  width: 100%;
+  height: 100%;
   transform: scaleY(0.08);
   transform-origin: center bottom;
   opacity: 0.35;
@@ -1427,9 +1429,16 @@ html.theme-light .theme-review-badge {
   opacity: 1;
 }
 
+.analytics-chart-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
 .analytics-line {
-  stroke-dasharray: 720;
-  stroke-dashoffset: 720;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
 }
 
 .analytics-chart.is-visible .analytics-line-blue {
@@ -1443,6 +1452,12 @@ html.theme-light .theme-review-badge {
 @keyframes analytics-draw {
   to {
     stroke-dashoffset: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .analytics-line {
+    stroke-width: 5;
   }
 }
 
