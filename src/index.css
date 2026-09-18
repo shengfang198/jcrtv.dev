@@ -1424,7 +1424,8 @@ html.theme-light .theme-review-badge {
   transition: transform 1.15s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.45s ease-out;
 }
 
-.analytics-chart.is-visible {
+.analytics-chart.is-visible,
+.animate-on-scroll.animate .analytics-chart {
   transform: scaleY(1);
   opacity: 1;
 }
@@ -1437,19 +1438,24 @@ html.theme-light .theme-review-badge {
 }
 
 .analytics-line {
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 0;
 }
 
-.analytics-chart.is-visible .analytics-line-blue {
-  animation: analytics-draw 1.2s ease-out forwards;
+.analytics-chart.is-visible .analytics-line-blue,
+.animate-on-scroll.animate .analytics-line-blue {
+  animation: analytics-draw 1.2s ease-out both;
 }
 
-.analytics-chart.is-visible .analytics-line-green {
-  animation: analytics-draw 1.2s ease-out 0.18s forwards;
+.analytics-chart.is-visible .analytics-line-green,
+.animate-on-scroll.animate .analytics-line-green {
+  animation: analytics-draw 1.2s ease-out 0.18s both;
 }
 
 @keyframes analytics-draw {
+  from {
+    stroke-dashoffset: 1000;
+  }
   to {
     stroke-dashoffset: 0;
   }
@@ -1464,7 +1470,9 @@ html.theme-light .theme-review-badge {
 @media (prefers-reduced-motion: reduce) {
   .analytics-chart,
   .analytics-chart.is-visible .analytics-line-blue,
-  .analytics-chart.is-visible .analytics-line-green {
+  .analytics-chart.is-visible .analytics-line-green,
+  .animate-on-scroll.animate .analytics-line-blue,
+  .animate-on-scroll.animate .analytics-line-green {
     transition: none;
     animation: none;
     transform: none;

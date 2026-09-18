@@ -356,20 +356,18 @@ function OverviewPanels({ projectsData }) {
                       <path
                         className="analytics-line analytics-line-blue"
                         d="M0,200 Q67,180 133,160 T267,120 T400,70"
-                        pathLength="1"
+                        pathLength="1000"
                         stroke="#3B82F6"
                         strokeWidth="4"
-                        vectorEffect="non-scaling-stroke"
                         fill="none"
                         strokeLinecap="round"
                       />
                       <path
                         className="analytics-line analytics-line-green"
                         d="M0,195 Q67,170 133,145 T267,95 T400,30"
-                        pathLength="1"
+                        pathLength="1000"
                         stroke="#10B981"
                         strokeWidth="4"
-                        vectorEffect="non-scaling-stroke"
                         fill="none"
                         strokeLinecap="round"
                       />
