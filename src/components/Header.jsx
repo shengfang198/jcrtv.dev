@@ -21,23 +21,25 @@ function Header() {
       <nav className="site-header-nav grid grid-cols-3 items-center bg-[#0C0D0F] w-full h-14 md:h-16 max-w-5xl border border-white/5 rounded-full px-3 md:px-8 py-2 md:py-3 shadow-2xl">
 
         <div className="flex items-center justify-start">
-          <span className="text-base md:text-lg font-bold tracking-tight text-white">jcrtv<span className="site-header-brand-muted hidden sm:inline text-white/40">.dev</span></span>
+          <a href="#overview" className="site-header-link text-base md:text-lg font-bold tracking-tight text-white hover:text-fuchsia-400 transition-colors scroll-smooth" aria-label="Home">
+            jcrtv<span className="site-header-brand-muted hidden sm:inline text-white/40">.dev</span>
+          </a>
         </div>
 
-        <div className="flex items-center justify-center gap-1.5 sm:gap-3 md:gap-5 text-[10px] sm:text-xs md:text-sm font-medium whitespace-nowrap">
-          <a href="#overview" className="site-header-link text-white hover:text-indigo-400 transition-colors scroll-smooth">Overview</a>
-          <a href="#about" className="site-header-link text-white hover:text-indigo-400 transition-colors scroll-smooth">Profile</a>
-          <a href="#projects" className="site-header-link text-white hover:text-indigo-400 transition-colors scroll-smooth">Projects</a>
-          <a href="#skills" className="site-header-link text-white hover:text-indigo-400 transition-colors scroll-smooth">Expertise</a>
-          <a href="#resume" className="site-header-link hidden sm:inline text-white hover:text-indigo-400 transition-colors scroll-smooth">Career</a>
-          <a href="#insights" className="site-header-link text-white hover:text-indigo-400 transition-colors scroll-smooth">Insights</a>
+        <div className="flex items-center justify-center gap-1.5 sm:gap-3 md:gap-5 text-[11px] sm:text-xs md:text-sm font-medium whitespace-nowrap">
+          <a href="#overview" className="site-header-link text-white hover:text-fuchsia-400 transition-colors scroll-smooth">Overview</a>
+          <a href="#about" className="site-header-link text-white hover:text-fuchsia-400 transition-colors scroll-smooth">Profile</a>
+          <a href="#projects" className="site-header-link text-white hover:text-fuchsia-400 transition-colors scroll-smooth">Projects</a>
+          <a href="#skills" className="site-header-link text-white hover:text-fuchsia-400 transition-colors scroll-smooth">Expertise</a>
+          <a href="#resume" className="site-header-link hidden sm:inline text-white hover:text-fuchsia-400 transition-colors scroll-smooth">Career</a>
+          <a href="#insights" className="site-header-link text-white hover:text-fuchsia-400 transition-colors scroll-smooth">Insights</a>
         </div>
 
         <div className="flex items-center justify-end gap-2 text-sm font-medium">
           <button
             type="button"
             onClick={toggleTheme}
-            className="theme-toggle-btn inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 p-2 text-neutral-200 transition-colors hover:bg-white/10 focus:outline-none"
+            className="theme-toggle-btn inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 p-2 text-neutral-200 focus:outline-none"
             aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
             title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
           >
@@ -59,7 +61,7 @@ function Header() {
               </svg>
             )}
           </button>
-          <a href="#footer" className="site-header-contact-btn hover:bg-white/10 focus:outline-none transition-colors flex text-sm font-medium text-neutral-200 bg-white/10 border border-white/10 rounded-full px-2 sm:px-4 py-1.5 sm:py-2 gap-x-2 gap-y-2 items-center scroll-smooth">
+          <a href="#footer" className="site-header-contact-btn focus:outline-none flex text-sm font-medium text-neutral-200 bg-white/10 border border-white/10 rounded-full px-2 sm:px-4 py-1.5 sm:py-2 gap-x-2 gap-y-2 items-center scroll-smooth">
             <span className="hidden md:inline text-xs font-semibold tracking-tight">Contact me</span>
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-neutral-400">
               <path d="M5 12h14"></path>

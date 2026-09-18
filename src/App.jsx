@@ -10,13 +10,20 @@ import MiniGame from './components/MiniGame.jsx'
 import OverviewPanels from './components/OverviewPanels.jsx'
 import Clock from './components/Clock.jsx'
 import Footer from './components/Footer.jsx'
+import ProjectPage from './components/ProjectPage.jsx'
 import projectsData from './data/ProjectsData.jsx'
 import useScrollReveal from './hooks/useScrollReveal.js'
+import useInkFill from './hooks/useInkFill.js'
+
+function getProjectIdFromHash(hash = window.location.hash) {
+  const match = hash.match(/^#\/project\/([^/?#]+)/);
+  return match ? decodeURIComponent(match[1]) : null;
+}
 
 function App() {
-  const [selectedProject, setSelectedProject] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [projectId, setProjectId] = useState(() => getProjectIdFromHash());
   useScrollReveal();
+  useInkFill();
 
   useEffect(() => {
     const layer = document.getElementById('particles-js');
@@ -59,15 +66,38 @@ function App() {
     };
   }, []);
 
-  const openProjectModal = (project) => {
-    setSelectedProject(project);
-    setIsModalOpen(true);
-  };
+  useEffect(() => {
+    const onHashChange = () => {
+      setProjectId(getProjectIdFromHash());
+    };
 
-  const closeProjectModal = () => {
-    setIsModalOpen(false);
-    setSelectedProject(null);
-  };
+    window.addEventListener('hashchange', onHashChange);
+    return () => window.removeEventListener('hashchange', onHashChange);
+  }, []);
+
+  useEffect(() => {
+    if (projectId) {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      return undefined;
+    }
+
+    const sectionHash = window.location.hash;
+    const frame = window.requestAnimationFrame(() => {
+      if (sectionHash && sectionHash !== '#') {
+        const target = document.querySelector(sectionHash);
+        if (target) {
+          target.scrollIntoView({ behavior: 'instant', block: 'start' });
+          return;
+        }
+      }
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    });
+
+    return () => window.cancelAnimationFrame(frame);
+  }, [projectId]);
+
+  const selectedProject = projectId ? projectsData[projectId] : null;
+  const isProjectPage = Boolean(projectId);
 
   return (
     <div className="w-full min-h-screen relative">
@@ -77,30 +107,23 @@ function App() {
       </div>
       <div className="relative z-[1]">
         <Header />
-        <Body
-          projectsData={projectsData}
-          selectedProject={selectedProject}
-          isModalOpen={isModalOpen}
-          onOpenModal={openProjectModal}
-          onCloseModal={closeProjectModal}
-        />
-        <Profile />
-        <Clock />
-        <Projects
-          projectsData={projectsData}
-          onOpenModal={openProjectModal}
-          selectedProject={selectedProject}
-          isModalOpen={isModalOpen}
-          onCloseModal={closeProjectModal}
-        />
-        <Expertise />
-        <Career />
-        <MiniGame />
-        <OverviewPanels
-          projectsData={projectsData}
-          onOpenModal={openProjectModal}
-        />
-        <Footer />
+        <div className={isProjectPage ? 'hidden' : undefined}>
+          <Body />
+          <Profile />
+          <Clock />
+          <Projects />
+          <Expertise />
+          <Career />
+          <MiniGame />
+          <OverviewPanels projectsData={projectsData} />
+          <Footer />
+        </div>
+        {isProjectPage && (
+          <ProjectPage
+            project={selectedProject}
+            projectsData={projectsData}
+          />
+        )}
       </div>
     </div>
   )

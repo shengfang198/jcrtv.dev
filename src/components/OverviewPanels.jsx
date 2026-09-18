@@ -29,7 +29,7 @@ const devTerms = [
   { letter: 'Z', items: 'Zero downtime deployment, Zeplin (UI collaboration), Z-index (CSS layering)', description: 'Releases without outages, design handoff, and stacking UI layers.' }
 ];
 
-function OverviewPanels({ projectsData, onOpenModal }) {
+function OverviewPanels({ projectsData }) {
   const [seoSearchTerm, setSeoSearchTerm] = useState('');
   const [extraAttendees, setExtraAttendees] = useState(() => {
     const saved = localStorage.getItem('designReviewAttendees');
@@ -78,8 +78,7 @@ function OverviewPanels({ projectsData, onOpenModal }) {
       type: 'Project',
       title: project.title,
       text: `${project.description} ${project.category} ${(project.tech || []).join(' ')}`,
-      href: '#projects',
-      project
+      href: `#/project/${project.id}`
     }))
   ];
 
@@ -100,12 +99,15 @@ function OverviewPanels({ projectsData, onOpenModal }) {
   const openSearchResult = (result) => {
     if (result.href === '#') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else if (result.href) {
+      return;
+    }
+    if (result.href?.startsWith('#/project/')) {
+      window.location.hash = result.href;
+      return;
+    }
+    if (result.href) {
       const target = document.querySelector(result.href);
       if (target) target.scrollIntoView({ behavior: 'smooth' });
-    }
-    if (result.project && onOpenModal) {
-      onOpenModal(result.project);
     }
   };
 
@@ -267,7 +269,7 @@ function OverviewPanels({ projectsData, onOpenModal }) {
                 </div>
               ) : (
                 <button
-                  className="theme-review-btn bg-white/5 text-white hover:bg-white/10 text-sm px-5 py-2.5 rounded-full font-semibold transition-colors border border-white/5"
+                  className="theme-review-btn bg-white/5 text-white text-sm px-5 py-2.5 rounded-full font-semibold border border-white/5"
                   onClick={() => {
                     const newCount = extraAttendees + 1;
                     setExtraAttendees(newCount);

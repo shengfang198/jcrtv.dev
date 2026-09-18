@@ -83,7 +83,7 @@ function SkillRow({ name, level, index, inView }) {
     <div className="skill-row">
       <div className="flex justify-between mb-2">
         <span className="font-medium text-white">{name}</span>
-        <span className="font-medium text-blue-200 text-white/80">{shown}%</span>
+        <span className="font-medium text-fuchsia-200 text-white/80">{shown}%</span>
       </div>
       <div className="skill-bar-track w-full rounded-full h-3 border border-white/10 overflow-hidden">
         <div

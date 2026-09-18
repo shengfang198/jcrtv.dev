@@ -56,7 +56,7 @@ function Profile() {
                   href="./resume__.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="theme-action-btn bg-indigo-500 hover:bg-indigo-600 focus:bg-blue-600 focus:outline-none text-white text-sm px-5 py-2.5 rounded-full font-semibold transition-colors border border-blue-500 inline-block"
+                  className="theme-action-btn bg-fuchsia-600 focus:outline-none text-white text-sm px-5 py-2.5 rounded-full font-semibold border border-fuchsia-600 inline-block"
                 >
                   View CV
                 </a>

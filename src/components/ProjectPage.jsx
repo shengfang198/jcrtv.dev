@@ -1,6 +1,32 @@
 import React, { useEffect, useState } from 'react';
 
-function ProjectModal({ isOpen, onClose, project, projectsData, onSelectProject }) {
+function ProjectSidebar({ projectsData, activeId }) {
+  const projects = Object.values(projectsData || {});
+
+  return (
+    <aside className="project-page-sidebar">
+      <div className="project-page-sidebar-card">
+        <p className="project-modal-label text-xs font-semibold uppercase tracking-wider mb-4">
+          Projects
+        </p>
+        <nav className="project-page-sidebar-list" aria-label="Project list">
+          {projects.map((item) => (
+            <a
+              key={item.id}
+              href={`#/project/${item.id}`}
+              className={`project-page-sidebar-link ink-fill-btn${item.id === activeId ? ' is-active' : ''}`}
+            >
+              <span className="project-page-sidebar-title">{item.title}</span>
+              <span className="project-page-sidebar-meta">{item.category}</span>
+            </a>
+          ))}
+        </nav>
+      </div>
+    </aside>
+  );
+}
+
+function ProjectPage({ project, projectsData }) {
   const [currentSampleIndex, setCurrentSampleIndex] = useState(0);
   const saasDemoUrl = 'https://virtual-editor-dsel.onrender.com/';
 
@@ -8,13 +34,25 @@ function ProjectModal({ isOpen, onClose, project, projectsData, onSelectProject 
     setCurrentSampleIndex(0);
   }, [project?.id]);
 
-  if (!isOpen || !project) return null;
-
-  const handleOverlayClick = (e) => {
-    if (e.target === e.currentTarget) {
-      onClose();
-    }
-  };
+  if (!project) {
+    return (
+      <section className="project-page">
+        <div className="project-page-layout">
+          <ProjectSidebar projectsData={projectsData} />
+          <div className="project-page-inner project-modal-container">
+            <div className="p-8">
+              <h1 className="project-modal-title text-2xl font-bold mb-4">Project not found</h1>
+              <p className="project-modal-text mb-6">This project page is unavailable or the link is invalid.</p>
+              <a href="#overview" className="project-modal-action-btn inline-flex px-6 py-3 rounded-full font-medium transition-colors border">
+                Back to Home
+              </a>
+            </div>
+          </div>
+          <div className="project-page-layout-spacer" aria-hidden="true" />
+        </div>
+      </section>
+    );
+  }
 
   const nextSample = () => {
     if (project.samples && project.samples.length > 1) {
@@ -64,79 +102,27 @@ function ProjectModal({ isOpen, onClose, project, projectsData, onSelectProject 
     return <img src={sample} alt={alt} className="project-modal-sample-media" />;
   };
 
-  const variantGroups = [
-    {
-      ids: ['ecommerce', 'ecommerce-custom'],
-      options: [
-        { id: 'ecommerce', label: 'Shopify' },
-        { id: 'ecommerce-custom', label: 'Custom Store' }
-      ]
-    },
-    {
-      ids: ['graphic-product-design', 'product-design'],
-      options: [
-        { id: 'graphic-product-design', label: 'Graphic Design' },
-        { id: 'product-design', label: 'Product Design' }
-      ]
-    },
-    {
-      ids: ['bridgehub', 'writely'],
-      options: [
-        { id: 'bridgehub', label: 'Bridgehub' },
-        { id: 'writely', label: 'Writely' }
-      ]
-    }
-  ];
-  const activeVariantGroup = variantGroups.find((group) => group.ids.includes(project.id));
-
   return (
-    <div className="project-modal-overlay fixed inset-0 z-[60] flex items-center justify-center p-4" onClick={handleOverlayClick}>
-      <div className="project-modal-container relative max-w-4xl w-full max-h-[85vh]">
-        <button
-          type="button"
-          onClick={onClose}
-          className="project-modal-close-btn"
-          aria-label="Close modal"
-        >
-          <svg className="project-modal-close-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M18 6L6 18" />
-            <path d="M6 6l12 12" />
-          </svg>
-        </button>
+    <section className="project-page">
+      <div className="project-page-layout">
+      <ProjectSidebar projectsData={projectsData} activeId={project.id} />
+      <div className="project-page-inner project-modal-container relative w-full">
         <div className="project-modal-scroll">
-        <div className="project-modal-section-divider p-8 pr-12 border-b">
-          {activeVariantGroup && projectsData && onSelectProject && (
-            <div className="mb-5">
-              {activeVariantGroup.ids.includes('bridgehub') && (
-                <p className="project-modal-label text-xs font-semibold uppercase tracking-wider mb-3">
-                  More projects
-                </p>
-              )}
-              <div className="flex flex-wrap gap-2">
-                {activeVariantGroup.options.map((option) => (
-                  <button
-                    key={option.id}
-                    type="button"
-                    className={`ecommerce-option-btn${project.id === option.id ? ' is-active' : ''}`}
-                    onClick={() => {
-                      const nextProject = projectsData[option.id];
-                      if (nextProject) onSelectProject(nextProject);
-                    }}
-                  >
-                    {option.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
+        <div className="project-modal-section-divider p-8 border-b">
+          <a
+            href="#overview"
+            className="project-page-back"
+          >
+            Back to Home
+          </a>
 
-          <div className="flex items-start mb-6 pr-8">
+          <div className="flex items-start mb-6">
             <div className="flex items-center gap-3">
               <div className={`theme-accent-icon w-12 h-12 rounded-full ${project.color} flex items-center justify-center`}>
                 {project.icon}
               </div>
               <div>
-                <h2 className="project-modal-title text-2xl font-bold">{project.title}</h2>
+                <h1 className="project-modal-title text-2xl font-bold">{project.title}</h1>
                 <span className={`theme-chip ${project.badgeColor} text-xs px-3 py-1 rounded-full font-medium`}>
                   {project.category}
                 </span>
@@ -153,7 +139,7 @@ function ProjectModal({ isOpen, onClose, project, projectsData, onSelectProject 
                   href={project.liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="project-modal-action-btn px-6 py-3 rounded-full font-medium transition-colors border"
+                  className="project-modal-action-btn theme-action-btn ink-fill-btn px-6 py-3 rounded-full font-medium border"
                 >
                   View Live Project
                 </a>
@@ -163,7 +149,7 @@ function ProjectModal({ isOpen, onClose, project, projectsData, onSelectProject 
                   href={project.videoUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="project-modal-video-btn px-6 py-3 rounded-full font-medium transition-colors border"
+                  className="project-modal-video-btn theme-action-btn ink-fill-btn px-6 py-3 rounded-full font-medium border"
                 >
                   {project.id === 'saas-platform' ? 'View SaaS Demo' : 'View Game Video'}
                 </a>
@@ -173,7 +159,7 @@ function ProjectModal({ isOpen, onClose, project, projectsData, onSelectProject 
                   href={saasDemoUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="project-modal-saas-top-link inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 rounded-full font-semibold transition-colors"
+                  className="project-modal-saas-top-link theme-action-btn ink-fill-btn inline-flex items-center gap-2 bg-fuchsia-600 text-white px-5 py-2.5 rounded-full font-semibold"
                 >
                   Open SaaS App
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -212,7 +198,7 @@ function ProjectModal({ isOpen, onClose, project, projectsData, onSelectProject 
                       <button
                         type="button"
                         onClick={prevSample}
-                        className="project-modal-nav-btn px-4 py-2 rounded-full font-medium transition-colors border flex items-center gap-2"
+                        className="project-modal-nav-btn px-4 py-2 rounded-full font-medium border flex items-center gap-2"
                       >
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                           <path d="M15 18l-6-6 6-6"/>
@@ -225,7 +211,7 @@ function ProjectModal({ isOpen, onClose, project, projectsData, onSelectProject 
                       <button
                         type="button"
                         onClick={nextSample}
-                        className="project-modal-nav-btn px-4 py-2 rounded-full font-medium transition-colors border flex items-center gap-2"
+                        className="project-modal-nav-btn px-4 py-2 rounded-full font-medium border flex items-center gap-2"
                       >
                         Next
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -253,12 +239,12 @@ function ProjectModal({ isOpen, onClose, project, projectsData, onSelectProject 
           </div>
         </div>
 
-        <div className="p-8 pr-8">
-          <h3 className="project-modal-title text-xl font-bold mb-6">Case Study</h3>
+        <div className="p-8">
+          <h2 className="project-modal-title text-xl font-bold mb-6">Case Study</h2>
 
           {project.caseStudy.map((section, index) => (
             <div key={index} className="mb-8">
-              <h4 className="project-modal-title text-lg font-semibold mb-3">{section.title}</h4>
+              <h3 className="project-modal-title text-lg font-semibold mb-3">{section.title}</h3>
               <p className="project-modal-text leading-relaxed">{section.content}</p>
               {section.bullets && (
                 <ul className="mt-4 space-y-2">
@@ -274,7 +260,7 @@ function ProjectModal({ isOpen, onClose, project, projectsData, onSelectProject 
           ))}
 
           <div className="project-modal-section-divider border-t pt-6">
-            <h4 className="project-modal-title text-lg font-semibold mb-4">Key Results</h4>
+            <h3 className="project-modal-title text-lg font-semibold mb-4">Key Results</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {project.results.map((result, index) => (
                 <div key={index} className="flex items-center gap-3">
@@ -287,8 +273,10 @@ function ProjectModal({ isOpen, onClose, project, projectsData, onSelectProject 
         </div>
         </div>
       </div>
-    </div>
+      <div className="project-page-layout-spacer" aria-hidden="true" />
+      </div>
+    </section>
   );
 }
 
-export default ProjectModal;
+export default ProjectPage;

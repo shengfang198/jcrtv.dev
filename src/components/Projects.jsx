@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import ProjectModal from './ProjectModal.jsx';
 
 function ProjectCardMedia({ image, images, title }) {
   const slides = images?.length
@@ -185,16 +184,8 @@ const projectCards = [
   }
 ];
 
-function Projects({ projectsData, onOpenModal, selectedProject, isModalOpen, onCloseModal }) {
-  const openProjectModal = (projectId) => {
-    const project = projectsData[projectId];
-    if (project) {
-      onOpenModal(project);
-    }
-  };
-
+function Projects() {
   return (
-    <>
       <section id="projects" className="py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
@@ -209,44 +200,34 @@ function Projects({ projectsData, onOpenModal, selectedProject, isModalOpen, onC
 
           <div className="project-card-grid">
             {projectCards.map((card) => (
-              <button
+              <a
                 key={card.id}
-                type="button"
+                href={`#/project/${card.id}`}
                 className="project-grid-card animate-on-scroll flashlight-card bg-[#0C0D0F] rounded-[2rem] border border-white/5 hover:border-white/10 transition-colors backdrop-blur-2xl"
-                onClick={() => openProjectModal(card.id)}
               >
                 <ProjectCardMedia image={card.image} images={card.images} title={card.title} />
                 <div className="project-grid-card-body">
                   <div className="flex items-start gap-3 mb-3">
-                    <div className="theme-accent-icon w-8 h-8 rounded-full bg-cyan-600 flex items-center justify-center shrink-0">
+                    <div className="theme-accent-icon w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center shrink-0">
                       {card.icon}
                     </div>
                     <div className="min-w-0 flex-1">
                       <h3 className="font-semibold text-white leading-snug text-left">{card.title}</h3>
-                      <span className="theme-chip bg-cyan-600 text-white text-[10px] px-2 py-0.5 rounded-full inline-block mt-1">
+                      <span className="theme-chip bg-purple-600 text-white text-[10px] px-2 py-0.5 rounded-full inline-block mt-1">
                         {card.badge}
                       </span>
                     </div>
                   </div>
                   <p className="text-neutral-400 text-sm text-left flex-1 mb-4">{card.summary}</p>
-                  <span className="theme-action-btn self-start bg-cyan-600 text-white px-3 py-1.5 rounded-full text-xs font-medium">
+                  <span className="theme-action-btn ink-fill-btn self-start bg-fuchsia-600 text-white px-3 py-1.5 rounded-full text-xs font-medium">
                     View Project
                   </span>
                 </div>
-              </button>
+              </a>
             ))}
           </div>
         </div>
       </section>
-
-      <ProjectModal
-        isOpen={isModalOpen}
-        onClose={onCloseModal}
-        project={selectedProject}
-        projectsData={projectsData}
-        onSelectProject={onOpenModal}
-      />
-    </>
   );
 }
 

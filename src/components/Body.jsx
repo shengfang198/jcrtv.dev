@@ -1,38 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
-function Body(props) {
+function Body() {
   const [typedText, setTypedText] = useState('');
   const [showCursor, setShowCursor] = useState(false);
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null); // null | 'success' | 'error'
-
-  // Prevent background scrolling when modal is open
-  useEffect(() => {
-    if (props.isModalOpen) {
-      document.body.style.overflow = 'hidden';
-
-      // Close modal when user scrolls (navigation)
-      const handleScroll = () => {
-        if (props.isModalOpen) {
-          props.onCloseModal();
-        }
-      };
-
-      // Add scroll listener
-      window.addEventListener('scroll', handleScroll, { passive: true });
-
-      // Cleanup scroll listener
-      return () => {
-        window.removeEventListener('scroll', handleScroll);
-        document.body.style.overflow = '';
-      };
-    } else {
-      // Restore default scroll behavior
-      document.body.style.overflow = '';
-      return () => {};
-    }
-  }, [props.isModalOpen, props.onCloseModal, props]);
 
   useEffect(() => {
     // Load particles.js script
