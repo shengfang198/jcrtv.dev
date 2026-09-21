@@ -108,7 +108,7 @@ function Footer() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-8">
             <div>
-              <div className="footer-brand text-2xl font-bold mb-4">
+              <div className="footer-brand text-2xl font-bold mb-4 text-white">
                 Jay Creative
               </div>
             </div>
