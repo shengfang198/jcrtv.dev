@@ -70,7 +70,7 @@ function ProjectSidebar({ projectsData, activeId }) {
             <a
               key={item.id}
               href={`#/project/${item.id}`}
-              className={`project-page-sidebar-link ink-fill-btn${item.id === activeId ? ' is-active' : ''}`}
+              className={`project-page-sidebar-link${item.id === activeId ? ' is-active' : ''}`}
               onClick={() => setMenuOpen(false)}
             >
               <span className="project-page-sidebar-title">{item.title}</span>

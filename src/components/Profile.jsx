@@ -35,7 +35,7 @@ function Profile() {
 
             <div className="border-t border-white/5 pt-5">
               <p className="text-sm text-neutral-400 mb-6 leading-relaxed">
-                I'm a passionate designer and developer with a strong focus on creating intuitive user experiences and clean, efficient code. With over 5 years in the industry, I've helped startups and established companies bring their digital products to life.
+                I'm a designer and full-stack developer with 5+ years of experience, focused on building business-driven digital products that combine intuitive user experiences, scalable systems, and clean, efficient code. I help startups and established businesses turn ideas into practical, high-quality solutions that improve workflows, enhance customer experiences, and support business growth.
               </p>
 
               <div className="flex justify-between items-center">

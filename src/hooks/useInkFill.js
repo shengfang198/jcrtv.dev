@@ -5,11 +5,8 @@ const INK_SELECTOR = [
   '.theme-get-in-touch-btn',
   '.theme-action-btn',
   '.theme-review-btn',
-  '.site-header-contact-btn',
-  '.theme-toggle-btn',
   '.runner-play-btn',
   '.ecommerce-option-btn',
-  '.project-page-sidebar-link',
 ].join(', ');
 
 const EXIT_MS = 480;
