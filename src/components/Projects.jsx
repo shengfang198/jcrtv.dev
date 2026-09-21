@@ -85,7 +85,7 @@ const projectCards = [
     icon: (
       <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 18V12h6v6a6 6 0 0 1-12 0Z" />
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 12a6 6 0 1-5.5-3.5M9 12a6 6 0 1 5.5-3.5" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 12a6 6 0 1 0-5.5-3.5M9 12a6 6 0 1 1 5.5-3.5" />
       </svg>
     )
   },

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 function ProjectSidebar({ projectsData, activeId }) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -83,13 +83,105 @@ function ProjectSidebar({ projectsData, activeId }) {
   );
 }
 
-function ProjectPage({ project, projectsData }) {
-  const [currentSampleIndex, setCurrentSampleIndex] = useState(0);
-  const saasDemoUrl = 'https://virtual-editor-dsel.onrender.com/';
+function getDrivePreviewUrl(url) {
+  if (typeof url !== 'string') return '';
+  const match = url.match(/\/file\/d\/([^/]+)/);
+  return match ? `https://drive.google.com/file/d/${match[1]}/preview` : url;
+}
+
+function isDriveLink(url) {
+  return typeof url === 'string' && url.includes('drive.google.com');
+}
+
+function isVideoFile(url) {
+  return typeof url === 'string' && (url.endsWith('.mp4') || url.endsWith('.mov') || url.endsWith('.webm'));
+}
+
+function SampleMedia({ sample, alt }) {
+  const [ready, setReady] = useState(false);
+  const imageRef = useRef(null);
+  const hasSample = typeof sample === 'string' && Boolean(sample);
 
   useEffect(() => {
+    setReady(false);
+    const image = imageRef.current;
+    if (image?.complete && image.naturalWidth > 0) {
+      setReady(true);
+    }
+  }, [sample]);
+
+  if (!hasSample) {
+    return (
+      <div className="project-modal-media-loader" role="status" aria-label="Sample unavailable">
+        <span className="project-modal-text text-sm">Sample unavailable</span>
+      </div>
+    );
+  }
+
+  const markReady = () => setReady(true);
+
+  const mediaClass = `project-modal-sample-media${ready ? ' is-ready' : ''}`;
+
+  let media;
+  if (isDriveLink(sample)) {
+    media = (
+      <iframe
+        key={sample}
+        src={getDrivePreviewUrl(sample)}
+        title={alt}
+        className={mediaClass}
+        allow="autoplay"
+        onLoad={markReady}
+      />
+    );
+  } else if (isVideoFile(sample)) {
+    media = (
+      <video
+        key={sample}
+        src={sample}
+        controls
+        className={mediaClass}
+        onLoadedData={markReady}
+        onError={markReady}
+      >
+        Your browser does not support the video tag.
+      </video>
+    );
+  } else {
+    media = (
+      <img
+        key={sample}
+        ref={imageRef}
+        src={sample}
+        alt={alt}
+        className={mediaClass}
+        onLoad={markReady}
+        onError={markReady}
+      />
+    );
+  }
+
+  return (
+    <>
+      {media}
+      {!ready && (
+        <div className="project-modal-media-loader" role="status" aria-live="polite" aria-label="Loading sample">
+          <span className="project-modal-media-spinner" aria-hidden="true" />
+        </div>
+      )}
+    </>
+  );
+}
+
+function ProjectPage({ project, projectsData }) {
+  const [currentSampleIndex, setCurrentSampleIndex] = useState(0);
+  const [sampleProjectId, setSampleProjectId] = useState(project?.id);
+  const saasDemoUrl = 'https://virtual-editor-dsel.onrender.com/';
+
+  if (project?.id !== sampleProjectId) {
+    setSampleProjectId(project?.id);
     setCurrentSampleIndex(0);
-  }, [project?.id]);
+  }
 
   if (!project) {
     return (
@@ -111,52 +203,27 @@ function ProjectPage({ project, projectsData }) {
     );
   }
 
+  const samples = project.samples || [];
+  const sampleCount = samples.length;
+  const safeSampleIndex = sampleCount
+    ? Math.min(Math.max(currentSampleIndex, 0), sampleCount - 1)
+    : 0;
+  const currentSample = samples[safeSampleIndex];
+
   const nextSample = () => {
-    if (project.samples && project.samples.length > 1) {
+    if (sampleCount > 1) {
       setCurrentSampleIndex((prev) =>
-        prev === project.samples.length - 1 ? 0 : prev + 1
+        prev === sampleCount - 1 ? 0 : prev + 1
       );
     }
   };
 
   const prevSample = () => {
-    if (project.samples && project.samples.length > 1) {
+    if (sampleCount > 1) {
       setCurrentSampleIndex((prev) =>
-        prev === 0 ? project.samples.length - 1 : prev - 1
+        prev === 0 ? sampleCount - 1 : prev - 1
       );
     }
-  };
-
-  const getDrivePreviewUrl = (url) => {
-    const match = url.match(/\/file\/d\/([^/]+)/);
-    return match ? `https://drive.google.com/file/d/${match[1]}/preview` : url;
-  };
-
-  const isDriveLink = (url) => url.includes('drive.google.com');
-  const isVideoFile = (url) =>
-    url.endsWith('.mp4') || url.endsWith('.mov') || url.endsWith('.webm');
-
-  const renderSampleMedia = (sample, alt) => {
-    if (isDriveLink(sample)) {
-      return (
-        <iframe
-          src={getDrivePreviewUrl(sample)}
-          title={alt}
-          className="project-modal-sample-media"
-          allow="autoplay"
-        />
-      );
-    }
-
-    if (isVideoFile(sample)) {
-      return (
-        <video src={sample} controls className="project-modal-sample-media">
-          Your browser does not support the video tag.
-        </video>
-      );
-    }
-
-    return <img src={sample} alt={alt} className="project-modal-sample-media" />;
   };
 
   return (
@@ -242,14 +309,14 @@ function ProjectPage({ project, projectsData }) {
 
             <div className="project-modal-panel rounded-xl p-6 border">
               <div className="project-modal-label text-xs font-semibold uppercase tracking-wider mb-3">Project Samples</div>
-              {project.samples ? (
-                project.samples.length > 1 ? (
+              {sampleCount ? (
+                sampleCount > 1 ? (
                   <div className="relative w-full min-w-0">
                     <div className="project-modal-media-wrap project-modal-sample-frame rounded-lg">
-                      {renderSampleMedia(
-                        project.samples[currentSampleIndex],
-                        `Sample ${currentSampleIndex + 1}`
-                      )}
+                      <SampleMedia
+                        sample={currentSample}
+                        alt={`Sample ${safeSampleIndex + 1}`}
+                      />
                     </div>
                     <div className="flex justify-between items-center mt-4">
                       <button
@@ -263,7 +330,7 @@ function ProjectPage({ project, projectsData }) {
                         Previous
                       </button>
                       <span className="project-modal-text text-sm">
-                        {currentSampleIndex + 1} / {project.samples.length}
+                        {safeSampleIndex + 1} / {sampleCount}
                       </span>
                       <button
                         type="button"
@@ -279,12 +346,12 @@ function ProjectPage({ project, projectsData }) {
                   </div>
                 ) : (
                   <div className="project-modal-sample-grid grid gap-3 sm:gap-4 min-w-0 w-full grid-cols-1">
-                    {project.samples.map((sample, index) => (
+                    {samples.map((sample, index) => (
                       <div
                         key={index}
                         className="project-modal-media-wrap project-modal-sample-frame rounded-lg"
                       >
-                        {renderSampleMedia(sample, `Sample ${index + 1}`)}
+                        <SampleMedia sample={sample} alt={`Sample ${index + 1}`} />
                       </div>
                     ))}
                   </div>

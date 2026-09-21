@@ -1343,6 +1343,7 @@ html.theme-light .theme-review-badge {
 }
 
 .project-modal-sample-frame {
+  position: relative;
   width: min(100%, 56rem);
   aspect-ratio: 16 / 10;
   height: auto;
@@ -1369,6 +1370,52 @@ html.theme-light .theme-review-badge {
   object-fit: contain;
   object-position: center;
   border: 0;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.project-modal-sample-media.is-ready {
+  opacity: 1;
+}
+
+.project-modal-media-loader {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(12, 13, 15, 0.5);
+}
+
+.project-modal-media-spinner {
+  width: 1.75rem;
+  height: 1.75rem;
+  border: 2px solid rgba(255, 255, 255, 0.22);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: project-media-spin 0.7s linear infinite;
+}
+
+@keyframes project-media-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-modal-sample-media {
+    transition: none;
+  }
+
+  .project-modal-media-spinner {
+    animation: none;
+    border-top-color: rgba(255, 255, 255, 0.55);
+  }
+
+  html.theme-light .project-modal-media-spinner {
+    border-top-color: rgba(15, 23, 42, 0.45);
+  }
 }
 
 .project-modal-nav-btn,
@@ -2265,6 +2312,15 @@ html.theme-light .project-modal-chip {
 
 html.theme-light .project-modal-media-wrap {
   background: transparent;
+}
+
+html.theme-light .project-modal-media-loader {
+  background: rgba(226, 232, 240, 0.72);
+}
+
+html.theme-light .project-modal-media-spinner {
+  border-color: rgba(15, 23, 42, 0.16);
+  border-top-color: #0f172a;
 }
 
 html.theme-light .project-modal-nav-btn,
