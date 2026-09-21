@@ -121,9 +121,8 @@ function Footer() {
                   <li><span className="text-neutral-400 font-medium">Full-Stack Development</span></li>
                   <li><span className="text-neutral-400 font-medium">Shopify Development</span></li>
                   <li><span className="text-neutral-400 font-medium">SaaS Development</span></li>
-                  <li><span className="text-neutral-400 font-medium">Graphic Design</span></li>
+                  <li><span className="text-neutral-400 font-medium">Graphic Design / Product Design</span></li>
                   <li><span className="text-neutral-400 font-medium">3D Visualization</span></li>
-                  <li><span className="text-neutral-400 font-medium">Product Design</span></li>
                 </ul>
               </div>
 

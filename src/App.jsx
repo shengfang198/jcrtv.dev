@@ -17,7 +17,11 @@ import useInkFill from './hooks/useInkFill.js'
 
 function getProjectIdFromHash(hash = window.location.hash) {
   const match = hash.match(/^#\/project\/([^/?#]+)/);
-  return match ? decodeURIComponent(match[1]) : null;
+  if (!match) return null;
+  const id = decodeURIComponent(match[1]);
+  if (id === 'product-design') return 'graphic-product-design';
+  if (id === 'nft-marketplace') return 'ui-ux';
+  return id;
 }
 
 function App() {

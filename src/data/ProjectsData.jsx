@@ -11,9 +11,9 @@ const archViz8 = '/3DVISUALIZATION/8.jpg'
 const archViz9 = '/3DVISUALIZATION/9.jpg'
 const archViz10 = '/3DVISUALIZATION/10.jpg'
 const figmaAnimation = 'https://drive.google.com/file/d/1KRrW8Bg9ccNf9I82qfNe2WUtX9wb9ffi/view?usp=sharing'
-const figmaUiEcommerce = '/FIGMA/eccomerce.png'
-const figmaNNLVS = '/FIGMA/NNLVS.png'
-const figmaPresentation = '/FIGMA/presentation.png'
+const figmaUiEcommerce = '/FIGMA/prototype.png'
+const figmaNNLVS = '/FIGMA/ninelives-prototype.png'
+const figmaPresentation = '/FIGMA/VEprototype.png'
 const figmaVS = '/FIGMA/VS.png'
 const gamedevImage = '/GAMEDEV/indiegame.jpeg'
 const saasImage = '/SAAS/thumbnail.png'
@@ -277,19 +277,19 @@ const projectsData = {
   },
   'graphic-product-design': {
     id: 'graphic-product-design',
-    title: 'Graphic Design',
-    description: 'Graphic design for branding, apparel, campaign art, and visual communication.',
-    category: 'Graphic Design',
+    title: 'Graphic Design / Product Design',
+    description: 'Graphic design and product design for branding, apparel, packaging, and presentation-ready visuals.',
+    category: 'Graphic Design / Product Design',
     color: 'bg-purple-500/20',
     badgeColor: 'bg-fuchsia-500/20 text-fuchsia-300',
     client: 'Various Clients',
     duration: 'Ongoing Projects',
-    tech: ['Adobe Photoshop', 'Adobe Illustrator', 'Figma'],
+    tech: ['Adobe Photoshop', 'Adobe Illustrator', 'Figma', 'Blender'],
     icon: <svg className="w-5 h-5 text-fuchsia-300" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 19l7-7 3 3-7 7-3-3z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><circle cx="11" cy="11" r="2" strokeWidth={1.5}></circle></svg>,
     caseStudy: [
       {
         title: 'Overview',
-        content: 'I create brand visuals, apparel graphics, and campaign artwork that are clear, consistent, and ready for print or digital use.'
+        content: 'I create brand visuals, apparel graphics, product concepts, and presentations that are clear, consistent, and ready for print, digital, or launch.'
       },
       {
         title: 'Services Provided',
@@ -297,64 +297,6 @@ const projectsData = {
         bullets: [
           'Brand and visual identity design',
           'Poster, apparel, and campaign graphics',
-          'Layout, typography, and print-ready artwork'
-        ]
-      },
-      {
-        title: 'Tech Stack',
-        content: '',
-        bullets: [
-          'Adobe Photoshop – retouching, mockups, and campaign art',
-          'Adobe Illustrator – vector graphics, logos, and print assets',
-          'Figma – layout exploration and design systems'
-        ]
-      },
-      {
-        title: 'Client Challenge',
-        content: 'Clients needed brand-ready graphic assets that communicated identity across print, apparel, and digital channels.'
-      },
-      {
-        title: 'Design & Technical Implementation',
-        content: 'I built a graphic design workflow from concept through production-ready assets.',
-        bullets: [
-          'Developed graphic systems for brand, apparel, and campaign use',
-          'Prepared print-ready and digital artwork for production'
-        ]
-      },
-      {
-        title: 'Workflow Optimization',
-        content: 'Reusable mockup templates and graphic layouts reduced turnaround time while keeping brand presentation consistent.'
-      }
-    ],
-    results: [
-      'Delivered graphic design assets for branding and marketing',
-      'Stronger visual identity across print, apparel, and digital use',
-      'Faster production handoff through organized artwork and mockups'
-    ],
-    samples: [graphicArtist8, graphicArtist9, graphicArtist1, graphicArtist2, graphicArtist5],
-    liveUrl: null,
-    githubUrl: null
-  },
-  'product-design': {
-    id: 'product-design',
-    title: 'Product Design',
-    description: 'Product design for form studies, packaging, and presentation-ready product visuals.',
-    category: 'Product Design',
-    color: 'bg-purple-500/20',
-    badgeColor: 'bg-fuchsia-500/20 text-fuchsia-300',
-    client: 'Various Clients',
-    duration: 'Ongoing Projects',
-    tech: ['Blender', 'Adobe Photoshop', 'Adobe Illustrator'],
-    icon: <svg className="w-5 h-5 text-fuchsia-300" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12"></path></svg>,
-    caseStudy: [
-      {
-        title: 'Overview',
-        content: 'I design product concepts and presentations that communicate form, material, and identity before manufacturing or launch.'
-      },
-      {
-        title: 'Services Provided',
-        content: '',
-        bullets: [
           'Product design concepts and form studies',
           'Packaging visuals and product hero shots',
           '3D product modeling, materials, and presentation'
@@ -364,38 +306,113 @@ const projectsData = {
         title: 'Tech Stack',
         content: '',
         bullets: [
-          'Blender – product modeling and presentation renders',
-          'Adobe Photoshop – retouching and campaign mockups',
-          'Adobe Illustrator – packaging layouts and vector assets'
+          'Adobe Photoshop – retouching, mockups, and campaign art',
+          'Adobe Illustrator – vector graphics, logos, packaging, and print assets',
+          'Figma – layout exploration and design systems',
+          'Blender – product modeling and presentation renders'
         ]
       },
       {
         title: 'Client Challenge',
-        content: 'Clients needed product visuals that communicated form, material, and identity before manufacturing or launch.'
+        content: 'Clients needed brand-ready graphic assets and product visuals that communicated identity, form, and material across print, apparel, digital, and pre-launch presentations.'
       },
       {
         title: 'Design & Technical Implementation',
-        content: 'I built a product design workflow from concept through presentation-ready assets.',
+        content: 'I built a graphic and product design workflow from concept through production-ready and presentation-ready assets.',
         bullets: [
+          'Developed graphic systems for brand, apparel, and campaign use',
           'Created product form, packaging, and surface-detail studies',
-          'Rendered product hero shots with accurate materials and lighting'
+          'Rendered product hero shots with accurate materials and lighting',
+          'Prepared print-ready and digital artwork for production'
         ]
       },
       {
         title: 'Workflow Optimization',
-        content: 'Reusable product lighting setups and mockup templates reduced turnaround time while keeping presentation consistent.'
+        content: 'Reusable mockup templates, lighting setups, and graphic layouts reduced turnaround time while keeping brand and product presentation consistent.'
       }
     ],
     results: [
+      'Delivered graphic and product design assets for branding, marketing, and launch',
+      'Stronger visual identity across print, apparel, and digital use',
       'Product concepts presented with clear form, materials, and hero shots',
       'Faster production handoff through organized artwork and mockups'
     ],
-    samples: [graphicProduct, graphicArtboard, graphicProductThumb2],
+    samples: [graphicArtist8, graphicArtist9, graphicArtist1, graphicArtist2, graphicArtist5, graphicProduct, graphicArtboard, graphicProductThumb2],
     liveUrl: null,
     githubUrl: null
   },
-  'nft-marketplace': {
-    id: 'nft-marketplace',
+  'ai-agent-automation': {
+    id: 'ai-agent-automation',
+    title: 'AI Agent / Automation',
+    description: 'An AI agent that helps users with everyday tasks, research, and connected tools so work can move from question to result without switching apps.',
+    category: 'AI Agent · Research · Tools · Automation',
+    color: 'bg-purple-500/20',
+    badgeColor: 'bg-fuchsia-500/20 text-fuchsia-300',
+    client: 'Self-Initiated',
+    duration: 'Ongoing Project',
+    tech: ['OpenAI', 'Tool Calling', 'Web Search', 'Python', 'Node.js', 'PostgreSQL', 'APIs'],
+    icon: <svg className="w-5 h-5 text-fuchsia-300" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="8" width="6" height="6" rx="1" strokeWidth={1.5}></rect><rect x="15" y="4" width="6" height="6" rx="1" strokeWidth={1.5}></rect><rect x="15" y="14" width="6" height="6" rx="1" strokeWidth={1.5}></rect><path d="M9 11h3M12 7v8" strokeWidth={1.5} strokeLinecap="round"></path></svg>,
+    caseStudy: [
+      {
+        title: 'Overview',
+        content: 'This AI agent is built to help with the work people do all day: research a topic, break a task into steps, use the right tools, and return a clear result. Instead of jumping between search, notes, and apps, the user asks once and the agent handles the follow-through.'
+      },
+      {
+        title: 'What It Helps With',
+        content: '',
+        bullets: [
+          'Everyday tasks: planning, follow-ups, summaries, and next-step checklists',
+          'Research: gathering sources, comparing options, and turning findings into a short brief',
+          'Tools: calling search, docs, calendars, and APIs when a task needs more than text',
+          'Automation: repeating the same workflow so the user does not redo it by hand'
+        ]
+      },
+      {
+        title: 'How It Works',
+        content: 'The agent reads the request, chooses a plan, and uses tools when needed.',
+        bullets: [
+          'Understands the goal in plain language',
+          'Breaks the job into research, action, and review steps',
+          'Uses connected tools to search, fetch data, and complete the task',
+          'Returns a usable answer, file, or next action instead of leftover notes'
+        ]
+      },
+      {
+        title: 'Tech Stack',
+        content: '',
+        bullets: [
+          'OpenAI – reasoning, planning, and natural-language help',
+          'Tool calling – research, search, and app actions from one agent',
+          'Python / Node.js – agent logic and tool adapters',
+          'PostgreSQL – database for tasks, research, and agent history',
+          'APIs – connect calendars, docs, and internal systems'
+        ]
+      },
+      {
+        title: 'Problem Statement',
+        content: 'People lose time switching tabs to research, copy results into another tool, and repeat the same task later. The agent keeps the task, the research, and the tools in one place.'
+      },
+      {
+        title: 'Solution Approach',
+        content: 'I designed the agent around a simple loop: understand the task, research if needed, use tools, then deliver a result the user can act on.',
+        bullets: [
+          'Task-first prompts so the agent starts with what the user wants done',
+          'Research tools for sources, comparisons, and summaries',
+          'Connected actions so the agent can move beyond chat into real work'
+        ]
+      }
+    ],
+    results: [
+      'One agent for daily tasks, research, and tool use',
+      'Faster path from a question to a finished brief or action',
+      'Repeatable workflows that the agent can run again without extra setup'
+    ],
+    samples: ['/AI/ai-agent-thumbnail.png'],
+    liveUrl: null,
+    githubUrl: null
+  },
+  'ui-ux': {
+    id: 'ui-ux',
     title: 'UI UX Design',
     description: 'Creative UI/UX projects showcasing user interface design, interaction design, and digital product solutions.',
     category: 'UI/UX Design',
@@ -585,60 +602,69 @@ const projectsData = {
   'bridgehub': {
     id: 'bridgehub',
     title: 'Bridgehub',
-    description: 'API-powered job marketplace that searches and aggregates live listings from multiple public job-board APIs into one search experience.',
-    category: 'Job Marketplace · API Integration',
+    description: 'Bridgehub is jobs, learning, placement, and community in one place: an agency hub with job listings, a simple forum, and space to build with others.',
+    category: 'Agency · Jobs · Learning · Placement · Community',
     color: 'bg-purple-500/20',
     badgeColor: 'bg-fuchsia-500/20 text-fuchsia-300',
     client: 'Self-Initiated',
-    duration: 'Self-Initiated Project',
-    tech: ['React', 'Vite', 'REST APIs', 'Arbeitnow API', 'Remotive API', 'RemoteOK API', 'OnRender'],
+    duration: 'Coming Project',
+    tech: ['React', 'Vite', 'REST APIs', 'Forum', 'OnRender'],
     icon: <svg className="w-5 h-5 text-fuchsia-300" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="7" width="20" height="14" rx="2" strokeWidth={1.5}></rect><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"></path><path strokeLinecap="round" strokeWidth={1.5} d="M2 13h20"></path></svg>,
     caseStudy: [
       {
         title: 'Project Overview',
-        content: 'Bridgehub is a job-search marketplace that pulls listings from public job APIs and presents them in a single interface. Users can search by job title, keywords, or company, review role details, and open the original posting to apply.'
+        content: 'Bridgehub is built as a single place for jobs, learning, placement, and community. It works like an agency hub: people can browse job listings, follow learning paths, find placement support, and talk in a simple forum instead of spreading that work across separate sites.'
+      },
+      {
+        title: 'What It Includes',
+        content: '',
+        bullets: [
+          'Agency hub for talent, clients, and placement in one workspace',
+          'Job listings with search, role details, and apply flow',
+          'Learning space for skills, guides, and progress toward roles',
+          'Placement support that connects candidates with openings',
+          'Simple forum for community questions, builds, and discussion',
+          'Build area where users can share work and follow projects'
+        ]
       },
       {
         title: 'Key Features',
         content: '',
         bullets: [
-          'Unified search across multiple job-board APIs',
-          'Live listings from Arbeitnow, Remotive, and RemoteOK',
-          'Search by job title, keywords, or company',
-          'Source status so users can see which APIs are loading or failed',
+          'Jobs, learning, placement, and community in one product',
           'Job cards with company, location, and tags',
-          'Detail view with description and an apply link to the original posting',
-          'Pagination for browsing large result sets'
+          'Forum threads for help, builds, and community updates',
+          'Shared profiles so listing, learning, and placement stay connected'
         ]
       },
       {
         title: 'Tech Stack',
-        content: 'Frontend job marketplace that consumes public REST job-board APIs and deploys as a cloud web app.',
+        content: 'Web app for listings, learning, placement, and a lightweight community forum.',
         bullets: [
           'Frontend: React and Vite',
-          'Data: Arbeitnow, Remotive, and RemoteOK job APIs',
-          'Integration: client-side REST fetches with normalized listing records',
+          'Listings and community: REST APIs with a simple forum model',
           'Hosting: OnRender'
         ]
       },
       {
         title: 'Problem Statement',
-        content: 'Job seekers have to check several boards to find remote and international roles. The goal was one search surface that combines those feeds without forcing users to visit each source separately.'
+        content: 'Job boards, courses, placement, and community usually live in different products. People lose context when they apply somewhere, learn somewhere else, and ask questions in a third place. Bridgehub keeps those pieces together.'
       },
       {
         title: 'Solution Approach',
-        content: 'I built a React search app that requests listings from each API, maps them into a shared job model, and filters results by the query in the search bar.',
+        content: 'I designed Bridgehub as one hub with four connected surfaces: jobs, learning, placement, and a simple forum for the community.',
         bullets: [
-          'Normalized title, company, location, tags, description, and apply URL from each source',
-          'Tracked per-source loading and error state while results stream in',
-          'Kept apply actions on the original listing URL so applications stay on the source site'
+          'Job listing flow for search, detail, and apply',
+          'Learning and placement paths tied to the same user profile',
+          'Forum for community discussion without extra social overhead',
+          'Agency-style layout so talent and openings meet in one place'
         ]
       }
     ],
     results: [
-      'Shipped a live job-search marketplace on OnRender',
-      'Aggregated listings from three public job-board APIs in one UI',
-      'Gave users keyword search, source status, and direct apply links'
+      'One hub for jobs, learning, placement, and community',
+      'Agency, job listing, build, and simple forum in a single product',
+      'Clearer path from learning a skill to applying and joining the community'
     ],
     samples: [bridgehubImage],
     liveUrl: 'https://bridgehub-hp5e.onrender.com/',

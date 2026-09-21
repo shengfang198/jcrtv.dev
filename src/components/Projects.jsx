@@ -124,10 +124,13 @@ const projectCards = [
   },
   {
     id: 'graphic-product-design',
-    title: 'Graphic Design',
-    badge: 'Graphic Design',
-    summary: 'Brand graphics, apparel art, and visual identity for print and digital.',
-    image: '/GRAPHIC_ARTIST/Samuraipng.png',
+    title: 'Graphic Design / Product Design',
+    badge: 'Graphic Design / Product Design',
+    summary: 'Brand graphics, apparel art, product concepts, packaging, and presentation-ready visuals.',
+    images: [
+      { src: '/GRAPHIC_ARTIST/Samuraipng.png', label: 'Graphic Design' },
+      { src: '/GRAPHIC_ARTIST/productdesign.jpg', label: 'Product Design' }
+    ],
     icon: (
       <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l7-7 3 3-7 7-3-3z" />
@@ -138,24 +141,26 @@ const projectCards = [
     )
   },
   {
-    id: 'product-design',
-    title: 'Product Design',
-    badge: 'Product Design',
-    summary: 'Product concepts, packaging, and presentation-ready 3D product visuals.',
-    image: '/GRAPHIC_ARTIST/productdesign.jpg',
+    id: 'ai-agent-automation',
+    title: 'AI Agent / Automation',
+    badge: 'AI Agents · Automation',
+    summary: 'An AI agent that helps with daily tasks, research, and connected tools in one workflow.',
+    image: '/AI/ai-agent-thumbnail.png',
     icon: (
       <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12" />
+        <rect x="3" y="8" width="6" height="6" rx="1" strokeWidth={2} />
+        <rect x="15" y="4" width="6" height="6" rx="1" strokeWidth={2} />
+        <rect x="15" y="14" width="6" height="6" rx="1" strokeWidth={2} />
+        <path d="M9 11h3M12 7v8" strokeWidth={2} strokeLinecap="round" />
       </svg>
     )
   },
   {
-    id: 'nft-marketplace',
-    title: 'UI UX',
-    badge: 'Graphic Design · UI/UX',
+    id: 'ui-ux',
+    title: 'UI UX Design',
+    badge: 'UI/UX · Figma',
     summary: 'User interface design, interaction design, and digital product solutions.',
-    image: '/FIGMA/NNLVS.png',
+    image: '/FIGMA/ninelives-prototype.png',
     icon: (
       <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
         <circle cx="12" cy="12" r="10" strokeWidth={2} />
@@ -167,8 +172,8 @@ const projectCards = [
   {
     id: 'bridgehub',
     title: 'See More Projects',
-    badge: 'More Projects',
-    summary: 'Explore additional builds including Bridgehub and Writely — an AI-powered docs and notes editor.',
+    badge: 'Coming Projects',
+    summary: 'Bridgehub is jobs, learning, placement, and community in one place. Also includes Writely, an AI-powered docs and notes editor.',
     image: '/BRIDGEHUB/bridge-hub-thumbnail.png',
     images: [
       { src: '/BRIDGEHUB/bridge-hub-thumbnail.png', label: 'Bridgehub' },
