@@ -1813,17 +1813,41 @@ html.theme-light footer a.hover\:text-white:hover {
 }
 
 .footer-brand {
-  background-image: linear-gradient(to right, #818cf8, #c084fc);
+  background-image: linear-gradient(90deg, #d946ef, #a855f7, #22d3ee, #a855f7, #d946ef);
+  background-size: 280% 100%;
+  background-position: 0% 50%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: footer-brand-shift 7s linear infinite;
+}
+
+html.theme-light .footer-brand {
+  background-image: linear-gradient(90deg, #d946ef, #a855f7, #22d3ee, #a855f7, #d946ef);
+  background-size: 280% 100%;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
-html.theme-light .footer-brand {
-  background-image: none;
-  -webkit-background-clip: unset;
-  background-clip: border-box;
-  color: #4338ca;
+@keyframes footer-brand-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-brand,
+  html.theme-light .footer-brand {
+    animation: none;
+    background-image: none;
+    -webkit-background-clip: unset;
+    background-clip: border-box;
+    color: #a855f7;
+  }
 }
 
 /* Section eyebrow + title row (Browse My Recent, Projects, etc.) */
