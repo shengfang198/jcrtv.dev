@@ -1486,28 +1486,62 @@ html.theme-light .theme-review-badge {
 .runner-player {
   background: transparent;
   box-shadow: none;
-  transition: transform 0.08s linear;
+  z-index: 2;
+  transform-origin: center center;
+  pointer-events: none;
+}
+
+.runner-player.is-running {
+  will-change: transform;
 }
 
 .runner-player-sprite {
   image-rendering: pixelated;
   mix-blend-mode: multiply;
   background: transparent;
+  pointer-events: none;
 }
 
 .runner-obstacle {
-  box-shadow: 0 0 12px rgba(15, 23, 42, 0.25);
-  image-rendering: pixelated;
+  left: 0;
+  z-index: 1;
+  border-radius: 5px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28), 0 4px 10px rgba(0, 0, 0, 0.18);
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.2), transparent 46%);
+  pointer-events: none;
+}
+
+.runner-obstacle.is-top {
+  top: 0;
+  border-radius: 0 0 5px 5px;
+}
+
+.runner-obstacle.is-bottom {
+  bottom: 0;
+  border-radius: 5px 5px 0 0;
 }
 
 .runner-play-btn {
   background: #2563eb;
   color: #ffffff;
   border: 1px solid #2563eb;
+  width: 9.25rem;
+  height: 2.5rem;
+  padding: 0 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  box-shadow: none;
 }
 
-.runner-play-btn:hover {
+.runner-play-btn:hover,
+.runner-play-btn:focus,
+.runner-play-btn:focus-visible {
   background: #1d4ed8;
+  border-color: #1d4ed8;
+  outline: none;
+  box-shadow: none;
 }
 
 .runner-card-surface {
@@ -1520,6 +1554,25 @@ html.theme-light .theme-review-badge {
 
 .runner-track {
   background: linear-gradient(180deg, rgba(12, 13, 15, 0.55) 0%, rgba(12, 13, 15, 0.78) 100%);
+  box-shadow: inset 0 0 42px rgba(0, 0, 0, 0.28);
+  cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
+}
+
+.runner-track-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(8, 9, 11, 0.4);
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  pointer-events: none;
 }
 
 .runner-track-grid {
@@ -1744,10 +1797,12 @@ html.theme-light .runner-card-surface {
 html.theme-light .runner-track {
   background: #e5e7eb;
   border-color: #d1d5db;
+  box-shadow: inset 0 0 36px rgba(15, 23, 42, 0.06);
 }
 
-html.theme-light .runner-ground-line {
-  background: #6b7280;
+html.theme-light .runner-track-overlay {
+  background: rgba(248, 250, 252, 0.58);
+  color: #0f172a;
 }
 
 html.theme-light .runner-track-grid {
@@ -2083,10 +2138,14 @@ html.theme-light .theme-action-btn.text-white:hover,
 html.theme-light .theme-action-btn:focus,
 html.theme-light .theme-review-btn:hover,
 html.theme-light .theme-review-btn.text-white:hover,
-html.theme-light .runner-play-btn:hover {
+html.theme-light .runner-play-btn:hover,
+html.theme-light .runner-play-btn:focus,
+html.theme-light .runner-play-btn:focus-visible {
   background: #1e293b;
   border-color: #1e293b;
   color: #ffffff;
+  outline: none;
+  box-shadow: none;
 }
 
 html.theme-light .theme-get-in-touch-btn span,
