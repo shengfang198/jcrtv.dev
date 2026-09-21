@@ -118,11 +118,12 @@ function Footer() {
                 <h4 className="text-white font-semibold mb-4">Services</h4>
                 <ul className="space-y-2 text-sm">
                   <li><span className="text-neutral-400 font-medium">UI/UX Design</span></li>
-                  <li><span className="text-neutral-400 font-medium">Web Development</span></li>
-                  <li><span className="text-neutral-400 font-medium">3D Modeling</span></li>
-                  <li><span className="text-neutral-400 font-medium">Shopify 2.0 Liquid</span></li>
+                  <li><span className="text-neutral-400 font-medium">Full-Stack Development</span></li>
+                  <li><span className="text-neutral-400 font-medium">Shopify Development</span></li>
+                  <li><span className="text-neutral-400 font-medium">SaaS Development</span></li>
+                  <li><span className="text-neutral-400 font-medium">Graphic Design</span></li>
+                  <li><span className="text-neutral-400 font-medium">3D Visualization</span></li>
                   <li><span className="text-neutral-400 font-medium">Product Design</span></li>
-                  <li><span className="text-neutral-400 font-medium">SaaS</span></li>
                 </ul>
               </div>
 
