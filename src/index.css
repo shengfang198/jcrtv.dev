@@ -1795,6 +1795,60 @@ html.theme-light .project-grid-card-media {
   background: rgba(15, 23, 42, 0.06);
 }
 
+html.theme-light .project-grid-card-slide::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0) 38%, rgba(15, 23, 42, 0.68) 100%);
+  opacity: 0;
+  transition: opacity 0.28s ease;
+}
+
+html.theme-light .project-grid-card-slide-label {
+  opacity: 0;
+  left: 0.9rem;
+  right: 4rem;
+  bottom: 0.85rem;
+  width: auto;
+  max-width: calc(100% - 5rem);
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 650;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+  text-transform: none;
+  text-shadow: 0 1px 10px rgba(15, 23, 42, 0.5);
+  transform: translateY(8px);
+  transition: opacity 0.28s ease, transform 0.28s ease;
+}
+
+html.theme-light .project-grid-card:hover .project-grid-card-slide.is-active::after,
+html.theme-light .project-grid-card:focus-visible .project-grid-card-slide.is-active::after,
+html.theme-light .project-grid-card:focus-within .project-grid-card-slide.is-active::after {
+  opacity: 1;
+}
+
+html.theme-light .project-grid-card:hover .project-grid-card-slide-label,
+html.theme-light .project-grid-card:focus-visible .project-grid-card-slide-label,
+html.theme-light .project-grid-card:focus-within .project-grid-card-slide-label {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.theme-light .project-grid-card-slide::after,
+  html.theme-light .project-grid-card-slide-label {
+    transition: none;
+    transform: none;
+  }
+}
+
 html.theme-light .progress-bar {
   background: #2563eb;
   backdrop-filter: none;
@@ -2030,6 +2084,11 @@ html.theme-light .flashlight-active li {
 html.theme-light .flashlight-active span {
   color: #334155;
   text-shadow: none;
+}
+
+html.theme-light .flashlight-active .project-grid-card-slide-label {
+  color: #ffffff;
+  text-shadow: 0 1px 10px rgba(15, 23, 42, 0.5);
 }
 
 html.theme-light .flashlight-active .performance-years,

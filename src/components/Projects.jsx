@@ -77,6 +77,40 @@ const projectCards = [
     )
   },
   {
+    id: 'action-rpg',
+    title: 'Action RPG Game',
+    badge: 'Game Development',
+    summary: 'Full 3D action RPG built with Unreal Engine featuring immersive combat and storytelling.',
+    image: '/GAMEDEV/indiegame.jpeg',
+    icon: (
+      <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 18V12h6v6a6 6 0 0 1-12 0Z" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 12a6 6 0 1-5.5-3.5M9 12a6 6 0 1 5.5-3.5" />
+      </svg>
+    )
+  },
+  {
+    id: 'saas-platform',
+    title: 'Editing Services SaaS',
+    badge: 'SaaS Platform',
+    summary: 'Cloud platform for orders, editors, revisions, payments, and real-time collaboration.',
+    image: '/SAAS/thumbnail.png',
+    icon: (
+      <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <rect width="18" height="18" x="3" y="4" rx="2" ry="2" strokeWidth={1.5} />
+        <line x1="16" x2="16" y1="2" y2="6" strokeWidth={1.5} />
+        <line x1="8" x2="8" y1="2" y2="6" strokeWidth={1.5} />
+        <line x1="3" x2="21" y1="10" y2="10" strokeWidth={1.5} />
+        <path d="M8 14h.01" strokeWidth={2} />
+        <path d="M12 14h.01" strokeWidth={2} />
+        <path d="M16 14h.01" strokeWidth={2} />
+        <path d="M8 18h.01" strokeWidth={2} />
+        <path d="M12 18h.01" strokeWidth={2} />
+        <path d="M16 18h.01" strokeWidth={2} />
+      </svg>
+    )
+  },
+  {
     id: '3d-visualization',
     title: '3D Visualization',
     badge: 'Architectural Visualization',
@@ -127,40 +161,6 @@ const projectCards = [
         <circle cx="12" cy="12" r="10" strokeWidth={2} />
         <circle cx="12" cy="12" r="6" strokeWidth={2} />
         <circle cx="12" cy="12" r="2" strokeWidth={2} />
-      </svg>
-    )
-  },
-  {
-    id: 'saas-platform',
-    title: 'Editing Services SaaS',
-    badge: 'SaaS Platform',
-    summary: 'Cloud platform for orders, editors, revisions, payments, and real-time collaboration.',
-    image: '/SAAS/thumbnail.png',
-    icon: (
-      <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-        <rect width="18" height="18" x="3" y="4" rx="2" ry="2" strokeWidth={1.5} />
-        <line x1="16" x2="16" y1="2" y2="6" strokeWidth={1.5} />
-        <line x1="8" x2="8" y1="2" y2="6" strokeWidth={1.5} />
-        <line x1="3" x2="21" y1="10" y2="10" strokeWidth={1.5} />
-        <path d="M8 14h.01" strokeWidth={2} />
-        <path d="M12 14h.01" strokeWidth={2} />
-        <path d="M16 14h.01" strokeWidth={2} />
-        <path d="M8 18h.01" strokeWidth={2} />
-        <path d="M12 18h.01" strokeWidth={2} />
-        <path d="M16 18h.01" strokeWidth={2} />
-      </svg>
-    )
-  },
-  {
-    id: 'action-rpg',
-    title: 'Action RPG Game',
-    badge: 'Game Development',
-    summary: 'Full 3D action RPG built with Unreal Engine featuring immersive combat and storytelling.',
-    image: '/GAMEDEV/indiegame.jpeg',
-    icon: (
-      <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 18V12h6v6a6 6 0 0 1-12 0Z" />
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 12a6 6 0 1-5.5-3.5M9 12a6 6 0 1 5.5-3.5" />
       </svg>
     )
   },
