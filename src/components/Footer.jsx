@@ -176,7 +176,7 @@ function Footer() {
         )}
         <button
           id="scrollToTop"
-          className="w-12 h-12 bg-white/10 hover:bg-white/20 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 opacity-0 invisible translate-y-4 hover:scale-110 border border-white/20 backdrop-blur-sm"
+          className="w-12 h-12 bg-white/10 hover:bg-white/20 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 opacity-0 invisible translate-y-4 hover:scale-110 border border-white/20 backdrop-blur-sm outline-none focus:outline-none focus-visible:outline-none active:outline-none"
           aria-label="Scroll to top"
         >
           <svg className="w-5 h-5 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">

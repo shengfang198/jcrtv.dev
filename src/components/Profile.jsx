@@ -15,7 +15,7 @@ function Profile() {
         </div>
 
         {/* Profile Card */}
-          <div className="animate-on-scroll flashlight-card bg-[#0C0D0F] rounded-[2.5rem] p-8 border border-white/5 relative overflow-hidden group hover:border-white/10 transition-colors backdrop-blur-2xl">
+          <div className="animate-on-scroll flashlight-card bg-[#0C0D0F] rounded-2xl p-8 border border-white/5 relative overflow-hidden group hover:border-white/10 transition-colors backdrop-blur-2xl">
             <div className="flex justify-between items-start mb-6">
               <div className="px-3 py-1 bg-white/5 rounded-full border border-white/5 text-[10px] text-neutral-400 font-semibold uppercase tracking-wider">Profile</div>
             </div>

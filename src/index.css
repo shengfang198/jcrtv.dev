@@ -384,35 +384,34 @@ html {
   opacity: 0.32;
 }
 
-/* Keep text readable while glow is active */
-.flashlight-active h3 {
+/* Keep text readable while glow is active (dark mode only) */
+html:not(.theme-light) .flashlight-active h3 {
   color: #ffffff;
   filter: none;
   text-shadow: 0 0 16px rgba(255, 255, 255, 0.35);
   font-weight: 500;
 }
 
-.flashlight-active p {
+html:not(.theme-light) .flashlight-active p {
   color: #e5e7eb;
   filter: none;
   text-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
 }
 
-.flashlight-active span {
+html:not(.theme-light) .flashlight-active span {
   color: #d1d5db;
   filter: none;
   text-shadow: 0 0 8px rgba(255, 255, 255, 0.18);
 }
 
-/* Experience / lists — same lit treatment as body copy (Education uses more <p>) */
-.flashlight-active h4 {
+html:not(.theme-light) .flashlight-active h4 {
   color: #ffffff;
   filter: none;
   text-shadow: 0 0 16px rgba(255, 255, 255, 0.35);
   font-weight: 500;
 }
 
-.flashlight-active li {
+html:not(.theme-light) .flashlight-active li {
   color: #e5e7eb;
   filter: none;
   text-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
@@ -440,25 +439,25 @@ html {
   background: rgba(16, 17, 20, 0.7);
 }
 
-.flashlight-active .career-entry :is(h3, h4, p, span, li) {
+html:not(.theme-light) .flashlight-active .career-entry :is(h3, h4, p, span, li) {
   text-shadow: none;
   filter: none;
 }
 
-.flashlight-active .career-entry h4 {
+html:not(.theme-light) .flashlight-active .career-entry h4 {
   color: #ffffff;
 }
 
-.flashlight-active .career-entry p,
-.flashlight-active .career-entry li {
+html:not(.theme-light) .flashlight-active .career-entry p,
+html:not(.theme-light) .flashlight-active .career-entry li {
   color: #a3a3a3;
 }
 
-.flashlight-active .career-entry p.text-neutral-500 {
+html:not(.theme-light) .flashlight-active .career-entry p.text-neutral-500 {
   color: #737373;
 }
 
-.flashlight-active .career-entry .theme-chip {
+html:not(.theme-light) .flashlight-active .career-entry .theme-chip {
   color: #ffffff;
 }
 
@@ -527,7 +526,7 @@ html {
   opacity: 0;
   transform: translate(-50%, 120%);
   transform-origin: center center;
-  transition: transform 0.45s linear;
+  transition: transform 0.28s ease-out;
   z-index: -1;
   pointer-events: none;
   will-change: transform;
@@ -539,8 +538,7 @@ html {
   transform: translate(-50%, -50%);
 }
 
-.ecommerce-option-btn.is-active,
-.project-page-sidebar-link.is-active {
+.ecommerce-option-btn.is-active {
   background-color: #000000 !important;
   border-color: #000000 !important;
 }
@@ -549,7 +547,7 @@ html {
 .ink-exit::before {
   opacity: 1;
   transform: translate(-50%, -220%);
-  transition: transform 0.45s linear;
+  transition: transform 0.28s ease-out;
 }
 
 .ink-reset::before {
@@ -593,7 +591,7 @@ html {
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.4s ease;
+  transition: transform 2s ease-in-out;
 }
 
 .project-grid-card:hover .project-grid-card-media img {
@@ -832,6 +830,22 @@ html {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
+}
+
+#scrollToTop,
+#scrollToTop:hover,
+#scrollToTop:focus,
+#scrollToTop:focus-visible,
+#scrollToTop:active {
+  outline: none;
+  box-shadow: none;
+}
+
+#scrollToTop:hover,
+#scrollToTop:focus,
+#scrollToTop:focus-visible,
+#scrollToTop:active {
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .brightness-control {
@@ -1143,7 +1157,7 @@ html.theme-light .theme-review-badge {
 }
 
 .project-page-sidebar-card {
-  border-radius: 2rem;
+  border-radius: 1rem;
   background: #0c0d0f;
   border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.55);
@@ -1274,7 +1288,7 @@ html.theme-light .theme-review-badge {
 
 .project-modal-container {
   overflow: hidden;
-  border-radius: 2rem;
+  border-radius: 1rem;
   background: #0c0d0f;
   border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.55);
@@ -1758,14 +1772,6 @@ html.theme-light .profile-contact-item i {
   color: #1e293b;
 }
 
-html.theme-light .flashlight-active .profile-contact-item,
-html.theme-light .flashlight-active .profile-contact-item span,
-html.theme-light .flashlight-active .profile-contact-item i {
-  color: #0f172a;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.45);
-  font-weight: 600;
-}
-
 html.theme-light main,
 html.theme-light section,
 html.theme-light footer {
@@ -1909,6 +1915,14 @@ html.theme-light .progress-bar {
   backdrop-filter: none;
 }
 
+html.theme-light .skill-row:hover .skill-bar-fill.is-visible {
+  filter: none;
+}
+
+html.theme-light .skill-row:hover .skill-bar-fill.is-visible::after {
+  animation: none;
+}
+
 html.theme-light .tech-card.is-visible:hover {
   background-color: var(--light-muted);
   border-color: rgba(15, 23, 42, 0.28);
@@ -1947,23 +1961,6 @@ html.theme-light .flashlight-active .career-entry {
   background: rgba(255, 255, 255, 0.72);
 }
 
-html.theme-light .flashlight-active .career-entry h4 {
-  color: #0f172a;
-}
-
-html.theme-light .flashlight-active .career-entry p,
-html.theme-light .flashlight-active .career-entry li {
-  color: #334155;
-}
-
-html.theme-light .flashlight-active .career-entry p.text-neutral-500 {
-  color: #475569;
-}
-
-html.theme-light .flashlight-active .career-entry .theme-chip {
-  color: #ffffff;
-}
-
 html.theme-light .border-neutral-700\/50,
 html.theme-light .border-gray-800 {
   border-color: #d1d5db;
@@ -1977,6 +1974,13 @@ html.theme-light .text-white {
 html.theme-light .text-white\/90,
 html.theme-light .text-white\/80 {
   color: #334155;
+}
+
+.theme-get-in-touch-btn,
+.theme-get-in-touch-btn:hover,
+.theme-get-in-touch-btn:focus,
+.theme-get-in-touch-btn:focus-visible {
+  border-color: rgba(212, 212, 212, 0.55);
 }
 
 .theme-get-in-touch-btn:hover {
@@ -2122,43 +2126,9 @@ html.theme-light .text-gray-500 {
   color: #0f172a;
 }
 
-/* Flashlight hover: lift body copy (incl. Experience <li>) above flat light-theme grays */
-html.theme-light .flashlight-active h3,
-html.theme-light .flashlight-active h4 {
-  color: #0f172a;
-  text-shadow: 0 0 14px rgba(255, 255, 255, 0.88);
-  font-weight: 600;
-}
-
-html.theme-light .flashlight-active p,
-html.theme-light .flashlight-active li {
-  color: #1f2937;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.55);
-}
-
-html.theme-light .flashlight-active span {
-  color: #334155;
-  text-shadow: none;
-}
-
 html.theme-light .flashlight-active .project-grid-card-slide-label {
   color: #ffffff;
   text-shadow: 0 1px 10px rgba(15, 23, 42, 0.5);
-}
-
-html.theme-light .flashlight-active .performance-years,
-html.theme-light .flashlight-active .performance-years span {
-  color: #64748b;
-  text-shadow: none;
-}
-
-html.theme-light .flashlight-active span.text-neutral-400,
-html.theme-light .flashlight-active span.text-sm.text-neutral-400,
-html.theme-light .flashlight-active .text-neutral-500,
-html.theme-light .flashlight-active .text-neutral-500 span,
-html.theme-light .flashlight-active span.text-neutral-500 {
-  color: #475569;
-  text-shadow: none;
 }
 
 html.theme-light .hover\:text-white:hover {
@@ -2212,6 +2182,15 @@ html.theme-light #scrollToTop {
   border-color: rgba(15, 23, 42, 0.15);
 }
 
+html.theme-light #scrollToTop:hover,
+html.theme-light #scrollToTop:focus,
+html.theme-light #scrollToTop:focus-visible,
+html.theme-light #scrollToTop:active {
+  outline: none;
+  box-shadow: none;
+  border-color: rgba(15, 23, 42, 0.15);
+}
+
 html.theme-light .cover-atmosphere {
   display: none;
 }
@@ -2250,8 +2229,13 @@ html.theme-light .project-page-sidebar-link:hover .project-page-sidebar-meta {
 }
 
 html.theme-light .project-page-sidebar-link.is-active {
-  background: #000000;
-  border-color: #000000;
+  background: #0f172a;
+  border-color: #0f172a;
+}
+
+html.theme-light .project-page-sidebar-link.is-active:hover {
+  background: #1e293b;
+  border-color: #1e293b;
 }
 
 html.theme-light .project-page-sidebar-title {

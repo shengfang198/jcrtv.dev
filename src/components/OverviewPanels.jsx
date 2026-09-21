@@ -129,7 +129,7 @@ function OverviewPanels({ projectsData }) {
       {/* Reference */}
       <section>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="animate-on-scroll flashlight-card bg-[#0C0D0F] rounded-[2rem] p-8 border border-white/5 relative overflow-hidden group hover:border-white/10 transition-colors backdrop-blur-2xl">
+          <div className="animate-on-scroll flashlight-card bg-[#0C0D0F] rounded-2xl p-8 border border-white/5 relative overflow-hidden group hover:border-white/10 transition-colors backdrop-blur-2xl">
             <div className="flex justify-between items-start mb-6">
               <div className="px-3 py-1 bg-white/5 rounded-full border border-white/5 text-xs text-neutral-400 font-semibold uppercase tracking-wider">Reference</div>
             </div>
@@ -252,7 +252,7 @@ function OverviewPanels({ projectsData }) {
       {/* Insights */}
       <section>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="animate-on-scroll flashlight-card bg-[#0C0D0F] rounded-[2rem] p-8 border border-white/5 relative overflow-hidden group hover:border-white/10 transition-colors backdrop-blur-2xl">
+          <div className="animate-on-scroll flashlight-card bg-[#0C0D0F] rounded-2xl p-8 border border-white/5 relative overflow-hidden group hover:border-white/10 transition-colors backdrop-blur-2xl">
             <div className="flex justify-between items-start mb-6">
               <div className="px-3 py-1 bg-white/5 rounded-full border border-white/5 text-xs text-neutral-400 font-semibold uppercase tracking-wider">Insights</div>
             </div>
@@ -302,7 +302,7 @@ function OverviewPanels({ projectsData }) {
       {/* Performance */}
       <section>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="animate-on-scroll flashlight-card bg-[#0C0D0F] rounded-[2.5rem] max-sm:rounded-[1.75rem] p-8 max-sm:p-5 border border-white/5 relative overflow-hidden group hover:border-white/10 transition-colors backdrop-blur-2xl">
+          <div className="animate-on-scroll flashlight-card bg-[#0C0D0F] rounded-2xl p-8 max-sm:p-5 border border-white/5 relative overflow-hidden group hover:border-white/10 transition-colors backdrop-blur-2xl">
             <div className="flex justify-between items-start mb-6">
               <div className="px-3 py-1 bg-white/5 rounded-full border border-white/5 text-xs text-neutral-400 font-semibold uppercase tracking-wider">Performance</div>
             </div>

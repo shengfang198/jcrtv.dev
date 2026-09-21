@@ -203,7 +203,7 @@ function Projects() {
               <a
                 key={card.id}
                 href={`#/project/${card.id}`}
-                className="project-grid-card animate-on-scroll flashlight-card bg-[#0C0D0F] rounded-[2rem] border border-white/5 hover:border-white/10 transition-colors backdrop-blur-2xl"
+                className="project-grid-card animate-on-scroll flashlight-card bg-[#0C0D0F] rounded-2xl border border-white/5 hover:border-white/10 transition-colors backdrop-blur-2xl"
               >
                 <ProjectCardMedia image={card.image} images={card.images} title={card.title} />
                 <div className="project-grid-card-body">

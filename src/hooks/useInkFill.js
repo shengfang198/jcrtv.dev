@@ -9,7 +9,7 @@ const INK_SELECTOR = [
   '.ecommerce-option-btn',
 ].join(', ');
 
-const EXIT_MS = 480;
+const EXIT_MS = 300;
 
 function clearInkTimers(el) {
   window.clearTimeout(el._inkExitTimer);

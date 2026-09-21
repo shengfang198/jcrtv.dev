@@ -115,7 +115,7 @@ function Expertise() {
           <div className="w-20 h-px bg-white/10 mx-auto transition-all duration-300 underline-expand"></div>
         </div>
 
-        <div className="animate-on-scroll flashlight-card bg-[#0C0D0F] rounded-[2.5rem] max-sm:rounded-[1.75rem] p-8 max-sm:p-5 border border-white/5 relative overflow-hidden group hover:border-white/10 transition-colors backdrop-blur-2xl">
+        <div className="animate-on-scroll flashlight-card bg-[#0C0D0F] rounded-2xl p-8 max-sm:p-5 border border-white/5 relative overflow-hidden group hover:border-white/10 transition-colors backdrop-blur-2xl">
             <div className="flex justify-between items-start mb-6">
               <div className="px-3 py-1 bg-white/5 rounded-full border border-white/5 text-[10px] text-neutral-400 font-semibold uppercase tracking-wider">Expertise</div>
             </div>

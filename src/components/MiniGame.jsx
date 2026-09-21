@@ -264,7 +264,7 @@ function MiniGame() {
   return (
     <section>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <div className="animate-on-scroll flashlight-card runner-card runner-card-surface runner-card-shell rounded-[2.5rem] border border-white/5 relative group hover:border-white/10 transition-colors">
+        <div className="animate-on-scroll flashlight-card runner-card runner-card-surface runner-card-shell rounded-2xl border border-white/5 relative group hover:border-white/10 transition-colors">
           <div className="relative z-10 p-8 pb-4">
             <div className="flex items-center justify-between mb-6">
               <div className="px-3 py-1 bg-white/5 rounded-full border border-white/5 text-xs text-neutral-400 font-semibold uppercase tracking-wider">
