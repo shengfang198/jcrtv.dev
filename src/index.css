@@ -316,7 +316,7 @@ html {
     background-image: radial-gradient(circle at 0 100%,#ff4f311f,#fff0),radial-gradient(circle at 50% 100%,hsla(0,0%,100%,.06),transparent),radial-gradient(circle at 50% 100%,#4b397a6e,#2a192963)
 }
 
-/* Flashlight — random blob outline + ellipse smears (JS sets --blob-a*, --e*w/h each hover) */
+/* Flashlight — fewer blobs, smaller glow, will-change only while active */
 .flashlight-card:before {
   content: '';
   position: absolute;
@@ -326,11 +326,9 @@ html {
   background:
     radial-gradient(ellipse var(--e1w, 135%) var(--e1h, 88%) at var(--g1x, 26%) var(--g1y, 34%), var(--flashlight-primary), transparent 54%),
     radial-gradient(ellipse var(--e2w, 92%) var(--e2h, 118%) at var(--g2x, 74%) var(--g2y, 36%), var(--flashlight-secondary), transparent 56%),
-    radial-gradient(ellipse var(--e3w, 108%) var(--e3h, 78%) at var(--g3x, 46%) var(--g3y, 72%), var(--flashlight-tertiary), transparent 58%),
-    radial-gradient(ellipse var(--e4w, 124%) var(--e4h, 96%) at var(--g4x, 64%) var(--g4y, 58%), var(--flashlight-quaternary), transparent 60%),
-    radial-gradient(ellipse var(--e5w, 72%) var(--e5h, 98%) at var(--g5x, 16%) var(--g5y, 60%), var(--flashlight-primary), transparent 48%);
+    radial-gradient(ellipse var(--e3w, 108%) var(--e3h, 78%) at var(--g3x, 46%) var(--g3y, 72%), var(--flashlight-tertiary), transparent 58%);
   opacity: 0;
-  filter: blur(86px) saturate(155%) brightness(104%);
+  filter: blur(48px) saturate(160%) brightness(106%);
   transform: translate(
       calc(var(--translate-x, 0px) + var(--scatter-a-x, 0px)),
       calc(var(--translate-y, 0px) + var(--scatter-a-y, 0px))
@@ -339,17 +337,15 @@ html {
     scale(var(--flash-scale, 1));
   transform-origin: center center;
   transition: opacity 0.42s ease-out;
-  width: 1380px;
-  height: 1380px;
+  width: 900px;
+  height: 900px;
   mix-blend-mode: screen;
-  will-change: transform, opacity;
 }
 
 .flashlight-card.flashlight-initial-enter:before {
   transition: opacity 0.42s ease-out;
 }
 
-/* Secondary scattered blob — different random outline + rotation */
 .flashlight-card:after {
   content: '';
   position: absolute;
@@ -357,31 +353,34 @@ html {
   pointer-events: none;
   border-radius: var(--blob-b1, 48%) var(--blob-b2, 52%) var(--blob-b3, 44%) var(--blob-b4, 56%) / var(--blob-b5, 54%) var(--blob-b6, 46%) var(--blob-b7, 52%) var(--blob-b8, 48%);
   background:
-    radial-gradient(ellipse var(--e6w, 118%) var(--e6h, 92%) at var(--g6x, 42%) var(--g6y, 48%), var(--flashlight-tertiary), transparent 52%),
-    radial-gradient(ellipse var(--e7w, 88%) var(--e7h, 112%) at var(--g7x, 72%) var(--g7y, 52%), var(--flashlight-secondary), transparent 54%);
+    radial-gradient(ellipse var(--e6w, 118%) var(--e6h, 92%) at var(--g6x, 42%) var(--g6y, 48%), var(--flashlight-quaternary), transparent 52%);
   opacity: 0;
-  filter: blur(76px) saturate(145%) brightness(102%);
-  /* +150px aligns secondary 1080px box center with 1380px main (half-difference) */
+  filter: blur(40px) saturate(150%) brightness(104%);
+  /* +90px aligns secondary 720px box center with 900px main (half-difference) */
   transform: translate(
-      calc(var(--translate-x, 0px) + var(--scatter-b-x, 0px) + 150px),
-      calc(var(--translate-y, 0px) + var(--scatter-b-y, 0px) + 150px)
+      calc(var(--translate-x, 0px) + var(--scatter-b-x, 0px) + 90px),
+      calc(var(--translate-y, 0px) + var(--scatter-b-y, 0px) + 90px)
     )
     rotate(var(--blob-rot-b, 0deg))
     scale(calc(var(--flash-scale, 1) * 0.78));
   transform-origin: center center;
   transition: opacity 0.48s ease-out;
-  width: 1080px;
-  height: 1080px;
+  width: 720px;
+  height: 720px;
   mix-blend-mode: screen;
+}
+
+.flashlight-active:before,
+.flashlight-active:after {
   will-change: transform, opacity;
 }
 
 .flashlight-active:before {
-  opacity: 0.46;
+  opacity: 0.52;
 }
 
 .flashlight-active:after {
-  opacity: 0.32;
+  opacity: 0.36;
 }
 
 /* Keep text readable while glow is active (dark mode only) */
@@ -1519,15 +1518,21 @@ html.theme-light .theme-review-badge {
   isolation: isolate;
 }
 
-.runner-track-hole {
-  background: #000;
-  mix-blend-mode: destination-out;
-  pointer-events: none;
-  z-index: 0;
+.runner-track {
+  background: linear-gradient(180deg, rgba(12, 13, 15, 0.55) 0%, rgba(12, 13, 15, 0.78) 100%);
 }
 
-.runner-track {
-  background: transparent;
+.runner-track-grid {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: radial-gradient(ellipse 85% 80% at 50% 50%, #000 35%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 85% 80% at 50% 50%, #000 35%, transparent 100%);
 }
 
 .analytics-chart {
@@ -1736,10 +1741,6 @@ html.theme-light .runner-card-surface {
   box-shadow: none;
 }
 
-html.theme-light .runner-track-hole {
-  display: none;
-}
-
 html.theme-light .runner-track {
   background: #e5e7eb;
   border-color: #d1d5db;
@@ -1747,6 +1748,12 @@ html.theme-light .runner-track {
 
 html.theme-light .runner-ground-line {
   background: #6b7280;
+}
+
+html.theme-light .runner-track-grid {
+  background-image:
+    linear-gradient(rgba(15, 23, 42, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.08) 1px, transparent 1px);
 }
 
 html.theme-light .runner-card .text-white {
@@ -2171,8 +2178,8 @@ html.theme-light .hover\:bg-white\/10:hover {
   position: absolute;
   left: 0;
   right: 0;
-  top: -120vh;
-  height: 340vh;
+  top: -50vh;
+  height: 200vh;
   width: 100%;
   will-change: transform;
   transform: translate3d(0, 0, 0);

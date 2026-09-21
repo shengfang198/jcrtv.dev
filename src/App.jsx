@@ -53,7 +53,7 @@ function App() {
 
     const onScroll = () => {
       // Clamp to the oversized buffer so top/bottom never show empty gaps
-      const maxShift = window.innerHeight * 1.05;
+      const maxShift = window.innerHeight * 0.45;
       targetY = Math.min(window.scrollY * 0.2, maxShift);
       if (!rafId) rafId = requestAnimationFrame(tick);
     };

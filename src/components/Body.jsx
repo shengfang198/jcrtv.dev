@@ -19,22 +19,22 @@ function Body() {
         setTimeout(() => {
           window.particlesJS('particles-js', {
             particles: {
-              number: { value: 80, density: { enable: true, value_area: 800 } },
+              number: { value: 32, density: { enable: true, value_area: 1100 } },
               color: {
                 value: ['#22d3ee', '#38bdf8', '#6366f1', '#a855f7', '#ec4899', '#34d399', '#fbbf24']
               },
               shape: { type: 'circle', stroke: { width: 0, color: '#000000' }, polygon: { nb_sides: 5 } },
-              opacity: { value: 0.55, random: false, anim: { enable: false, speed: 1, opacity_min: 0.1, sync: false } },
+              opacity: { value: 0.5, random: false, anim: { enable: false, speed: 1, opacity_min: 0.1, sync: false } },
               size: { value: 3, random: true, anim: { enable: false, speed: 40, size_min: 0.1, sync: false } },
-              line_linked: { enable: true, distance: 150, color: '#94a3b8', opacity: 0.35, width: 1 },
-              move: { enable: true, speed: 2, direction: 'none', random: false, straight: false, out_mode: 'out', bounce: false, attract: { enable: false, rotateX: 600, rotateY: 1200 } }
+              line_linked: { enable: true, distance: 140, color: '#94a3b8', opacity: 0.28, width: 1 },
+              move: { enable: true, speed: 1.2, direction: 'none', random: false, straight: false, out_mode: 'out', bounce: false, attract: { enable: false, rotateX: 600, rotateY: 1200 } }
             },
             interactivity: {
-              detect_on: 'canvas',
-              events: { onhover: { enable: true, mode: 'grab' }, onclick: { enable: true, mode: 'push' }, resize: true },
-              modes: { grab: { distance: 140, line_linked: { opacity: 1 } }, bubble: { distance: 400, size: 40, duration: 2, opacity: 8, speed: 3 }, repulse: { distance: 200, duration: 0.4 }, push: { particles_nb: 4 }, remove: { particles_nb: 2 } }
+              detect_on: 'window',
+              events: { onhover: { enable: true, mode: 'grab' }, onclick: { enable: false, mode: 'push' }, resize: true },
+              modes: { grab: { distance: 90, line_linked: { opacity: 0.45 } }, bubble: { distance: 400, size: 40, duration: 2, opacity: 8, speed: 3 }, repulse: { distance: 200, duration: 0.4 }, push: { particles_nb: 4 }, remove: { particles_nb: 2 } }
             },
-            retina_detect: true
+            retina_detect: false
           });
         }, 100);
       }
@@ -79,7 +79,7 @@ function Body() {
     // Flashlight effect for cards â€” grows from small to full; random scatter each hover
     const addFlashlightEffect = () => {
       const cards = document.querySelectorAll('.flashlight-card');
-      const FLASH_HALF = 690; // half of 1380px main glow (3Ã— 460 base; matches CSS)
+      const FLASH_HALF = 450;
       let isScrolling = false;
       let scrollThrottle;
       let activeCards = new Set();
@@ -346,10 +346,7 @@ function Body() {
         randomEllipse(card, '--e1w', '--e1h');
         randomEllipse(card, '--e2w', '--e2h');
         randomEllipse(card, '--e3w', '--e3h');
-        randomEllipse(card, '--e4w', '--e4h');
-        randomEllipse(card, '--e5w', '--e5h');
         randomEllipse(card, '--e6w', '--e6h');
-        randomEllipse(card, '--e7w', '--e7h');
 
         card.style.setProperty('--g1x', pct(23, 31));
         card.style.setProperty('--g1y', pct(28, 36));
@@ -357,14 +354,8 @@ function Body() {
         card.style.setProperty('--g2y', pct(30, 38));
         card.style.setProperty('--g3x', pct(42, 50));
         card.style.setProperty('--g3y', pct(64, 72));
-        card.style.setProperty('--g4x', pct(58, 66));
-        card.style.setProperty('--g4y', pct(52, 60));
-        card.style.setProperty('--g5x', pct(18, 26));
-        card.style.setProperty('--g5y', pct(54, 62));
         card.style.setProperty('--g6x', pct(38, 46));
         card.style.setProperty('--g6y', pct(44, 52));
-        card.style.setProperty('--g7x', pct(62, 70));
-        card.style.setProperty('--g7y', pct(46, 54));
         card.style.setProperty('--scatter-a-x', `${randRange(-36, 36)}px`);
         card.style.setProperty('--scatter-a-y', `${randRange(-36, 36)}px`);
         card.style.setProperty('--scatter-b-x', `${randRange(-56, 56)}px`);
@@ -508,27 +499,47 @@ function Body() {
       }
     };
 
+    const isLightTheme = () => document.documentElement.classList.contains('theme-light');
+
+    const applyStaticColors = () => {
+      applyParticleColors(0, isLightTheme() ? lightColor : null);
+    };
+
     const tick = (now) => {
       if (cancelled) return;
-      const isLight = document.documentElement.classList.contains('theme-light');
-      if (isLight) {
-        applyParticleColors(0, lightColor);
-      } else if (prefersReducedMotion) {
-        applyParticleColors(0);
-      } else {
-        const dt = Math.min(0.05, (now - lastTime) / 1000);
-        lastTime = now;
-        colorT += dt / 7;
-        applyParticleColors(colorT);
+      if (isLightTheme() || prefersReducedMotion) {
+        applyStaticColors();
+        rafId = 0;
+        return;
       }
+      const dt = Math.min(0.05, (now - lastTime) / 1000);
+      lastTime = now;
+      colorT += dt / 7;
+      applyParticleColors(colorT);
       rafId = requestAnimationFrame(tick);
     };
 
     const start = () => {
       if (cancelled) return;
       lastTime = performance.now();
+      if (isLightTheme() || prefersReducedMotion) {
+        applyStaticColors();
+        return;
+      }
       rafId = requestAnimationFrame(tick);
     };
+
+    const onThemeChange = () => {
+      if (cancelled) return;
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = 0;
+      }
+      start();
+    };
+
+    const themeObserver = new MutationObserver(onThemeChange);
+    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 
     if (window.pJSDom?.[0]?.pJS) {
       start();
@@ -543,6 +554,7 @@ function Body() {
 
     return () => {
       cancelled = true;
+      themeObserver.disconnect();
       if (waitId) window.clearInterval(waitId);
       if (rafId) cancelAnimationFrame(rafId);
     };

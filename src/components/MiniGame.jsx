@@ -120,6 +120,17 @@ function MiniGame() {
       return overlapX && overlapY;
     };
 
+    let trackHeight = TRACK_HEIGHT;
+    let trackWidth = 760;
+    const measureTrack = () => {
+      const el = runnerTrackRef.current;
+      if (!el) return;
+      trackHeight = el.clientHeight || TRACK_HEIGHT;
+      trackWidth = el.clientWidth || 760;
+    };
+    measureTrack();
+    window.addEventListener('resize', measureTrack);
+
     const loop = (now) => {
       const s = runnerStateRef.current;
       if (!s.isStarted || s.isGameOver) return;
@@ -137,7 +148,6 @@ function MiniGame() {
         s.velocity = 0;
       }
 
-      const trackHeight = runnerTrackRef.current?.clientHeight || TRACK_HEIGHT;
       const playableHeight = trackHeight - GROUND_OFFSET;
       const maxPlayerY = Math.max(playableHeight - PLAYER_SIZE, 0);
       if (s.playerY > maxPlayerY) {
@@ -156,7 +166,6 @@ function MiniGame() {
         const blockWidth = isTallBlock
           ? 30 + Math.floor(Math.random() * 18)
           : blockHeight;
-        const trackWidth = runnerTrackRef.current?.clientWidth || 760;
         const randomColor = enemyColors[Math.floor(Math.random() * enemyColors.length)];
         const obstaclePosition = Math.random() < 0.5 ? 'bottom' : 'top';
         const adjustedHeight = obstaclePosition === 'top'
@@ -184,7 +193,6 @@ function MiniGame() {
       s.obstacles = s.obstacles.filter((o) => o.x + o.width > -10);
       const didRemove = s.obstacles.length !== oldLen;
 
-      const trackWidth = runnerTrackRef.current?.clientWidth || 760;
       const playerRect = {
         left: PLAYER_X,
         right: PLAYER_X + PLAYER_SIZE,
@@ -249,6 +257,7 @@ function MiniGame() {
     runnerRafRef.current = requestAnimationFrame(loop);
 
     return () => {
+      window.removeEventListener('resize', measureTrack);
       if (runnerRafRef.current) cancelAnimationFrame(runnerRafRef.current);
     };
   }, [runnerStarted, runnerGameOver, runnerHighScore]);
@@ -281,8 +290,8 @@ function MiniGame() {
 
           <div className="relative z-10 px-8">
             <div className="relative h-72">
-              <div className="runner-track-hole absolute inset-0 rounded-2xl" aria-hidden="true" />
               <div ref={runnerTrackRef} className="runner-track relative z-[1] h-72 rounded-2xl border border-white/10 overflow-hidden">
+                <div className="runner-track-grid" aria-hidden="true" />
                 <div className="runner-ground-line absolute bottom-6 left-0 right-0 h-[2px] bg-white/20" />
                 <div
                   ref={runnerPlayerElRef}
