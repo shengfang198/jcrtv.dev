@@ -383,43 +383,25 @@ html {
   opacity: 0.36;
 }
 
-/* Keep text readable while glow is active (dark mode only) */
-html:not(.theme-light) .flashlight-active h3 {
-  color: #ffffff;
-  filter: none;
-  text-shadow: 0 0 16px rgba(255, 255, 255, 0.35);
-  font-weight: 500;
-}
-
-html:not(.theme-light) .flashlight-active p {
-  color: #e5e7eb;
-  filter: none;
-  text-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
-}
-
-html:not(.theme-light) .flashlight-active span {
-  color: #d1d5db;
-  filter: none;
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.18);
-}
-
-html:not(.theme-light) .flashlight-active h4 {
-  color: #ffffff;
-  filter: none;
-  text-shadow: 0 0 16px rgba(255, 255, 255, 0.35);
-  font-weight: 500;
-}
-
-html:not(.theme-light) .flashlight-active li {
-  color: #e5e7eb;
-  filter: none;
-  text-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
-}
-
 .flashlight-card {
   position: relative;
   overflow: hidden;
   z-index: 10;
+}
+
+.flashlight-edge-guard {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 3px #0c0d0f;
+}
+
+html:not(.theme-light) .flashlight-card:hover,
+html:not(.theme-light) .flashlight-card:focus,
+html:not(.theme-light) .flashlight-card:focus-visible {
+  border-color: rgba(255, 255, 255, 0.05);
 }
 
 /* Career content panels: frosted glass, muted flashlight bleed */
@@ -436,28 +418,6 @@ html:not(.theme-light) .flashlight-active li {
 
 .flashlight-active .career-entry {
   background: rgba(16, 17, 20, 0.7);
-}
-
-html:not(.theme-light) .flashlight-active .career-entry :is(h3, h4, p, span, li) {
-  text-shadow: none;
-  filter: none;
-}
-
-html:not(.theme-light) .flashlight-active .career-entry h4 {
-  color: #ffffff;
-}
-
-html:not(.theme-light) .flashlight-active .career-entry p,
-html:not(.theme-light) .flashlight-active .career-entry li {
-  color: #a3a3a3;
-}
-
-html:not(.theme-light) .flashlight-active .career-entry p.text-neutral-500 {
-  color: #737373;
-}
-
-html:not(.theme-light) .flashlight-active .career-entry .theme-chip {
-  color: #ffffff;
 }
 
 .project-card-grid {
@@ -481,6 +441,7 @@ html:not(.theme-light) .flashlight-active .career-entry .theme-chip {
   appearance: none;
   -webkit-appearance: none;
 }
+
 
 .ink-fill-btn,
 .theme-get-in-touch-btn,
@@ -1444,6 +1405,39 @@ html.theme-light .theme-review-badge {
   color: #ffffff;
 }
 
+html:not(.theme-light) .project-page :is(
+  .theme-chip,
+  .theme-accent-icon,
+  .project-modal-chip,
+  .project-modal-action-btn,
+  .project-modal-video-btn,
+  .project-modal-nav-btn,
+  .project-modal-saas-top-link,
+  .project-modal-saas-bottom-link
+) {
+  background: #000000;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+html:not(.theme-light) .project-page .theme-accent-icon svg {
+  color: #ffffff;
+}
+
+html:not(.theme-light) .project-page :is(
+  .project-modal-action-btn,
+  .project-modal-video-btn,
+  .project-modal-nav-btn,
+  .project-modal-saas-top-link,
+  .project-modal-saas-bottom-link
+):hover {
+  background: #000000;
+  color: #ffffff;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #a3a3a3;
+}
+
 .project-modal-video-btn {
   background: rgba(34, 197, 94, 0.2);
   color: #86efac;
@@ -1726,7 +1720,7 @@ html.theme-light .theme-review-badge {
 
 .tech-card.is-visible:hover {
   background-color: rgba(38, 38, 38, 0.35);
-  border-color: rgba(255, 255, 255, 0.22);
+  border-color: rgba(64, 64, 64, 0.5);
 }
 
 .tech-card-inner {
@@ -1972,9 +1966,13 @@ html.theme-light .skill-row:hover .skill-bar-fill.is-visible::after {
   animation: none;
 }
 
+html.theme-light .flashlight-edge-guard {
+  box-shadow: inset 0 0 0 3px var(--light-surface);
+}
+
 html.theme-light .tech-card.is-visible:hover {
   background-color: var(--light-muted);
-  border-color: rgba(15, 23, 42, 0.28);
+  border-color: #d1d5db;
 }
 
 html.theme-light .bg-white\/5 {
@@ -2179,10 +2177,6 @@ html.theme-light .text-gray-500 {
   color: #0f172a;
 }
 
-html.theme-light .flashlight-active .project-grid-card-slide-label {
-  color: #ffffff;
-  text-shadow: 0 1px 10px rgba(15, 23, 42, 0.5);
-}
 
 html.theme-light .hover\:text-white:hover {
   color: #111827;

@@ -307,7 +307,7 @@ function MiniGame() {
     <section>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <div
-          className="animate-on-scroll flashlight-card runner-card runner-card-surface runner-card-shell rounded-2xl border border-white/5 relative group hover:border-white/10 transition-colors"
+          className="animate-on-scroll flashlight-card runner-card runner-card-surface runner-card-shell rounded-2xl border border-white/5 relative group transition-colors"
           onMouseEnter={() => { hoverCardRef.current = true; }}
           onMouseLeave={() => { hoverCardRef.current = false; }}
         >

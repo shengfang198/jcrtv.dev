@@ -380,6 +380,13 @@ function Body() {
       window.addEventListener('scroll', handleScroll, { passive: true });
 
       cards.forEach((card) => {
+        if (!card.querySelector(':scope > .flashlight-edge-guard')) {
+          const guard = document.createElement('span');
+          guard.className = 'flashlight-edge-guard';
+          guard.setAttribute('aria-hidden', 'true');
+          card.appendChild(guard);
+        }
+
         let currentColors = {};
 
         const updateColors = () => {
