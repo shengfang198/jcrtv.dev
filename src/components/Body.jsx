@@ -380,7 +380,7 @@ function Body() {
       window.addEventListener('scroll', handleScroll, { passive: true });
 
       cards.forEach((card) => {
-        if (!card.querySelector(':scope > .flashlight-edge-guard')) {
+        if (!card.classList.contains('project-grid-card') && !card.querySelector(':scope > .flashlight-edge-guard')) {
           const guard = document.createElement('span');
           guard.className = 'flashlight-edge-guard';
           guard.setAttribute('aria-hidden', 'true');

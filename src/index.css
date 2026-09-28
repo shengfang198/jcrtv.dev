@@ -539,10 +539,18 @@ html:not(.theme-light) .flashlight-card:focus-visible {
   }
 }
 
+.project-grid-card {
+  border: 0;
+}
+
+.project-grid-card > .flashlight-edge-guard {
+  display: none;
+}
+
 .project-grid-card-media {
   aspect-ratio: 16 / 10;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.04);
+  background: #0c0d0f;
   position: relative;
 }
 
@@ -1892,6 +1900,11 @@ html.theme-light .animate-on-scroll.bg-\[\#0C0D0F\],
 html.theme-light .bg-\[\#0C0D0F\] {
   background: var(--light-surface);
   border-color: #e5e7eb;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.05);
+}
+
+html.theme-light .project-grid-card {
+  border: 0;
   box-shadow: 0 10px 25px rgba(15, 23, 42, 0.05);
 }
 
