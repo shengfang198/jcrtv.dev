@@ -27,6 +27,7 @@ const graphicArtist9 = '/GRAPHIC_ARTIST/Skullpng.png'
 const graphicArtboard = '/GRAPHIC_ARTIST/Artboard 1.png'
 const graphicProduct = '/GRAPHIC_ARTIST/productdesign.jpg'
 const graphicProductThumb2 = '/GRAPHIC_ARTIST/thumbnail2.png'
+const graphicMockup = '/GRAPHIC_ARTIST/mockup.png'
 
 // Project Data
 const projectsData = {
@@ -337,7 +338,7 @@ const projectsData = {
       'Product concepts presented with clear form, materials, and hero shots',
       'Faster production handoff through organized artwork and mockups'
     ],
-    samples: [graphicArtist8, graphicArtist9, graphicArtist1, graphicArtist2, graphicArtist5, graphicProduct, graphicArtboard, graphicProductThumb2],
+    samples: [graphicArtist8, graphicArtist9, graphicArtist1, graphicArtist2, graphicArtist5, graphicProduct, graphicMockup, graphicArtboard, graphicProductThumb2],
     liveUrl: null,
     githubUrl: null
   },
