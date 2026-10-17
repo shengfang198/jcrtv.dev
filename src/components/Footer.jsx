@@ -1,30 +1,28 @@
 import React, { useEffect, useState } from 'react';
 
-const DEFAULT_BRIGHTNESS = 90;
-const MIN_BRIGHTNESS = 60;
+const DEFAULT_BRIGHTNESS = 0;
+const MIN_BRIGHTNESS = 0;
 const MAX_BRIGHTNESS = 140;
 
-function mixHex(hex, factor) {
+function mixTowardWhite(hex, amount) {
   const n = hex.replace('#', '');
   const r = parseInt(n.slice(0, 2), 16);
   const g = parseInt(n.slice(2, 4), 16);
   const b = parseInt(n.slice(4, 6), 16);
-  const adj = (channel) => Math.round(Math.min(255, Math.max(0, channel * factor)));
-  return `rgb(${adj(r)} ${adj(g)} ${adj(b)})`;
+  const channel = (value) => Math.round(value + (255 - value) * amount);
+  return `rgb(${channel(r)} ${channel(g)} ${channel(b)})`;
 }
 
 function applyLightBrightness(value) {
-  const factor = value / 100;
-  // Content follows the slider with a softer shift so cards stay readable.
-  const contentFactor = 1 + (factor - 1) * 0.35;
+  const t = Math.min(MAX_BRIGHTNESS, Math.max(MIN_BRIGHTNESS, value)) / MAX_BRIGHTNESS;
   const root = document.documentElement;
-  root.style.setProperty('--light-brightness', String(factor));
-  root.style.setProperty('--background', mixHex('#e4e9f2', factor));
-  root.style.setProperty('--light-surface', mixHex('#ffffff', contentFactor));
-  root.style.setProperty('--light-muted', mixHex('#f3f4f6', contentFactor));
-  root.style.setProperty('--card', mixHex('#ffffff', contentFactor));
-  root.style.setProperty('--input', mixHex('#ffffff', contentFactor));
-  root.style.setProperty('--muted', mixHex('#f3f4f6', contentFactor));
+  root.style.setProperty('--light-brightness', String(t));
+  root.style.setProperty('--background', mixTowardWhite('#e8eef6', t));
+  root.style.setProperty('--light-surface', '#ffffff');
+  root.style.setProperty('--light-muted', mixTowardWhite('#f4f6f8', t));
+  root.style.setProperty('--card', '#ffffff');
+  root.style.setProperty('--input', '#ffffff');
+  root.style.setProperty('--muted', mixTowardWhite('#f4f6f8', t));
 }
 
 function clearLightBrightness() {

@@ -548,12 +548,56 @@ function Body() {
     const themeObserver = new MutationObserver(onThemeChange);
     themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 
+    let pointerX = 0;
+    let pointerY = 0;
+    let pointerInside = false;
+    let pointerRaf = 0;
+
+    const syncParticlePointer = () => {
+      if (!pointerInside) return;
+      const pJS = window.pJSDom?.[0]?.pJS;
+      const canvas = pJS?.canvas?.el;
+      if (!canvas) return;
+      const rect = canvas.getBoundingClientRect();
+      if (!rect.width || !rect.height) return;
+      pJS.interactivity.mouse.pos_x = (pointerX - rect.left) * (canvas.width / rect.width);
+      pJS.interactivity.mouse.pos_y = (pointerY - rect.top) * (canvas.height / rect.height);
+    };
+
+    const trackPointer = () => {
+      syncParticlePointer();
+      pointerRaf = requestAnimationFrame(trackPointer);
+    };
+
+    const onPointerMove = (event) => {
+      pointerX = event.clientX;
+      pointerY = event.clientY;
+      pointerInside = true;
+      syncParticlePointer();
+      if (!pointerRaf) pointerRaf = requestAnimationFrame(trackPointer);
+    };
+
+    const onPointerLeave = () => {
+      pointerInside = false;
+      if (pointerRaf) {
+        cancelAnimationFrame(pointerRaf);
+        pointerRaf = 0;
+      }
+    };
+
+    const attachPointer = () => {
+      window.addEventListener('mousemove', onPointerMove);
+      document.documentElement.addEventListener('mouseleave', onPointerLeave);
+    };
+
     if (window.pJSDom?.[0]?.pJS) {
+      attachPointer();
       start();
     } else {
       waitId = window.setInterval(() => {
         if (window.pJSDom?.[0]?.pJS) {
           window.clearInterval(waitId);
+          attachPointer();
           start();
         }
       }, 120);
@@ -562,6 +606,9 @@ function Body() {
     return () => {
       cancelled = true;
       themeObserver.disconnect();
+      window.removeEventListener('mousemove', onPointerMove);
+      document.documentElement.removeEventListener('mouseleave', onPointerLeave);
+      if (pointerRaf) cancelAnimationFrame(pointerRaf);
       if (waitId) window.clearInterval(waitId);
       if (rafId) cancelAnimationFrame(rafId);
     };

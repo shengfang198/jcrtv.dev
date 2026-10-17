@@ -29,6 +29,15 @@ function ProjectSidebar({ projectsData, activeId }) {
     };
   }, [menuOpen]);
 
+  useEffect(() => {
+    if (!menuOpen) return undefined;
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') setMenuOpen(false);
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [menuOpen]);
+
   return (
     <aside className="project-page-sidebar">
       <button
@@ -53,18 +62,30 @@ function ProjectSidebar({ projectsData, activeId }) {
         )}
         <span>Projects</span>
       </button>
-      {menuOpen ? (
-        <button
-          type="button"
-          className="project-page-sidebar-backdrop"
-          aria-label="Close project list"
-          onClick={() => setMenuOpen(false)}
-        />
-      ) : null}
+      <button
+        type="button"
+        className={`project-page-sidebar-backdrop${menuOpen ? ' is-open' : ''}`}
+        aria-label="Close project list"
+        tabIndex={menuOpen ? 0 : -1}
+        onClick={() => setMenuOpen(false)}
+      />
       <div id="project-page-menu" className={`project-page-sidebar-card${menuOpen ? ' is-open' : ''}`}>
-        <p className="project-modal-label text-xs font-semibold uppercase tracking-wider mb-4">
-          Projects
-        </p>
+        <div className="project-page-sidebar-head">
+          <p className="project-modal-label text-xs font-semibold uppercase tracking-wider">
+            Projects
+          </p>
+          <button
+            type="button"
+            className="project-page-sidebar-close"
+            aria-label="Close project list"
+            onClick={() => setMenuOpen(false)}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <path d="M18 6 6 18" />
+              <path d="m6 6 12 12" />
+            </svg>
+          </button>
+        </div>
         <nav className="project-page-sidebar-list" aria-label="Project list">
           {projects.map((item) => (
             <a

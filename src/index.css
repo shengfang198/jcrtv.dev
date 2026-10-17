@@ -1,138 +1,42 @@
-/* Geist Font Definitions */
-/* cyrillic */
+/* Space Grotesk */
 @font-face {
-  font-family: 'Geist';
+  font-family: 'Space Grotesk';
   font-style: normal;
   font-weight: 300;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/geist/v4/gyByhwUxId8gMEwYGFWfOw.woff2) format('woff2');
-  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+  src: url('/fonts/space-grotesk.light.ttf') format('truetype');
 }
-/* latin-ext */
 @font-face {
-  font-family: 'Geist';
-  font-style: normal;
-  font-weight: 300;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/geist/v4/gyByhwUxId8gMEwSGFWfOw.woff2) format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'Geist';
-  font-style: normal;
-  font-weight: 300;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/geist/v4/gyByhwUxId8gMEwcGFU.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-/* cyrillic */
-@font-face {
-  font-family: 'Geist';
+  font-family: 'Space Grotesk';
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/geist/v4/gyByhwUxId8gMEwYGFWfOw.woff2) format('woff2');
-  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+  src: url('/fonts/space-grotesk.regular.ttf') format('truetype');
 }
-/* latin-ext */
 @font-face {
-  font-family: 'Geist';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/geist/v4/gyByhwUxId8gMEwSGFWfOw.woff2) format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'Geist';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/geist/v4/gyByhwUxId8gMEwcGFU.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-/* cyrillic */
-@font-face {
-  font-family: 'Geist';
+  font-family: 'Space Grotesk';
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/geist/v4/gyByhwUxId8gMEwYGFWfOw.woff2) format('woff2');
-  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+  src: url('/fonts/space-grotesk.medium.ttf') format('truetype');
 }
-/* latin-ext */
 @font-face {
-  font-family: 'Geist';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/geist/v4/gyByhwUxId8gMEwSGFWfOw.woff2) format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'Geist';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/geist/v4/gyByhwUxId8gMEwcGFU.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-/* cyrillic */
-@font-face {
-  font-family: 'Geist';
+  font-family: 'Space Grotesk';
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/geist/v4/gyByhwUxId8gMEwYGFWfOw.woff2) format('woff2');
-  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+  src: url('/fonts/space-grotesk.medium.ttf') format('truetype');
 }
-/* latin-ext */
 @font-face {
-  font-family: 'Geist';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/geist/v4/gyByhwUxId8gMEwSGFWfOw.woff2) format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'Geist';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/geist/v4/gyByhwUxId8gMEwcGFU.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-/* cyrillic */
-@font-face {
-  font-family: 'Geist';
+  font-family: 'Space Grotesk';
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/geist/v4/gyByhwUxId8gMEwYGFWfOw.woff2) format('woff2');
-  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+  src: url('/fonts/space-grotesk.bold.ttf') format('truetype');
 }
-/* latin-ext */
-@font-face {
-  font-family: 'Geist';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/geist/v4/gyByhwUxId8gMEwSGFWfOw.woff2) format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'Geist';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/geist/v4/gyByhwUxId8gMEwcGFU.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+
+@theme {
+  --font-sans: 'Space Grotesk', sans-serif;
 }
 
 @tailwind base;
@@ -416,9 +320,6 @@ html:not(.theme-light) .flashlight-card:focus-visible {
   -webkit-backdrop-filter: blur(20px) saturate(150%);
 }
 
-.flashlight-active .career-entry {
-  background: rgba(16, 17, 20, 0.7);
-}
 
 .project-card-grid {
   display: grid;
@@ -866,6 +767,11 @@ a:hover {
   color: #535bf2;
 }
 
+html,
+body {
+  font-family: 'Space Grotesk', sans-serif;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -971,25 +877,25 @@ button:focus-visible {
 }
 
 html.theme-light {
-  --light-brightness: 0.9;
-  --background: #cdd2da;
-  --light-surface: rgb(246 246 246);
-  --light-muted: rgb(234 235 237);
+  --light-brightness: 0;
+  --background: #e8eef6;
+  --light-surface: #ffffff;
+  --light-muted: #f4f6f8;
   --foreground: #111827;
-  --card: rgb(246 246 246);
+  --card: #ffffff;
   --card-foreground: #111827;
-  --popover: rgb(246 246 246);
+  --popover: #ffffff;
   --popover-foreground: #111827;
   --primary: #111827;
   --primary-foreground: #ffffff;
   --secondary: #e5e7eb;
   --secondary-foreground: #111827;
-  --muted: rgb(234 235 237);
+  --muted: #f4f6f8;
   --muted-foreground: #6b7280;
   --accent: #e5e7eb;
   --accent-foreground: #111827;
   --border: #d1d5db;
-  --input: rgb(246 246 246);
+  --input: #ffffff;
 }
 
 html.theme-light .site-header-nav {
@@ -1134,6 +1040,18 @@ html.theme-light .theme-review-badge {
   overflow-y: auto;
 }
 
+.project-page-sidebar-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.project-page-sidebar-close {
+  display: none;
+}
+
 .project-page-sidebar-list {
   display: flex;
   flex-direction: column;
@@ -1220,24 +1138,63 @@ html.theme-light .theme-review-badge {
     display: block;
     position: fixed;
     inset: 0;
-    z-index: 40;
+    z-index: 55;
     border: 0;
     background: rgba(0, 0, 0, 0.55);
     cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.32s ease;
+  }
+
+  .project-page-sidebar-backdrop.is-open {
+    opacity: 1;
+    pointer-events: auto;
   }
 
   .project-page-sidebar-card {
-    display: none;
+    display: flex;
+    flex-direction: column;
     position: fixed;
-    top: 5.5rem;
-    left: 1rem;
-    right: 1rem;
-    z-index: 50;
-    max-height: calc(100vh - 7rem);
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: min(20rem, 86vw);
+    height: 100%;
+    max-height: none;
+    margin: 0;
+    z-index: 60;
+    border-radius: 0;
+    border-left: 0;
+    transform: translateX(-100%);
+    pointer-events: none;
+    transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .project-page-sidebar-card.is-open {
-    display: block;
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+
+  .project-page-sidebar-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    border-radius: 9999px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.06);
+    color: #ffffff;
+    cursor: pointer;
+  }
+}
+
+@media (max-width: 767px) and (prefers-reduced-motion: reduce) {
+  .project-page-sidebar-card,
+  .project-page-sidebar-backdrop {
+    transition: none;
   }
 }
 
@@ -1419,13 +1376,18 @@ html:not(.theme-light) .project-page :is(
   .project-modal-chip,
   .project-modal-action-btn,
   .project-modal-video-btn,
-  .project-modal-nav-btn,
   .project-modal-saas-top-link,
   .project-modal-saas-bottom-link
 ) {
   background: #000000;
   color: #ffffff;
   border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+html:not(.theme-light) .project-page .project-modal-nav-btn {
+  background: #000000;
+  color: #ffffff;
+  border: 1px solid transparent;
 }
 
 html:not(.theme-light) .project-page .theme-accent-icon svg {
@@ -1435,7 +1397,6 @@ html:not(.theme-light) .project-page .theme-accent-icon svg {
 html:not(.theme-light) .project-page :is(
   .project-modal-action-btn,
   .project-modal-video-btn,
-  .project-modal-nav-btn,
   .project-modal-saas-top-link,
   .project-modal-saas-bottom-link
 ):hover {
@@ -1444,6 +1405,15 @@ html:not(.theme-light) .project-page :is(
   border-width: 1px;
   border-style: solid;
   border-color: #a3a3a3;
+}
+
+html:not(.theme-light) .project-page .project-modal-nav-btn,
+html:not(.theme-light) .project-page .project-modal-nav-btn:hover,
+html:not(.theme-light) .project-page .project-modal-nav-btn:focus,
+html:not(.theme-light) .project-page .project-modal-nav-btn:focus-visible {
+  border-color: transparent;
+  outline: none;
+  box-shadow: none;
 }
 
 .project-modal-video-btn {
@@ -1980,12 +1950,17 @@ html.theme-light .skill-row:hover .skill-bar-fill.is-visible::after {
 }
 
 html.theme-light .flashlight-edge-guard {
-  box-shadow: inset 0 0 0 3px var(--light-surface);
+  box-shadow: none;
+}
+
+html.theme-light .tech-card,
+html.theme-light .tech-card.is-visible,
+html.theme-light .tech-card.is-visible:hover {
+  border-color: transparent;
 }
 
 html.theme-light .tech-card.is-visible:hover {
   background-color: var(--light-muted);
-  border-color: #d1d5db;
 }
 
 html.theme-light .bg-white\/5 {
@@ -2006,24 +1981,36 @@ html.theme-light .border-white\/20 {
   border-color: rgba(15, 23, 42, 0.22);
 }
 
+html.theme-light .flashlight-card,
+html.theme-light .runner-card,
+html.theme-light .career-entry,
+html.theme-light .project-modal-container,
+html.theme-light .project-page-sidebar-card,
+html.theme-light .project-page-sidebar-link,
+html.theme-light .project-modal-panel {
+  border-color: #e5e7eb;
+}
+
 html.theme-light .bg-neutral-800\/20,
 html.theme-light .bg-neutral-800\/30 {
   background-color: var(--light-muted);
 }
 
-html.theme-light .career-entry {
-  background: rgba(255, 255, 255, 0.58);
-  border-color: rgba(15, 23, 42, 0.12);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
-}
-
+html.theme-light .career-entry,
 html.theme-light .flashlight-active .career-entry {
-  background: rgba(255, 255, 255, 0.72);
+  background: var(--light-muted);
+  border-color: #e5e7eb;
+  box-shadow: none;
 }
 
 html.theme-light .border-neutral-700\/50,
 html.theme-light .border-gray-800 {
-  border-color: #d1d5db;
+  border-color: #e5e7eb;
+}
+
+html.theme-light .tech-card.border-neutral-700\/50,
+html.theme-light .tech-card.border-neutral-700\/50:hover {
+  border-color: transparent;
 }
 
 html.theme-light .text-white {
@@ -2263,16 +2250,23 @@ html.theme-light .project-page-back:hover {
   color: #0f172a;
 }
 
+html.theme-light .project-page-hamburger,
+html.theme-light .project-page-sidebar-close {
+  color: #0f172a;
+  background: var(--light-surface);
+  border-color: #e5e7eb;
+}
+
 html.theme-light .project-modal-container,
 html.theme-light .project-page-sidebar-card {
   background: var(--light-surface);
-  border-color: #d1d5db;
-  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.22);
+  border-color: #e5e7eb;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.05);
 }
 
 html.theme-light .project-page-sidebar-link {
   background: var(--light-muted);
-  border-color: #dbe3ed;
+  border-color: #e5e7eb;
 }
 
 html.theme-light .project-page-sidebar-link:hover {
@@ -2346,7 +2340,7 @@ html.theme-light .project-modal-dot {
 
 html.theme-light .project-modal-panel {
   background: var(--light-muted);
-  border-color: #dbe3ed;
+  border-color: #e5e7eb;
 }
 
 html.theme-light .project-modal-chip {
@@ -2368,6 +2362,22 @@ html.theme-light .project-modal-media-spinner {
 }
 
 html.theme-light .project-modal-nav-btn,
+html.theme-light .project-modal-nav-btn:hover,
+html.theme-light .project-modal-nav-btn:focus,
+html.theme-light .project-modal-nav-btn:focus-visible {
+  background: #0f172a;
+  color: #ffffff;
+  border-color: transparent;
+  outline: none;
+  box-shadow: none;
+}
+
+html.theme-light .project-modal-nav-btn:hover,
+html.theme-light .project-modal-nav-btn:focus,
+html.theme-light .project-modal-nav-btn:focus-visible {
+  background: #1e293b;
+}
+
 html.theme-light .project-modal-action-btn,
 html.theme-light .project-modal-video-btn,
 html.theme-light .project-modal-saas-top-link,
@@ -2377,7 +2387,6 @@ html.theme-light .project-modal-saas-bottom-link {
   border-color: #0f172a;
 }
 
-html.theme-light .project-modal-nav-btn:hover,
 html.theme-light .project-modal-action-btn:hover,
 html.theme-light .project-modal-video-btn:hover,
 html.theme-light .project-modal-saas-top-link:hover,
