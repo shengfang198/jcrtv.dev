@@ -8,11 +8,11 @@
     <script>
       (function () {
         try {
-          if (localStorage.getItem('theme') !== 'dark') {
+          if (localStorage.getItem('theme') === 'light') {
             document.documentElement.classList.add('theme-light');
           }
         } catch (_error) {
-          document.documentElement.classList.add('theme-light');
+          document.documentElement.classList.remove('theme-light');
         }
       })();
     </script>

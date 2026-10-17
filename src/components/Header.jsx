@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 function Header() {
   const [theme, setTheme] = useState(() => {
     const storedTheme = localStorage.getItem('theme');
-    const initialTheme = storedTheme === 'dark' || storedTheme === 'light' ? storedTheme : 'light';
+    const initialTheme = storedTheme === 'dark' || storedTheme === 'light' ? storedTheme : 'dark';
     document.documentElement.classList.toggle('theme-light', initialTheme === 'light');
     return initialTheme;
   });
