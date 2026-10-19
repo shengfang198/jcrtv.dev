@@ -145,7 +145,7 @@ const projectCards = [
     title: 'AI Agent / Automation',
     badge: 'AI Agents · Automation',
     summary: 'An AI agent that helps with daily tasks, research, and connected tools in one workflow.',
-    image: '/AI/Screenshot 2026-10-19 055127.png',
+    image: '/AI/Screenshot 2026-10-19 065349.png',
     icon: (
       <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
         <rect x="3" y="8" width="6" height="6" rx="1" strokeWidth={2} />

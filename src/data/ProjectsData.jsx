@@ -410,7 +410,7 @@ const projectsData = {
       'Faster path from a question to a finished brief or action',
       'Repeatable workflows that the agent can run again without extra setup'
     ],
-    samples: ['/AI/Screenshot 2026-10-19 055127.png'],
+    samples: ['/AI/Screenshot 2026-10-19 065349.png'],
     liveUrl: null,
     githubUrl: null
   },
