@@ -351,7 +351,7 @@ const projectsData = {
     badgeColor: 'bg-fuchsia-500/20 text-fuchsia-300',
     client: 'Self-Initiated',
     duration: 'Ongoing Project',
-    tech: ['OpenAI', 'Tool Calling', 'Web Search', 'Python', 'Node.js', 'PostgreSQL', 'APIs'],
+    tech: ['React', 'TypeScript', 'Express', 'OpenAI', 'PostgreSQL', 'Redis', 'Socket.io', 'Electron'],
     icon: <svg className="w-5 h-5 text-fuchsia-300" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="8" width="6" height="6" rx="1" strokeWidth={1.5}></rect><rect x="15" y="4" width="6" height="6" rx="1" strokeWidth={1.5}></rect><rect x="15" y="14" width="6" height="6" rx="1" strokeWidth={1.5}></rect><path d="M9 11h3M12 7v8" strokeWidth={1.5} strokeLinecap="round"></path></svg>,
     caseStudy: [
       {
@@ -382,11 +382,13 @@ const projectsData = {
         title: 'Tech Stack',
         content: '',
         bullets: [
-          'OpenAI – reasoning, planning, and natural-language help',
-          'Tool calling – research, search, and app actions from one agent',
-          'Python / Node.js – agent logic and tool adapters',
-          'PostgreSQL – database for tasks, research, and agent history',
-          'APIs – connect calendars, docs, and internal systems'
+          'Frontend: React, TypeScript, Vite, and Tailwind CSS',
+          'API: Express on Node.js',
+          'AI: OpenAI with tool calling',
+          'Data: PostgreSQL for tasks, memory, and agent history',
+          'Jobs: Redis and BullMQ',
+          'Realtime: Socket.io',
+          'Desktop: Electron vault with SQLite'
         ]
       },
       {
@@ -609,7 +611,7 @@ const projectsData = {
     badgeColor: 'bg-fuchsia-500/20 text-fuchsia-300',
     client: 'Self-Initiated',
     duration: 'Coming Project',
-    tech: ['React', 'Vite', 'REST APIs', 'Forum', 'OnRender'],
+    tech: ['React', 'Vite', 'Tailwind CSS', 'Express', 'PostgreSQL', 'S3', 'OnRender'],
     icon: <svg className="w-5 h-5 text-fuchsia-300" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="7" width="20" height="14" rx="2" strokeWidth={1.5}></rect><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"></path><path strokeLinecap="round" strokeWidth={1.5} d="M2 13h20"></path></svg>,
     caseStudy: [
       {
@@ -642,8 +644,10 @@ const projectsData = {
         title: 'Tech Stack',
         content: 'Web app for listings, learning, placement, and a lightweight community forum.',
         bullets: [
-          'Frontend: React and Vite',
-          'Listings and community: REST APIs with a simple forum model',
+          'Frontend: React, Vite, and Tailwind CSS',
+          'API: Express on Node.js',
+          'Database: PostgreSQL',
+          'Files: S3 object storage',
           'Hosting: OnRender'
         ]
       },
@@ -680,7 +684,7 @@ const projectsData = {
     badgeColor: 'bg-fuchsia-500/20 text-fuchsia-300',
     client: 'Self-Initiated',
     duration: 'Self-Initiated Project',
-    tech: ['React', 'AI', 'OnRender', 'Docs Editor', 'Notes'],
+    tech: ['React', 'ProseMirror', 'Express', 'PostgreSQL', 'OpenAI', 'Dexie', 'OnRender'],
     icon: <svg className="w-5 h-5 text-fuchsia-300" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 20h9"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg>,
     caseStudy: [
       {
@@ -701,8 +705,11 @@ const projectsData = {
         title: 'Tech Stack',
         content: 'Web-based writing app with AI-assisted editing and cloud deployment.',
         bullets: [
-          'Frontend: React',
-          'Capabilities: docs editing, notes, AI assistance',
+          'Frontend: React, Vite, and Tailwind CSS',
+          'Editor: ProseMirror',
+          'API: Express on Node.js',
+          'Database: PostgreSQL, with Dexie for local notes',
+          'AI: OpenAI for writing help and embeddings',
           'Hosting: OnRender'
         ]
       },
