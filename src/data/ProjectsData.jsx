@@ -17,8 +17,8 @@ const figmaPresentation = '/FIGMA/VEprototype.png'
 const figmaVS = '/FIGMA/VS.png'
 const gamedevImage = '/GAMEDEV/indiegame.jpeg'
 const saasImage = '/SAAS/thumbnail.png'
-const bridgehubImage = '/BRIDGEHUB/bridge-hub-thumbnail.png'
-const writelyImage = '/OTHER PROJECTS/WRITELY.png'
+const bridgehubImage = '/BRIDGEHUB/Screenshot 2026-10-19 055952.png'
+const writelyImage = '/WRITELY/Screenshot 2026-10-19 055835.png'
 const graphicArtist1 = '/GRAPHIC_ARTIST/Untitled-1.png'
 const graphicArtist2 = '/GRAPHIC_ARTIST/2.png'
 const graphicArtist5 = '/GRAPHIC_ARTIST/MindSole.jpg'
@@ -408,7 +408,7 @@ const projectsData = {
       'Faster path from a question to a finished brief or action',
       'Repeatable workflows that the agent can run again without extra setup'
     ],
-    samples: ['/AI/ai-agent-thumbnail.png'],
+    samples: ['/AI/Screenshot 2026-10-19 055127.png'],
     liveUrl: null,
     githubUrl: null
   },

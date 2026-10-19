@@ -145,7 +145,7 @@ const projectCards = [
     title: 'AI Agent / Automation',
     badge: 'AI Agents · Automation',
     summary: 'An AI agent that helps with daily tasks, research, and connected tools in one workflow.',
-    image: '/AI/ai-agent-thumbnail.png',
+    image: '/AI/Screenshot 2026-10-19 055127.png',
     icon: (
       <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
         <rect x="3" y="8" width="6" height="6" rx="1" strokeWidth={2} />
@@ -174,10 +174,10 @@ const projectCards = [
     title: 'See More Projects',
     badge: 'Coming Projects',
     summary: 'Bridgehub is jobs, learning, placement, and community in one place. Also includes Writely, an AI-powered docs and notes editor.',
-    image: '/BRIDGEHUB/bridge-hub-thumbnail.png',
+    image: '/BRIDGEHUB/Screenshot 2026-10-19 055952.png',
     images: [
-      { src: '/BRIDGEHUB/bridge-hub-thumbnail.png', label: 'Bridgehub' },
-      { src: '/OTHER PROJECTS/WRITELY.png', label: 'Writely' }
+      { src: '/BRIDGEHUB/Screenshot 2026-10-19 055952.png', label: 'Bridgehub' },
+      { src: '/WRITELY/Screenshot 2026-10-19 055835.png', label: 'Writely' }
     ],
     icon: (
       <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
