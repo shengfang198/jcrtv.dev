@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-function ProjectCardMedia({ image, images, title }) {
+function ProjectCardMedia({ image, images, title, onIndexChange }) {
   const slides = images?.length
     ? images
     : image
@@ -15,6 +15,10 @@ function ProjectCardMedia({ image, images, title }) {
     }, 3200);
     return () => window.clearInterval(timer);
   }, [slides.length]);
+
+  useEffect(() => {
+    onIndexChange?.(index);
+  }, [index, onIndexChange]);
 
   if (!slides.length) return null;
 
@@ -63,29 +67,17 @@ const projectCards = [
     )
   },
   {
-    id: 'ecommerce-custom',
-    title: 'Custom E-commerce Platform',
-    badge: 'Full-Stack · UI/UX',
-    summary: 'Self-built clothing store with custom UI, cart, and authentication.',
-    image: '/ECOMMERCE/eccomerce2.png',
+    id: 'ai-agent-automation',
+    title: 'AI Agent / Automation',
+    badge: 'AI Agents · Automation',
+    summary: 'An AI agent that helps with daily tasks, research, and connected tools in one workflow.',
+    image: '/AI/Screenshot 2026-10-19 065349.png',
     icon: (
       <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-        <rect x="3" y="4" width="18" height="16" rx="2" strokeWidth={1.5} />
-        <path d="M3 9h18" strokeWidth={1.5} />
-        <path d="M8 13h3" strokeWidth={1.5} strokeLinecap="round" />
-      </svg>
-    )
-  },
-  {
-    id: 'action-rpg',
-    title: 'Action RPG Game',
-    badge: 'Game Development',
-    summary: 'Full 3D action RPG built with Unreal Engine featuring immersive combat and storytelling.',
-    image: '/GAMEDEV/indiegame.jpeg',
-    icon: (
-      <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 18V12h6v6a6 6 0 0 1-12 0Z" />
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 12a6 6 0 1 0-5.5-3.5M9 12a6 6 0 1 1 5.5-3.5" />
+        <rect x="3" y="8" width="6" height="6" rx="1" strokeWidth={2} />
+        <rect x="15" y="4" width="6" height="6" rx="1" strokeWidth={2} />
+        <rect x="15" y="14" width="6" height="6" rx="1" strokeWidth={2} />
+        <path d="M9 11h3M12 7v8" strokeWidth={2} strokeLinecap="round" />
       </svg>
     )
   },
@@ -111,6 +103,19 @@ const projectCards = [
     )
   },
   {
+    id: 'writely',
+    title: 'Writely',
+    badge: 'Docs Editor · AI',
+    summary: 'AI-powered docs editor and notes app for drafting, organizing, and refining writing in one place.',
+    image: '/WRITELY/Screenshot 2026-10-19 055835.png',
+    icon: (
+      <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 20h9" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z" />
+      </svg>
+    )
+  },
+  {
     id: '3d-visualization',
     title: '3D Visualization',
     badge: 'Architectural Visualization',
@@ -119,39 +124,6 @@ const projectCards = [
     icon: (
       <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-      </svg>
-    )
-  },
-  {
-    id: 'graphic-product-design',
-    title: 'Graphic Design / Product Design',
-    badge: 'Graphic Design / Product Design',
-    summary: 'Brand graphics, apparel art, product concepts, packaging, and presentation-ready visuals.',
-    images: [
-      { src: '/GRAPHIC_ARTIST/Samuraipng.png', label: 'Graphic Design' },
-      { src: '/GRAPHIC_ARTIST/productdesign.jpg', label: 'Product Design' }
-    ],
-    icon: (
-      <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l7-7 3 3-7 7-3-3z" />
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" />
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2 2l7.586 7.586" />
-        <circle cx="11" cy="11" r="2" strokeWidth={2} />
-      </svg>
-    )
-  },
-  {
-    id: 'ai-agent-automation',
-    title: 'AI Agent / Automation',
-    badge: 'AI Agents · Automation',
-    summary: 'An AI agent that helps with daily tasks, research, and connected tools in one workflow.',
-    image: '/AI/Screenshot 2026-10-19 065349.png',
-    icon: (
-      <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-        <rect x="3" y="8" width="6" height="6" rx="1" strokeWidth={2} />
-        <rect x="15" y="4" width="6" height="6" rx="1" strokeWidth={2} />
-        <rect x="15" y="14" width="6" height="6" rx="1" strokeWidth={2} />
-        <path d="M9 11h3M12 7v8" strokeWidth={2} strokeLinecap="round" />
       </svg>
     )
   },
@@ -171,14 +143,10 @@ const projectCards = [
   },
   {
     id: 'bridgehub',
-    title: 'See More Projects',
-    badge: 'Coming Projects',
-    summary: 'Bridgehub is jobs, learning, placement, and community in one place. Also includes Writely, an AI-powered docs and notes editor.',
+    title: 'Bridgehub',
+    badge: 'Jobs · Learning · Community',
+    summary: 'Jobs, learning, placement, and community in one place.',
     image: '/BRIDGEHUB/Screenshot 2026-10-19 055952.png',
-    images: [
-      { src: '/BRIDGEHUB/Screenshot 2026-10-19 055952.png', label: 'Bridgehub' },
-      { src: '/WRITELY/Screenshot 2026-10-19 055835.png', label: 'Writely' }
-    ],
     icon: (
       <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
         <rect x="2" y="7" width="20" height="14" rx="2" strokeWidth={2} />
@@ -186,8 +154,72 @@ const projectCards = [
         <path strokeLinecap="round" strokeWidth={2} d="M2 13h20" />
       </svg>
     )
+  },
+  {
+    id: 'action-rpg',
+    title: 'Action RPG Game',
+    badge: 'Game Development',
+    summary: 'Full 3D action RPG built with Unreal Engine featuring immersive combat and storytelling.',
+    image: '/GAMEDEV/indiegame.jpeg',
+    icon: (
+      <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 18V12h6v6a6 6 0 0 1-12 0Z" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 12a6 6 0 1 0-5.5-3.5M9 12a6 6 0 1 1 5.5-3.5" />
+      </svg>
+    )
+  },
+  {
+    id: 'graphic-product-design',
+    title: 'Graphic Design / Custom E-commerce',
+    badge: 'Design · Full-Stack',
+    summary: 'Brand graphics and product concepts, plus a self-built clothing store with custom UI, cart, and authentication.',
+    images: [
+      { id: 'graphic-product-design', src: '/GRAPHIC_ARTIST/Samuraipng.png', label: 'Graphic Design' },
+      { id: 'graphic-product-design', src: '/GRAPHIC_ARTIST/productdesign.jpg', label: 'Product Design' },
+      { id: 'ecommerce-custom', src: '/ECOMMERCE/eccomerce2.png', label: 'Custom E-commerce' }
+    ],
+    icon: (
+      <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l7-7 3 3-7 7-3-3z" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2 2l7.586 7.586" />
+        <circle cx="11" cy="11" r="2" strokeWidth={2} />
+      </svg>
+    )
   }
 ];
+
+function ProjectGridCard({ card }) {
+  const slides = card.images?.length ? card.images : [{ id: card.id, src: card.image, label: card.title }];
+  const [index, setIndex] = useState(0);
+  const activeId = slides[index]?.id || card.id;
+
+  return (
+    <a
+      href={`#/project/${activeId}`}
+      className="project-grid-card animate-on-scroll flashlight-card bg-[#0C0D0F] rounded-2xl backdrop-blur-2xl"
+    >
+      <ProjectCardMedia image={card.image} images={card.images} title={card.title} onIndexChange={setIndex} />
+      <div className="project-grid-card-body">
+        <div className="flex items-start gap-3 mb-3">
+          <div className="theme-accent-icon w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center shrink-0">
+            {card.icon}
+          </div>
+          <div className="min-w-0 flex-1">
+            <h3 className="font-semibold text-white leading-snug text-left">{card.title}</h3>
+            <span className="theme-chip bg-purple-600 text-white text-[10px] px-2 py-0.5 rounded-full inline-block mt-1">
+              {card.badge}
+            </span>
+          </div>
+        </div>
+        <p className="text-neutral-400 text-sm text-left flex-1 mb-4">{card.summary}</p>
+        <span className="theme-action-btn ink-fill-btn self-start bg-fuchsia-600 text-white px-3 py-1.5 rounded-full text-xs font-medium">
+          View Project
+        </span>
+      </div>
+    </a>
+  );
+}
 
 function Projects() {
   return (
@@ -205,30 +237,7 @@ function Projects() {
 
           <div className="project-card-grid">
             {projectCards.map((card) => (
-              <a
-                key={card.id}
-                href={`#/project/${card.id}`}
-                className="project-grid-card animate-on-scroll flashlight-card bg-[#0C0D0F] rounded-2xl backdrop-blur-2xl"
-              >
-                <ProjectCardMedia image={card.image} images={card.images} title={card.title} />
-                <div className="project-grid-card-body">
-                  <div className="flex items-start gap-3 mb-3">
-                    <div className="theme-accent-icon w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center shrink-0">
-                      {card.icon}
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <h3 className="font-semibold text-white leading-snug text-left">{card.title}</h3>
-                      <span className="theme-chip bg-purple-600 text-white text-[10px] px-2 py-0.5 rounded-full inline-block mt-1">
-                        {card.badge}
-                      </span>
-                    </div>
-                  </div>
-                  <p className="text-neutral-400 text-sm text-left flex-1 mb-4">{card.summary}</p>
-                  <span className="theme-action-btn ink-fill-btn self-start bg-fuchsia-600 text-white px-3 py-1.5 rounded-full text-xs font-medium">
-                    View Project
-                  </span>
-                </div>
-              </a>
+              <ProjectGridCard key={card.id} card={card} />
             ))}
           </div>
         </div>

@@ -738,5 +738,18 @@ const projectsData = {
   }
 };
 
+export const projectOrder = [
+  'ecommerce',
+  'ai-agent-automation',
+  'saas-platform',
+  'writely',
+  '3d-visualization',
+  'ui-ux',
+  'bridgehub',
+  'action-rpg',
+  'graphic-product-design',
+  'ecommerce-custom'
+];
+
 export default projectsData;
 

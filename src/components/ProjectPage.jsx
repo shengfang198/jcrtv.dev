@@ -1,8 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { projectOrder } from '../data/ProjectsData.jsx';
 
 function ProjectSidebar({ projectsData, activeId }) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const projects = Object.values(projectsData || {});
+  const projects = projectOrder
+    .map((id) => projectsData?.[id])
+    .filter(Boolean);
 
   useEffect(() => {
     setMenuOpen(false);
