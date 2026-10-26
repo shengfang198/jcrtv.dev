@@ -146,7 +146,7 @@ const projectCards = [
     title: 'Bridgehub',
     badge: 'Jobs · Learning · Community',
     summary: 'Jobs, learning, placement, and community in one place.',
-    image: '/BRIDGEHUB/Screenshot 2026-10-19 055952.png',
+    image: '/BRIDGEHUB/Screenshot 2026-10-25 203802.png',
     icon: (
       <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
         <rect x="2" y="7" width="20" height="14" rx="2" strokeWidth={2} />

@@ -17,7 +17,7 @@ const figmaPresentation = '/FIGMA/VEprototype.png'
 const figmaVS = '/FIGMA/VS.png'
 const gamedevImage = '/GAMEDEV/indiegame.jpeg'
 const saasImage = '/SAAS/thumbnail.png'
-const bridgehubImage = '/BRIDGEHUB/Screenshot 2026-10-19 055952.png'
+const bridgehubImage = '/BRIDGEHUB/Screenshot 2026-10-25 203802.png'
 const writelyImage = '/WRITELY/Screenshot 2026-10-19 055835.png'
 const graphicArtist1 = '/GRAPHIC_ARTIST/Untitled-1.png'
 const graphicArtist2 = '/GRAPHIC_ARTIST/2.png'
@@ -672,7 +672,7 @@ const projectsData = {
       'Clearer path from learning a skill to applying and joining the community'
     ],
     samples: [bridgehubImage],
-    liveUrl: 'https://bridgehub-hp5e.onrender.com/',
+    liveUrl: 'https://bridgehub-global.com',
     githubUrl: null
   },
   'writely': {
