@@ -107,7 +107,7 @@ const projectCards = [
     title: 'Writely',
     badge: 'Docs Editor · AI',
     summary: 'AI-powered docs editor and notes app for drafting, organizing, and refining writing in one place.',
-    image: '/WRITELY/Screenshot 2026-10-19 055835.png',
+    image: '/WRITELY/Screenshot 2026-10-26 064242.png',
     icon: (
       <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 20h9" />

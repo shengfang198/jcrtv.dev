@@ -18,7 +18,7 @@ const figmaVS = '/FIGMA/VS.png'
 const gamedevImage = '/GAMEDEV/indiegame.jpeg'
 const saasImage = '/SAAS/thumbnail.png'
 const bridgehubImage = '/BRIDGEHUB/Screenshot 2026-10-25 203802.png'
-const writelyImage = '/WRITELY/Screenshot 2026-10-19 055835.png'
+const writelyImage = '/WRITELY/Screenshot 2026-10-26 064242.png'
 const graphicArtist1 = '/GRAPHIC_ARTIST/Untitled-1.png'
 const graphicArtist2 = '/GRAPHIC_ARTIST/2.png'
 const graphicArtist5 = '/GRAPHIC_ARTIST/MindSole.jpg'
@@ -733,7 +733,7 @@ const projectsData = {
       'Made the app available as a hosted demo on OnRender'
     ],
     samples: [writelyImage],
-    liveUrl: 'https://writely-uly4.onrender.com/',
+    liveUrl: 'https://writely-editor.onrender.com/',
     githubUrl: null
   }
 };
