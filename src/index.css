@@ -132,8 +132,40 @@ body {
   color: #fff;
 }
 
+.loader-ring {
+  box-sizing: border-box;
+  display: inline-block;
+  flex-shrink: 0;
+  border: 3px solid #ffb703;
+  border-right-color: #ff006e;
+  border-bottom-color: #06d6a0;
+  border-left-color: #3a86ff;
+  border-radius: 9999px;
+  animation: loader-spin 0.7s linear infinite, loader-hue 1.4s linear infinite;
+}
+
+.btn:disabled {
+  cursor: wait;
+}
+
+@keyframes loader-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes loader-hue {
+  to {
+    filter: hue-rotate(360deg);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  .loader-ring {
+    animation: none;
   }
 }

@@ -1,4 +1,51 @@
 import { skills, technologies } from '../data/site.js'
+import { expertisePositioning, expertiseProfile, expertiseSections, expertiseStacks } from '../data/expertise.js'
+
+function SectionCard({ section }) {
+  return (
+    <article className="border border-neutral-200 p-6 md:p-8">
+      <h3 className="text-sm font-semibold tracking-[0.14em]">{section.title.toUpperCase()}</h3>
+      {section.rows && (
+        <dl className="mt-5 space-y-3 text-sm">
+          {section.rows.map(([label, value]) => (
+            <div key={label} className="grid gap-1 sm:grid-cols-[9.5rem_1fr] sm:gap-4">
+              <dt className="text-neutral-500">{label}</dt>
+              <dd>{value}</dd>
+            </div>
+          ))}
+        </dl>
+      )}
+      {section.groups && (
+        <div className="mt-5 space-y-5">
+          {section.groups.map((group) => (
+            <div key={group.label}>
+              <p className="text-xs font-semibold tracking-[0.16em] text-neutral-500">{group.label.toUpperCase()}</p>
+              <ul className="mt-2 space-y-1 text-sm">
+                {group.items.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      )}
+      {section.items && (
+        <ul className="mt-5 grid gap-x-6 gap-y-1 text-sm sm:grid-cols-2">
+          {section.items.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+      )}
+      {section.notes && (
+        <ul className="mt-5 space-y-1 border-t border-neutral-200 pt-4 text-sm text-neutral-600">
+          {section.notes.map((note) => (
+            <li key={note}>{note}</li>
+          ))}
+        </ul>
+      )}
+    </article>
+  )
+}
 
 function ExpertisePage() {
   return (
@@ -31,6 +78,42 @@ function ExpertisePage() {
               <div className="h-full bg-[#ff6608]" style={{ width: `${skill.level}%` }} />
             </div>
           </div>
+        ))}
+      </div>
+
+      <div className="mt-20 border-t border-neutral-200 pt-14">
+        <p className="text-xs font-semibold tracking-[0.2em] text-neutral-500">STACKS AND SKILLS</p>
+        <h2 className="mt-3 max-w-3xl text-2xl font-semibold leading-snug md:text-3xl">
+          {expertiseProfile.roles}
+        </h2>
+        <p className="mt-3 max-w-2xl text-sm leading-relaxed">{expertiseProfile.experience}</p>
+      </div>
+
+      <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        {expertiseStacks.map((stack) => (
+          <article key={stack.title} className="border border-neutral-200 p-5">
+            <h3 className="text-xs font-semibold tracking-[0.16em]">{stack.title.toUpperCase()}</h3>
+            <ul className="mt-3 space-y-1 text-sm">
+              {stack.items.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </article>
+        ))}
+      </div>
+
+      <div className="mt-6 grid gap-6 lg:grid-cols-2">
+        {expertiseSections.map((section) => (
+          <SectionCard key={section.title} section={section} />
+        ))}
+      </div>
+
+      <div className="mt-6 grid gap-4 md:grid-cols-3">
+        {expertisePositioning.map(([title, text]) => (
+          <article key={title} className="border border-neutral-200 p-6">
+            <h3 className="text-sm font-semibold tracking-[0.14em]">{title.toUpperCase()}</h3>
+            <p className="mt-3 text-sm leading-relaxed">{text}</p>
+          </article>
         ))}
       </div>
     </article>

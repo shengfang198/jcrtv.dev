@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
+import LoadingCircle from './LoadingCircle.jsx'
 
 function drivePreview(url) {
   const match = String(url).match(/\/file\/d\/([^/]+)/)
@@ -6,6 +7,13 @@ function drivePreview(url) {
 }
 
 function SampleFrame({ sample, alt }) {
+  const [ready, setReady] = useState(!sample)
+  useEffect(() => {
+    setReady(!sample)
+  }, [sample])
+
+  const finish = () => setReady(true)
+
   let media
   if (!sample) {
     media = <div className="flex h-full items-center justify-center text-sm">Sample unavailable</div>
@@ -16,22 +24,41 @@ function SampleFrame({ sample, alt }) {
         title={alt}
         className="h-full w-full border-0"
         allow="autoplay"
+        onLoad={finish}
       />
     )
   } else if (/\.(mp4|mov|webm)$/i.test(sample)) {
-    media = <video src={sample} controls className="h-full w-full object-contain" />
+    media = (
+      <video
+        src={sample}
+        controls
+        className={`h-full w-full object-contain ${ready ? 'opacity-100' : 'opacity-0'}`}
+        onLoadedData={finish}
+        onError={finish}
+      />
+    )
   } else {
     media = (
       <img
         src={sample}
         alt={alt}
-        className="h-full w-full object-contain"
+        ref={(node) => {
+          if (node?.complete && node.naturalWidth > 0) finish()
+        }}
+        onLoad={finish}
+        onError={finish}
+        className={`h-full w-full object-contain ${ready ? 'opacity-100' : 'opacity-0'}`}
       />
     )
   }
 
   return (
-    <div className="flex h-[420px] w-full min-w-0 flex-1 items-center justify-center sm:h-[520px] lg:h-[640px]">
+    <div className="relative flex h-[420px] w-full min-w-0 flex-1 items-center justify-center sm:h-[520px] lg:h-[640px]">
+      {!ready && (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <LoadingCircle className="h-12 w-12" />
+        </div>
+      )}
       {media}
     </div>
   )
