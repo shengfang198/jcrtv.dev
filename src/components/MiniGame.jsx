@@ -1,395 +1,323 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import moneyCashGif from '../assets/money-cash.gif';
+import { useCallback, useEffect, useRef, useState } from 'react'
 
-const RUNNER_TRACK_HEIGHT = 304;
-const RUNNER_PLAYER_SIZE = 50;
-const RUNNER_PLAYER_X = 72;
-const RUNNER_HIT_PAD = 8;
-const RUNNER_FLY_FORCE = 7.6;
-const RUNNER_GRAVITY = 0.52;
-const RUNNER_MIN_CLEARANCE = RUNNER_PLAYER_SIZE + 42;
-const HIGH_SCORE_KEY = 'flappy-bills-best';
-const ENEMY_COLORS = ['#ef4444', '#f97316', '#eab308', '#22c55e', '#06b6d4', '#3b82f6', '#8b5cf6', '#ec4899'];
+const TRACK_HEIGHT = 256
+const PLAYER_SIZE = 46
+const PLAYER_X = 64
+const HIT_PAD = 8
+const FLY_FORCE = 7.6
+const GRAVITY = 0.52
+const MIN_CLEARANCE = PLAYER_SIZE + 42
+const HIGH_SCORE_KEY = 'flappy-bills-best'
+const BLOCK_COLORS = ['#ffb703', '#fb8500', '#ff6608', '#ff006e', '#06d6a0', '#3a86ff']
 
 function readHighScore() {
   try {
-    const saved = Number(window.localStorage.getItem(HIGH_SCORE_KEY));
-    return Number.isFinite(saved) && saved > 0 ? Math.floor(saved) : 0;
+    const saved = Number(window.localStorage.getItem(HIGH_SCORE_KEY))
+    return Number.isFinite(saved) && saved > 0 ? Math.floor(saved) : 0
   } catch {
-    return 0;
+    return 0
   }
 }
 
 function writeHighScore(score) {
   try {
-    window.localStorage.setItem(HIGH_SCORE_KEY, String(score));
+    window.localStorage.setItem(HIGH_SCORE_KEY, String(score))
   } catch {
-    /* ignore quota / private mode */
+    /* ignore private mode */
   }
 }
 
 function MiniGame() {
-  const [runnerStarted, setRunnerStarted] = useState(false);
-  const [runnerGameOver, setRunnerGameOver] = useState(false);
-  const [runnerScore, setRunnerScore] = useState(0);
-  const [runnerHighScore, setRunnerHighScore] = useState(readHighScore);
-  const [runnerObstacles, setRunnerObstacles] = useState([]);
-  const runnerTrackRef = useRef(null);
-  const runnerPlayerElRef = useRef(null);
-  const runnerObstacleElsRef = useRef(new Map());
-  const runnerRafRef = useRef(null);
-  const runnerLastFrameRef = useRef(null);
-  const runnerScoreLastUpdateRef = useRef(0);
-  const runnerObstacleIdRef = useRef(0);
-  const runnerHighScoreRef = useRef(runnerHighScore);
-  const hoverCardRef = useRef(false);
-  const runnerStateRef = useRef({
-    playerY: Math.floor(RUNNER_TRACK_HEIGHT * 0.48),
+  const [started, setStarted] = useState(false)
+  const [gameOver, setGameOver] = useState(false)
+  const [score, setScore] = useState(0)
+  const [highScore, setHighScore] = useState(readHighScore)
+  const [obstacles, setObstacles] = useState([])
+  const trackRef = useRef(null)
+  const playerRef = useRef(null)
+  const obstacleRefs = useRef(new Map())
+  const rafRef = useRef(0)
+  const lastFrameRef = useRef(null)
+  const scoreTickRef = useRef(0)
+  const idRef = useRef(0)
+  const highScoreRef = useRef(highScore)
+  const hoverRef = useRef(false)
+  const stateRef = useRef({
+    playerY: Math.floor(TRACK_HEIGHT * 0.48),
     velocity: 0,
     obstacles: [],
     score: 0,
     isStarted: false,
     isGameOver: false
-  });
+  })
 
-  runnerHighScoreRef.current = runnerHighScore;
+  highScoreRef.current = highScore
 
-  const applyPlayerTransform = (y, velocity) => {
-    const el = runnerPlayerElRef.current;
-    if (!el) return;
-    const tilt = Math.max(-20, Math.min(26, -velocity * 2.3));
-    el.style.transform = `translate3d(0, ${-y}px, 0) rotate(${tilt}deg)`;
-  };
+  const applyPlayer = (y, velocity) => {
+    const el = playerRef.current
+    if (!el) return
+    const tilt = Math.max(-20, Math.min(26, -velocity * 2.3))
+    el.style.transform = `translate3d(0, ${-y}px, 0) rotate(${tilt}deg)`
+  }
 
   useEffect(() => {
-    applyPlayerTransform(runnerStateRef.current.playerY, 0);
-  }, []);
+    applyPlayer(stateRef.current.playerY, 0)
+  }, [])
 
-  const resetRunnerState = useCallback(() => {
-    const trackHeight = runnerTrackRef.current?.clientHeight || RUNNER_TRACK_HEIGHT;
-    const startY = Math.floor(trackHeight * 0.48);
-
-    runnerObstacleElsRef.current.clear();
-    runnerObstacleIdRef.current = 0;
-
-    runnerStateRef.current = {
+  const resetGame = useCallback(() => {
+    const height = trackRef.current?.clientHeight || TRACK_HEIGHT
+    const startY = Math.floor(height * 0.48)
+    obstacleRefs.current.clear()
+    idRef.current = 0
+    stateRef.current = {
       playerY: startY,
       velocity: 2.2,
       obstacles: [],
       score: 0,
       isStarted: true,
       isGameOver: false
-    };
-    setRunnerStarted(true);
-    setRunnerGameOver(false);
-    setRunnerScore(0);
-    setRunnerObstacles([]);
-    applyPlayerTransform(startY, 2.2);
-  }, []);
-
-  const flyRunner = useCallback(() => {
-    const s = runnerStateRef.current;
-    if (!s.isStarted || s.isGameOver) return;
-    s.velocity = RUNNER_FLY_FORCE;
-  }, []);
-
-  const handleTrackPointer = useCallback((e) => {
-    if (e.pointerType === 'mouse' && e.button !== 0) return;
-    e.preventDefault();
-    const s = runnerStateRef.current;
-    if (!s.isStarted || s.isGameOver) {
-      resetRunnerState();
-      return;
     }
-    flyRunner();
-  }, [resetRunnerState, flyRunner]);
+    setStarted(true)
+    setGameOver(false)
+    setScore(0)
+    setObstacles([])
+    applyPlayer(startY, 2.2)
+  }, [])
+
+  const fly = useCallback(() => {
+    const state = stateRef.current
+    if (!state.isStarted || state.isGameOver) return
+    state.velocity = FLY_FORCE
+  }, [])
+
+  const onPointerDown = useCallback((event) => {
+    if (event.pointerType === 'mouse' && event.button !== 0) return
+    event.preventDefault()
+    const state = stateRef.current
+    if (!state.isStarted || state.isGameOver) {
+      resetGame()
+      return
+    }
+    fly()
+  }, [fly, resetGame])
 
   useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.code !== 'Space' && e.code !== 'ArrowUp') return;
-      const s = runnerStateRef.current;
-      if (s.isStarted && !s.isGameOver) {
-        e.preventDefault();
-        flyRunner();
-        return;
+    const onKeyDown = (event) => {
+      if (event.code !== 'Space' && event.code !== 'ArrowUp') return
+      const state = stateRef.current
+      if (state.isStarted && !state.isGameOver) {
+        event.preventDefault()
+        fly()
+        return
       }
-      if (!hoverCardRef.current) return;
-      e.preventDefault();
-      resetRunnerState();
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [resetRunnerState, flyRunner]);
+      if (!hoverRef.current) return
+      event.preventDefault()
+      resetGame()
+    }
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [fly, resetGame])
 
   useEffect(() => {
-    if (!runnerStarted || runnerGameOver) return undefined;
-
-    const GRAVITY = RUNNER_GRAVITY;
-    const BASE_FRAME_MS = 1000 / 60;
-    const PLAYER_SIZE = RUNNER_PLAYER_SIZE;
-    const PLAYER_X = RUNNER_PLAYER_X;
+    if (!started || gameOver) return undefined
 
     const overlaps = (a, b) => (
-      a.left < b.right &&
-      a.right > b.left &&
-      a.bottom < b.top &&
-      a.top > b.bottom
-    );
+      a.left < b.right && a.right > b.left && a.bottom < b.top && a.top > b.bottom
+    )
 
-    let trackHeight = RUNNER_TRACK_HEIGHT;
-    let trackWidth = 760;
-    const measureTrack = () => {
-      const el = runnerTrackRef.current;
-      if (!el) return;
-      trackHeight = el.clientHeight || RUNNER_TRACK_HEIGHT;
-      trackWidth = el.clientWidth || 760;
-    };
-    measureTrack();
-    window.addEventListener('resize', measureTrack);
+    let trackHeight = TRACK_HEIGHT
+    let trackWidth = 760
+    const measure = () => {
+      const el = trackRef.current
+      if (!el) return
+      trackHeight = el.clientHeight || TRACK_HEIGHT
+      trackWidth = el.clientWidth || 760
+    }
+    measure()
+    window.addEventListener('resize', measure)
 
     const loop = (now) => {
-      const s = runnerStateRef.current;
-      if (!s.isStarted || s.isGameOver) return;
+      const state = stateRef.current
+      if (!state.isStarted || state.isGameOver) return
 
-      const lastNow = runnerLastFrameRef.current ?? now;
-      const dtMs = Math.min(50, Math.max(0, now - lastNow));
-      const dtFrames = dtMs / BASE_FRAME_MS;
-      runnerLastFrameRef.current = now;
+      const lastNow = lastFrameRef.current ?? now
+      const dtFrames = Math.min(50, Math.max(0, now - lastNow)) / (1000 / 60)
+      lastFrameRef.current = now
+      const speed = 5.1 + Math.min(3.4, Math.floor(state.score / 14) * 0.32)
 
-      const speed = 5.1 + Math.min(3.4, Math.floor(s.score / 14) * 0.32);
+      state.playerY += state.velocity * dtFrames
+      state.velocity -= GRAVITY * dtFrames
 
-      s.playerY += s.velocity * dtFrames;
-      s.velocity -= GRAVITY * dtFrames;
-
-      const playableHeight = trackHeight;
-      const maxPlayerY = Math.max(playableHeight - PLAYER_SIZE, 0);
-
-      if (s.playerY > maxPlayerY) {
-        s.playerY = maxPlayerY;
-        s.velocity = Math.min(s.velocity, -1.15);
+      const maxPlayerY = Math.max(trackHeight - PLAYER_SIZE, 0)
+      if (state.playerY > maxPlayerY) {
+        state.playerY = maxPlayerY
+        state.velocity = Math.min(state.velocity, -1.15)
+      }
+      if (state.playerY <= 0) {
+        state.playerY = 0
+        state.isGameOver = true
       }
 
-      if (s.playerY <= 0) {
-        s.playerY = 0;
-        s.isGameOver = true;
-      }
-
-      const last = s.obstacles[s.obstacles.length - 1];
-      const spawnGap = Math.max(168, 228 - Math.min(52, s.score * 0.22));
-      let didSpawn = false;
+      const last = state.obstacles[state.obstacles.length - 1]
+      const spawnGap = Math.max(168, 228 - Math.min(52, state.score * 0.22))
+      let didSpawn = false
 
       if (!last || last.x < trackWidth - spawnGap) {
-        let position = Math.random() < 0.5 ? 'bottom' : 'top';
-        let maxHeight = Math.floor(playableHeight * 0.5);
-
+        let position = Math.random() < 0.5 ? 'bottom' : 'top'
+        let maxHeight = Math.floor(trackHeight * 0.5)
         if (last && last.x > trackWidth - 280) {
-          if (last.position === position) {
-            position = position === 'top' ? 'bottom' : 'top';
-          }
-          maxHeight = Math.max(24, playableHeight - last.height - RUNNER_MIN_CLEARANCE);
+          if (last.position === position) position = position === 'top' ? 'bottom' : 'top'
+          maxHeight = Math.max(24, trackHeight - last.height - MIN_CLEARANCE)
         }
-
-        const isTall = Math.random() < 0.3 && maxHeight > 44;
+        const isTall = Math.random() < 0.3 && maxHeight > 44
         const height = isTall
           ? Math.floor(maxHeight * (0.7 + Math.random() * 0.28))
-          : 22 + Math.floor(Math.random() * Math.min(20, Math.max(8, maxHeight - 22)));
-        const width = isTall
-          ? 28 + Math.floor(Math.random() * 14)
-          : 24 + Math.floor(Math.random() * 12);
-
-        const id = runnerObstacleIdRef.current++;
-        s.obstacles.push({
+          : 22 + Math.floor(Math.random() * Math.min(20, Math.max(8, maxHeight - 22)))
+        const width = isTall ? 28 + Math.floor(Math.random() * 14) : 24 + Math.floor(Math.random() * 12)
+        const id = idRef.current++
+        state.obstacles.push({
           id,
           x: trackWidth + width,
           width,
           height,
-          color: ENEMY_COLORS[Math.floor(Math.random() * ENEMY_COLORS.length)],
           position,
-          passed: false
-        });
-        didSpawn = true;
+          passed: false,
+          color: BLOCK_COLORS[id % BLOCK_COLORS.length]
+        })
+        didSpawn = true
       }
 
-      const oldLen = s.obstacles.length;
-      for (let i = 0; i < s.obstacles.length; i += 1) {
-        const o = s.obstacles[i];
-        o.x -= speed * dtFrames;
-        if (!o.passed && o.x + o.width < PLAYER_X) {
-          o.passed = true;
-          s.score += 1;
+      const previousLength = state.obstacles.length
+      for (let i = 0; i < state.obstacles.length; i += 1) {
+        const obstacle = state.obstacles[i]
+        obstacle.x -= speed * dtFrames
+        if (!obstacle.passed && obstacle.x + obstacle.width < PLAYER_X) {
+          obstacle.passed = true
+          state.score += 1
         }
       }
-      s.obstacles = s.obstacles.filter((o) => o.x + o.width > -12);
-      const didRemove = s.obstacles.length !== oldLen;
+      state.obstacles = state.obstacles.filter((obstacle) => obstacle.x + obstacle.width > -12)
+      const didRemove = state.obstacles.length !== previousLength
 
-      if (!s.isGameOver) {
+      if (!state.isGameOver) {
         const playerRect = {
-          left: PLAYER_X + RUNNER_HIT_PAD,
-          right: PLAYER_X + PLAYER_SIZE - RUNNER_HIT_PAD,
-          bottom: s.playerY + RUNNER_HIT_PAD,
-          top: s.playerY + PLAYER_SIZE - RUNNER_HIT_PAD
-        };
-
-        for (let i = 0; i < s.obstacles.length; i += 1) {
-          const o = s.obstacles[i];
+          left: PLAYER_X + HIT_PAD,
+          right: PLAYER_X + PLAYER_SIZE - HIT_PAD,
+          bottom: state.playerY + HIT_PAD,
+          top: state.playerY + PLAYER_SIZE - HIT_PAD
+        }
+        for (let i = 0; i < state.obstacles.length; i += 1) {
+          const obstacle = state.obstacles[i]
           const obstacleRect = {
-            left: o.x,
-            right: o.x + o.width,
-            bottom: o.position === 'top' ? playableHeight - o.height : 0,
-            top: o.position === 'top' ? playableHeight : o.height
-          };
+            left: obstacle.x,
+            right: obstacle.x + obstacle.width,
+            bottom: obstacle.position === 'top' ? trackHeight - obstacle.height : 0,
+            top: obstacle.position === 'top' ? trackHeight : obstacle.height
+          }
           if (overlaps(playerRect, obstacleRect)) {
-            s.isGameOver = true;
-            break;
+            state.isGameOver = true
+            break
           }
         }
       }
 
-      if (s.isGameOver) {
-        s.isStarted = false;
-        setRunnerGameOver(true);
-        setRunnerStarted(false);
-        const finalScore = Math.floor(s.score);
-        setRunnerScore(finalScore);
-        if (finalScore > runnerHighScoreRef.current) {
-          runnerHighScoreRef.current = finalScore;
-          setRunnerHighScore(finalScore);
-          writeHighScore(finalScore);
+      if (state.isGameOver) {
+        state.isStarted = false
+        setGameOver(true)
+        setStarted(false)
+        const finalScore = Math.floor(state.score)
+        setScore(finalScore)
+        if (finalScore > highScoreRef.current) {
+          highScoreRef.current = finalScore
+          setHighScore(finalScore)
+          writeHighScore(finalScore)
         }
-        return;
+        return
       }
 
-      s.score += 0.045 * dtFrames;
-      applyPlayerTransform(s.playerY, s.velocity);
+      state.score += 0.045 * dtFrames
+      applyPlayer(state.playerY, state.velocity)
 
-      for (let i = 0; i < s.obstacles.length; i += 1) {
-        const o = s.obstacles[i];
-        const el = runnerObstacleElsRef.current.get(o.id);
-        if (el) el.style.transform = `translate3d(${o.x}px, 0, 0)`;
+      for (let i = 0; i < state.obstacles.length; i += 1) {
+        const obstacle = state.obstacles[i]
+        const el = obstacleRefs.current.get(obstacle.id)
+        if (el) el.style.transform = `translate3d(${obstacle.x}px, 0, 0)`
       }
 
-      if (now - runnerScoreLastUpdateRef.current > 120) {
-        setRunnerScore(Math.floor(s.score));
-        runnerScoreLastUpdateRef.current = now;
+      if (now - scoreTickRef.current > 120) {
+        setScore(Math.floor(state.score))
+        scoreTickRef.current = now
       }
+      if (didSpawn || didRemove) setObstacles(state.obstacles.slice())
+      rafRef.current = requestAnimationFrame(loop)
+    }
 
-      if (didSpawn || didRemove) {
-        setRunnerObstacles(s.obstacles.slice());
-      }
-
-      runnerRafRef.current = requestAnimationFrame(loop);
-    };
-
-    runnerLastFrameRef.current = null;
-    runnerScoreLastUpdateRef.current = 0;
-    runnerRafRef.current = requestAnimationFrame(loop);
+    lastFrameRef.current = null
+    scoreTickRef.current = 0
+    rafRef.current = requestAnimationFrame(loop)
 
     return () => {
-      window.removeEventListener('resize', measureTrack);
-      if (runnerRafRef.current) cancelAnimationFrame(runnerRafRef.current);
-    };
-  }, [runnerStarted, runnerGameOver]);
-
-  useEffect(() => {
-    for (let i = 0; i < runnerObstacles.length; i += 1) {
-      const o = runnerObstacles[i];
-      const el = runnerObstacleElsRef.current.get(o.id);
-      if (el) el.style.transform = `translate3d(${o.x}px, 0, 0)`;
+      window.removeEventListener('resize', measure)
+      if (rafRef.current) cancelAnimationFrame(rafRef.current)
     }
-  }, [runnerObstacles]);
+  }, [started, gameOver])
 
-  const overlayLabel = runnerGameOver
-    ? `Game over. Score ${runnerScore}`
-    : 'Click or Space to fly';
+  const label = gameOver ? `Game over. Score ${score}` : 'Click or Space to fly'
 
   return (
-    <section>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <section id="minigame" className="bg-ink text-white">
+      <div className="page-shell px-6 pb-14 md:px-14 md:pb-16">
+      <div className="flex items-end justify-between gap-4">
+        <h2 className="text-sm font-semibold tracking-[0.18em]">MINIGAME</h2>
+        <p className="text-xs font-medium tracking-wide text-white/70">
+          Score {score} / Best {highScore}
+        </p>
+      </div>
+      <div
+        className="relative mt-4 border border-white/15"
+        onMouseEnter={() => { hoverRef.current = true }}
+        onMouseLeave={() => { hoverRef.current = false }}
+      >
         <div
-          className="animate-on-scroll flashlight-card runner-card runner-card-surface runner-card-shell rounded-2xl border border-white/5 relative group transition-colors"
-          onMouseEnter={() => { hoverCardRef.current = true; }}
-          onMouseLeave={() => { hoverCardRef.current = false; }}
+          ref={trackRef}
+          className="relative h-64 cursor-pointer overflow-hidden touch-none"
+          onPointerDown={onPointerDown}
+          role="button"
+          tabIndex={0}
+          aria-label="Flappy Bills. Click or press Space to fly."
         >
-          <div className="relative z-10 p-8 pb-4">
-            <div className="flex items-center justify-between mb-6">
-              <div className="px-3 py-1 bg-white/5 rounded-full border border-white/5 text-xs text-neutral-400 font-semibold uppercase tracking-wider">
-                Mini Game
-              </div>
-              <div className="text-sm text-neutral-400 font-medium">
-                Score: <span className="text-white">{runnerScore}</span> | Best: <span className="text-white">{runnerHighScore}</span>
-              </div>
-            </div>
-
-            <h3 className="text-2xl text-white mb-2 font-medium tracking-tight">Flappy Bills</h3>
-            <p className="text-neutral-400 mb-0">Click the track, or use Space / Up Arrow to fly.</p>
+          <div
+            ref={playerRef}
+            className="absolute bottom-0 left-16 h-[46px] w-[46px]"
+          >
+            <img src="/money-cash.gif" alt="" className="h-full w-full object-contain" draggable="false" />
           </div>
-
-          <div className="relative z-10 px-8">
-            <div className="relative h-72">
-              <div
-                ref={runnerTrackRef}
-                className={`runner-track relative z-[1] h-72 rounded-2xl border border-white/10 overflow-hidden${runnerStarted ? ' is-running' : ''}`}
-                onPointerDown={handleTrackPointer}
-              >
-                <div className="runner-track-grid" aria-hidden="true" />
-                <div
-                  ref={runnerPlayerElRef}
-                  className={`runner-player absolute bottom-0 left-[72px] w-[50px] h-[50px]${runnerStarted ? ' is-running' : ''}`}
-                >
-                  <img
-                    src={moneyCashGif}
-                    alt="Runner character"
-                    className="w-full h-full object-contain runner-player-sprite"
-                    draggable="false"
-                  />
-                </div>
-                {runnerObstacles.map((obstacle) => (
-                  <div
-                    key={obstacle.id}
-                    ref={(el) => {
-                      if (el) runnerObstacleElsRef.current.set(obstacle.id, el);
-                      else runnerObstacleElsRef.current.delete(obstacle.id);
-                    }}
-                    className={`runner-obstacle absolute${obstacle.position === 'top' ? ' is-top' : ' is-bottom'}`}
-                    style={{
-                      width: `${obstacle.width}px`,
-                      height: `${obstacle.height}px`,
-                      backgroundColor: obstacle.color,
-                      transform: `translate3d(${obstacle.x}px, 0, 0)`
-                    }}
-                  />
-                ))}
-                {(!runnerStarted) && (
-                  <div className="runner-track-overlay">
-                    {overlayLabel}
-                  </div>
-                )}
-              </div>
+          {obstacles.map((obstacle) => (
+            <div
+              key={obstacle.id}
+              ref={(el) => {
+                if (el) obstacleRefs.current.set(obstacle.id, el)
+                else obstacleRefs.current.delete(obstacle.id)
+              }}
+              className={`absolute ${obstacle.position === 'top' ? 'top-0' : 'bottom-0'}`}
+              style={{
+                width: `${obstacle.width}px`,
+                height: `${obstacle.height}px`,
+                backgroundColor: obstacle.color,
+                transform: `translate3d(${obstacle.x}px, 0, 0)`
+              }}
+            />
+          ))}
+          {!started && (
+            <div className="absolute inset-0 flex items-center justify-center px-6 text-center text-sm font-medium tracking-wide text-white">
+              {label}
             </div>
-          </div>
-
-          <div className="relative z-10 p-8 pt-5">
-            <div className="flex items-center gap-3">
-              <button
-                type="button"
-                onClick={() => {
-                  if (!runnerStarted) resetRunnerState();
-                  else flyRunner();
-                }}
-                className="runner-play-btn rounded-full font-semibold text-sm"
-              >
-                {!runnerStarted ? (runnerGameOver ? 'Play Again' : 'Play') : 'Fly'}
-              </button>
-              {runnerGameOver && (
-                <span className="text-sm text-neutral-400">Game over. Press Play Again.</span>
-              )}
-            </div>
-          </div>
+          )}
         </div>
       </div>
+      </div>
     </section>
-  );
+  )
 }
 
-export default MiniGame;
+export default MiniGame

@@ -1,430 +1,218 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { projectOrder } from '../data/ProjectsData.jsx';
+import { useCallback, useEffect, useState } from 'react'
 
-function ProjectSidebar({ projectsData, activeId }) {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const projects = projectOrder
-    .map((id) => projectsData?.[id])
-    .filter(Boolean);
-
-  useEffect(() => {
-    setMenuOpen(false);
-  }, [activeId]);
-
-  useEffect(() => {
-    const media = window.matchMedia('(min-width: 768px)');
-    const closeOnDesktop = (event) => {
-      if (event.matches) {
-        setMenuOpen(false);
-      }
-    };
-    media.addEventListener('change', closeOnDesktop);
-    if (media.matches) {
-      setMenuOpen(false);
-    }
-    return () => media.removeEventListener('change', closeOnDesktop);
-  }, []);
-
-  useEffect(() => {
-    document.body.style.overflow = menuOpen ? 'hidden' : '';
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [menuOpen]);
-
-  useEffect(() => {
-    if (!menuOpen) return undefined;
-    const onKeyDown = (event) => {
-      if (event.key === 'Escape') setMenuOpen(false);
-    };
-    window.addEventListener('keydown', onKeyDown);
-    return () => window.removeEventListener('keydown', onKeyDown);
-  }, [menuOpen]);
-
-  return (
-    <aside className="project-page-sidebar">
-      <button
-        type="button"
-        className="project-page-hamburger"
-        aria-expanded={menuOpen}
-        aria-controls="project-page-menu"
-        aria-label={menuOpen ? 'Close project list' : 'Open project list'}
-        onClick={() => setMenuOpen((open) => !open)}
-      >
-        {menuOpen ? (
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-            <path d="M18 6 6 18" />
-            <path d="m6 6 12 12" />
-          </svg>
-        ) : (
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-            <path d="M4 6h16" />
-            <path d="M4 12h16" />
-            <path d="M4 18h16" />
-          </svg>
-        )}
-        <span>Projects</span>
-      </button>
-      <button
-        type="button"
-        className={`project-page-sidebar-backdrop${menuOpen ? ' is-open' : ''}`}
-        aria-label="Close project list"
-        tabIndex={menuOpen ? 0 : -1}
-        onClick={() => setMenuOpen(false)}
-      />
-      <div id="project-page-menu" className={`project-page-sidebar-card${menuOpen ? ' is-open' : ''}`}>
-        <div className="project-page-sidebar-head">
-          <p className="project-modal-label text-xs font-semibold uppercase tracking-wider">
-            Projects
-          </p>
-          <button
-            type="button"
-            className="project-page-sidebar-close"
-            aria-label="Close project list"
-            onClick={() => setMenuOpen(false)}
-          >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-              <path d="M18 6 6 18" />
-              <path d="m6 6 12 12" />
-            </svg>
-          </button>
-        </div>
-        <nav className="project-page-sidebar-list" aria-label="Project list">
-          {projects.map((item) => (
-            <a
-              key={item.id}
-              href={`#/project/${item.id}`}
-              className={`project-page-sidebar-link${item.id === activeId ? ' is-active' : ''}`}
-              onClick={() => setMenuOpen(false)}
-            >
-              <span className="project-page-sidebar-title">{item.title}</span>
-              <span className="project-page-sidebar-meta">{item.category}</span>
-            </a>
-          ))}
-        </nav>
-      </div>
-    </aside>
-  );
+function drivePreview(url) {
+  const match = String(url).match(/\/file\/d\/([^/]+)/)
+  return match ? `https://drive.google.com/file/d/${match[1]}/preview` : url
 }
 
-function getDrivePreviewUrl(url) {
-  if (typeof url !== 'string') return '';
-  const match = url.match(/\/file\/d\/([^/]+)/);
-  return match ? `https://drive.google.com/file/d/${match[1]}/preview` : url;
-}
-
-function isDriveLink(url) {
-  return typeof url === 'string' && url.includes('drive.google.com');
-}
-
-function isVideoFile(url) {
-  return typeof url === 'string' && (url.endsWith('.mp4') || url.endsWith('.mov') || url.endsWith('.webm'));
-}
-
-function SampleMedia({ sample, alt }) {
-  const [ready, setReady] = useState(false);
-  const imageRef = useRef(null);
-  const hasSample = typeof sample === 'string' && Boolean(sample);
-
-  useEffect(() => {
-    setReady(false);
-    const image = imageRef.current;
-    if (image?.complete && image.naturalWidth > 0) {
-      setReady(true);
-    }
-  }, [sample]);
-
-  if (!hasSample) {
-    return (
-      <div className="project-modal-media-loader" role="status" aria-label="Sample unavailable">
-        <span className="project-modal-text text-sm">Sample unavailable</span>
-      </div>
-    );
-  }
-
-  const markReady = () => setReady(true);
-
-  const mediaClass = `project-modal-sample-media${ready ? ' is-ready' : ''}`;
-
-  let media;
-  if (isDriveLink(sample)) {
+function SampleFrame({ sample, alt }) {
+  let media
+  if (!sample) {
+    media = <div className="flex h-full items-center justify-center text-sm">Sample unavailable</div>
+  } else if (sample.includes('drive.google.com')) {
     media = (
       <iframe
-        key={sample}
-        src={getDrivePreviewUrl(sample)}
+        src={drivePreview(sample)}
         title={alt}
-        className={mediaClass}
+        className="h-full w-full border-0"
         allow="autoplay"
-        onLoad={markReady}
       />
-    );
-  } else if (isVideoFile(sample)) {
-    media = (
-      <video
-        key={sample}
-        src={sample}
-        controls
-        className={mediaClass}
-        onLoadedData={markReady}
-        onError={markReady}
-      >
-        Your browser does not support the video tag.
-      </video>
-    );
+    )
+  } else if (/\.(mp4|mov|webm)$/i.test(sample)) {
+    media = <video src={sample} controls className="h-full w-full object-contain" />
   } else {
     media = (
       <img
-        key={sample}
-        ref={imageRef}
         src={sample}
         alt={alt}
-        className={mediaClass}
-        onLoad={markReady}
-        onError={markReady}
+        className="h-full w-full object-contain"
       />
-    );
+    )
   }
 
   return (
-    <>
+    <div className="flex h-[420px] w-full min-w-0 flex-1 items-center justify-center sm:h-[520px] lg:h-[640px]">
       {media}
-      {!ready && (
-        <div className="project-modal-media-loader" role="status" aria-live="polite" aria-label="Loading sample">
-          <span className="project-modal-media-spinner" aria-hidden="true" />
-        </div>
-      )}
-    </>
-  );
+    </div>
+  )
 }
 
-function ProjectPage({ project, projectsData }) {
-  const [currentSampleIndex, setCurrentSampleIndex] = useState(0);
-  const [sampleProjectId, setSampleProjectId] = useState(project?.id);
-  const saasDemoUrl = 'https://virtual-editor-dsel.onrender.com/';
+function ProjectPage({ project, projectOrder, projectsData }) {
+  const [index, setIndex] = useState(0)
 
-  if (project?.id !== sampleProjectId) {
-    setSampleProjectId(project?.id);
-    setCurrentSampleIndex(0);
-  }
+  useEffect(() => {
+    setIndex(0)
+  }, [project?.id])
+
+  const samples = project?.samples || []
+  const count = samples.length
+  const safeIndex = count ? Math.min(index, count - 1) : 0
+  const order = (projectOrder || []).filter((id) => projectsData?.[id])
+  const canPrev = safeIndex > 0
+  const canNext = safeIndex < count - 1
+
+  const step = useCallback((direction) => {
+    setIndex((current) => {
+      const next = current + direction
+      if (next < 0 || next > count - 1) return current
+      return next
+    })
+  }, [count])
+
+  useEffect(() => {
+    if (!project) return undefined
+    const onKey = (event) => {
+      if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) return
+      if (event.key === 'ArrowRight') {
+        event.preventDefault()
+        step(1)
+      }
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault()
+        step(-1)
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [project, step])
 
   if (!project) {
     return (
-      <section className="project-page">
-        <div className="project-page-layout">
-          <ProjectSidebar projectsData={projectsData} />
-          <div className="project-page-inner project-modal-container">
-            <div className="p-8 max-sm:p-5">
-              <h1 className="project-modal-title text-2xl font-bold mb-4">Project not found</h1>
-              <p className="project-modal-text mb-6">This project page is unavailable or the link is invalid.</p>
-              <a href="#overview" className="project-modal-action-btn inline-flex px-6 py-3 rounded-full font-medium transition-colors border">
-                Back to Home
-              </a>
-            </div>
-          </div>
-          <div className="project-page-layout-spacer" aria-hidden="true" />
-        </div>
+      <section className="page-shell px-6 py-24 md:px-14">
+        <h1 className="font-display text-5xl font-black">NOT FOUND</h1>
+        <p className="mt-4 text-sm">This project is unavailable.</p>
+        <a href="#overview" className="btn mt-8">
+          BACK HOME
+        </a>
       </section>
-    );
+    )
   }
 
-  const samples = project.samples || [];
-  const sampleCount = samples.length;
-  const safeSampleIndex = sampleCount
-    ? Math.min(Math.max(currentSampleIndex, 0), sampleCount - 1)
-    : 0;
-  const currentSample = samples[safeSampleIndex];
-
-  const nextSample = () => {
-    if (sampleCount > 1) {
-      setCurrentSampleIndex((prev) =>
-        prev === sampleCount - 1 ? 0 : prev + 1
-      );
-    }
-  };
-
-  const prevSample = () => {
-    if (sampleCount > 1) {
-      setCurrentSampleIndex((prev) =>
-        prev === 0 ? sampleCount - 1 : prev - 1
-      );
-    }
-  };
+  const arrowClass = (enabled) => (
+    `flex h-10 w-10 shrink-0 items-center justify-center ${
+      enabled ? 'text-ink hover:text-[#ff6608]' : 'cursor-default text-neutral-300'
+    }`
+  )
 
   return (
-    <section className="project-page">
-      <div className="project-page-layout">
-      <ProjectSidebar projectsData={projectsData} activeId={project.id} />
-      <div className="project-page-inner project-modal-container relative w-full">
-        <div className="project-modal-scroll">
-        <div className="project-modal-section-divider p-8 max-sm:p-5 border-b">
-          <a
-            href="#overview"
-            className="project-page-back"
-          >
-            Back to Home
-          </a>
+    <article className="page-shell px-6 py-10 md:px-14 md:py-14">
+      <div className="grid items-start gap-8 lg:grid-cols-[200px_1fr] lg:gap-10">
+        <nav aria-label="Projects" className="lg:sticky lg:top-24">
+          <p className="text-xs font-semibold tracking-[0.2em] text-neutral-500">PROJECTS</p>
+          <ul className="mt-4 space-y-2 text-sm leading-snug">
+            {order.map((id) => {
+              const item = projectsData[id]
+              const active = id === project.id
+              return (
+                <li key={id}>
+                  <a
+                    href={`#/project/${id}`}
+                    className={active ? 'font-semibold' : 'text-neutral-500 hover:text-ink'}
+                    aria-current={active ? 'page' : undefined}
+                  >
+                    {item.title}
+                  </a>
+                </li>
+              )
+            })}
+          </ul>
+        </nav>
 
-          <div className="flex items-start mb-6">
-            <div className="flex items-center gap-3">
-              <div className={`theme-accent-icon w-12 h-12 rounded-full ${project.color} flex items-center justify-center`}>
-                {project.icon}
-              </div>
-              <div>
-                <h1 className="project-modal-title text-2xl font-bold">{project.title}</h1>
-                <span className={`theme-chip ${project.badgeColor} text-xs px-3 py-1 rounded-full font-medium`}>
-                  {project.category}
-                </span>
-              </div>
-            </div>
+        <div>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => step(-1)}
+              aria-label="Previous"
+              disabled={!canPrev}
+              className={arrowClass(canPrev)}
+            >
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+                <path d="M15 5 8 12l7 7" />
+              </svg>
+            </button>
+            <SampleFrame sample={samples[safeIndex]} alt={`${project.title} sample ${safeIndex + 1}`} />
+            <button
+              type="button"
+              onClick={() => step(1)}
+              aria-label="Next"
+              disabled={!canNext}
+              className={arrowClass(canNext)}
+            >
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+                <path d="m9 5 7 7-7 7" />
+              </svg>
+            </button>
           </div>
+          <p className="mt-3 text-center text-xs font-semibold tracking-[0.16em]">
+            {count ? `${safeIndex + 1} / ${count}` : 'NO SAMPLES'}
+          </p>
 
-          <p className="project-modal-text text-lg mb-6">{project.description}</p>
-
-          {(project.liveUrl || project.videoUrl || project.id === 'saas-platform') && (
-            <div className="mb-6 flex gap-3 flex-wrap">
-              {project.liveUrl && (
-                <a
-                  href={project.liveUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="project-modal-action-btn theme-action-btn ink-fill-btn px-6 py-3 rounded-full font-medium border"
-                >
-                  View Live Project
-                </a>
-              )}
-              {project.videoUrl && (
-                <a
-                  href={project.videoUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="project-modal-video-btn theme-action-btn ink-fill-btn px-6 py-3 rounded-full font-medium border"
-                >
-                  {project.id === 'saas-platform' ? 'View SaaS Demo' : 'View Game Video'}
-                </a>
-              )}
-              {project.id === 'saas-platform' && (
-                <a
-                  href={saasDemoUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="project-modal-saas-top-link theme-action-btn ink-fill-btn inline-flex items-center gap-2 bg-fuchsia-600 text-white px-5 py-2.5 rounded-full font-semibold"
-                >
-                  Open SaaS App
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M7 17 17 7" />
-                    <path d="M7 7h10v10" />
-                  </svg>
-                </a>
-              )}
-            </div>
-          )}
-
-          <div className="mb-6">
-            <div className="project-modal-panel rounded-xl p-6 border mb-4">
-              <div className="project-modal-label text-xs font-semibold uppercase tracking-wider mb-3">Tech Stack</div>
-              <div className="flex flex-wrap gap-2">
-                {project.tech.map((tech, index) => (
-                  <span key={index} className="project-modal-chip text-sm px-3 py-1 rounded-full font-medium">
-                    {tech}
+          <div className="mt-10 grid items-start gap-10 lg:grid-cols-2 lg:gap-16">
+            <div>
+              <p className="text-xs font-semibold tracking-[0.2em] text-neutral-500">PROJECT</p>
+              <h1 className="mt-3 font-display text-[clamp(2rem,4vw,3.4rem)] font-black leading-[0.9] tracking-[-0.03em]">
+                {project.title.toUpperCase()}
+              </h1>
+              <p className="mt-4 text-sm leading-relaxed">{project.description}</p>
+              <div className="mt-5 flex flex-wrap gap-2">
+                {project.tech.map((item) => (
+                  <span key={item} className="border border-ink px-2.5 py-1 text-[11px] font-medium tracking-wide">
+                    {item}
                   </span>
                 ))}
               </div>
+              <div className="mt-6 flex flex-wrap gap-3">
+                {project.liveUrl && (
+                  <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="btn">
+                    VIEW LIVE
+                  </a>
+                )}
+                {project.videoUrl && (
+                  <a href={project.videoUrl} target="_blank" rel="noopener noreferrer" className="btn-line">
+                    VIEW VIDEO
+                  </a>
+                )}
+                {project.githubUrl && (
+                  <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="btn-line">
+                    GITHUB
+                  </a>
+                )}
+              </div>
+              <p className="mt-6 text-xs tracking-[0.14em] text-neutral-500">
+                {project.client} · {project.duration}
+              </p>
             </div>
 
-            <div className="project-modal-panel rounded-xl p-6 border">
-              <div className="project-modal-label text-xs font-semibold uppercase tracking-wider mb-3">Project Samples</div>
-              {sampleCount ? (
-                sampleCount > 1 ? (
-                  <div className="relative w-full min-w-0">
-                    <div className="project-modal-media-wrap project-modal-sample-frame rounded-lg">
-                      <SampleMedia
-                        sample={currentSample}
-                        alt={`Sample ${safeSampleIndex + 1}`}
-                      />
-                    </div>
-                    <div className="flex justify-between items-center mt-4">
-                      <button
-                        type="button"
-                        onClick={prevSample}
-                        className="project-modal-nav-btn px-4 py-2 rounded-full font-medium border flex items-center gap-2"
-                      >
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                          <path d="M15 18l-6-6 6-6"/>
-                        </svg>
-                        Previous
-                      </button>
-                      <span className="project-modal-text text-sm">
-                        {safeSampleIndex + 1} / {sampleCount}
-                      </span>
-                      <button
-                        type="button"
-                        onClick={nextSample}
-                        className="project-modal-nav-btn px-4 py-2 rounded-full font-medium border flex items-center gap-2"
-                      >
-                        Next
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                          <path d="M9 18l6-6-6-6"/>
-                        </svg>
-                      </button>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="project-modal-sample-grid grid gap-3 sm:gap-4 min-w-0 w-full grid-cols-1">
-                    {samples.map((sample, index) => (
-                      <div
-                        key={index}
-                        className="project-modal-media-wrap project-modal-sample-frame rounded-lg"
-                      >
-                        <SampleMedia sample={sample} alt={`Sample ${index + 1}`} />
-                      </div>
-                    ))}
-                  </div>
-                )
-              ) : (
-                <div className="project-modal-text text-sm">No samples available</div>
-              )}
-            </div>
-          </div>
-        </div>
-
-        <div className="p-8 max-sm:p-5">
-          <h2 className="project-modal-title text-xl font-bold mb-6">Case Study</h2>
-
-          {project.caseStudy.map((section, index) => (
-            <div key={index} className="mb-8">
-              <h3 className="project-modal-title text-lg font-semibold mb-3">{section.title}</h3>
-              <p className="project-modal-text leading-relaxed">{section.content}</p>
-              {section.bullets && (
-                <ul className="mt-4 space-y-2">
-                  {section.bullets.map((bullet, bulletIndex) => (
-                    <li key={bulletIndex} className="project-modal-text flex items-start gap-2">
-                      <span className="project-modal-bullet mt-1">•</span>
-                      <span>{bullet}</span>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          ))}
-
-          <div className="project-modal-section-divider border-t pt-6">
-            <h3 className="project-modal-title text-lg font-semibold mb-4">Key Results</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {project.results.map((result, index) => (
-                <div key={index} className="flex items-center gap-3">
-                  <div className="project-modal-dot w-2 h-2 rounded-full"></div>
-                  <span className="project-modal-text">{result}</span>
+            <div className="text-sm leading-relaxed">
+              <h2 className="text-base font-semibold">Case Study</h2>
+              {project.caseStudy.map((section) => (
+                <div key={section.title} className="mt-6">
+                  <h3 className="font-semibold">{section.title}</h3>
+                  {section.content && <p className="mt-1">{section.content}</p>}
+                  {section.bullets && (
+                    <ul className="mt-2 space-y-1">
+                      {section.bullets.map((bullet) => (
+                        <li key={bullet}>· {bullet}</li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
               ))}
+              <div className="mt-8">
+                <h3 className="font-semibold">Key Results</h3>
+                <ul className="mt-2 space-y-1">
+                  {project.results.map((result) => (
+                    <li key={result}>{result}</li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
         </div>
-        </div>
       </div>
-      <div className="project-page-layout-spacer" aria-hidden="true" />
-      </div>
-    </section>
-  );
+    </article>
+  )
 }
 
-export default ProjectPage;
+export default ProjectPage

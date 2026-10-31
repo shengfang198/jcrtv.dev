@@ -123,87 +123,56 @@ const projectsData = {
   },
   'ecommerce-custom': {
     id: 'ecommerce-custom',
-    title: 'E-commerce Clothing Platform',
-    description: 'A self-built e-commerce prototype developed for a future clothing business. The project showcases end-to-end product design, interactive shopping flows, and backend-supported authentication and cart functionality.',
-    category: 'UI/UX Design · Full-Stack Development · Self-Initiated Project',
+    title: 'Nine Lives',
+    description: 'Ecommerce site for the Nine Lives clothing line, with a React catalog, a signed-in cart, and Google accounts stored in Postgres.',
+    category: 'Full-Stack Development · Ecommerce',
     color: 'bg-purple-500/20',
     badgeColor: 'bg-fuchsia-500/20 text-fuchsia-300',
     client: 'Self-Initiated',
     duration: 'Self-Initiated Project',
-    tech: ['HTML5', 'Tailwind CSS', 'JavaScript', 'Node.js', 'Express.js', 'Google OAuth'],
+    tech: ['React', 'Vite', 'Tailwind CSS', 'Node.js', 'Express', 'PostgreSQL', 'Google Sign-In'],
     icon: <svg className="w-5 h-5 text-fuchsia-300" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 7v10a4 4 0 004 4h10"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 5a2 2 0 012 2v8"></path><circle cx="9" cy="9" r="2" strokeWidth={1.5}></circle><circle cx="9" cy="15" r="2" strokeWidth={1.5}></circle></svg>,
     caseStudy: [
       {
-        title: 'Project Overview',
-        content: 'This is a self-employed, full-stack e-commerce prototype created to explore how a modern clothing brand can operate beyond template-based platforms. I designed the UI, interactions, and system structure while implementing a backend server to support authentication, data handling, and scalable logic for future production.'
+        title: 'Overview',
+        content: 'Nine Lives is a custom ecommerce site for the clothing line. The live site is a React catalog, and Express serves the app plus the account and cart API. Shoppers browse pieces, pick a size, and check out only after signing in with Google.'
       },
       {
-        title: 'Key Features',
-        content: '',
+        title: 'Catalog',
+        content: 'The shop covers the pages a clothing brand needs before a sale.',
         bullets: [
-          'Custom fashion brand (NINELIVES)',
-          'Product catalog with multiple designs and variations',
-          'Add-to-cart system with real-time updates',
-          'Product detail modals and size selection',
-          'Google login (OAuth) and database-based authentication',
-          'Backend server for user and session handling',
-          'Interactive UI animations and transitions',
-          'Responsive layout for desktop and mobile'
+          'Home, catalog, and product pages for the Nine Lives line',
+          'Size and quantity selection on each product',
+          'Cart with add and remove for the signed-in shopper',
+          'Checkout that confirms the order for that account',
+          'Account page with name, email, and role',
+          'Brand pages for the vibe, FAQ, and terms'
         ]
       },
       {
         title: 'Tech Stack',
-        content: 'Modern web technologies for both frontend and backend implementation.',
+        content: 'The client and API are separate apps in one repo, and the API is what the browser calls.',
         bullets: [
-          'Frontend: HTML5, Tailwind CSS, JavaScript',
-          'Backend: Node.js, Express.js',
-          'Database: User accounts, sessions, cart data',
-          'Authentication: Google OAuth, Email/password (database-stored credentials)'
+          'Frontend: React, Vite, Tailwind CSS, and React Router',
+          'Backend: Node.js and Express',
+          'Database: PostgreSQL for users and client or admin roles',
+          'Auth: Google sign-in, verified on the server, then a JWT for later requests',
+          'Deploy: the site is live on OnRender, with Docker Compose for the API and Postgres'
         ]
       },
       {
-        title: 'Problem Statement',
-        content: 'Generic e-commerce platforms limit branding, interaction design, and control over user experience. The goal was to build a custom solution that allows full control over design, authentication, and shopping behavior.'
-      },
-      {
-        title: 'Solution Approach',
-        content: 'A comprehensive approach to building a custom e-commerce platform from the ground up.',
-        bullets: [
-          'Designed the entire interface and brand system from scratch',
-          'Implemented a backend server to manage users, sessions, and cart state',
-          'Built frontend interactions that communicate with backend endpoints',
-          'Structured the project to scale into payments, order history, and admin tools'
-        ]
-      },
-      {
-        title: 'Design & Technical Challenges',
-        content: '',
-        bullets: [
-          'Challenge: Managing cart state across sessions',
-          'Solution: Implemented backend-supported cart logic tied to authenticated users',
-          'Challenge: Authentication without relying on third-party storefronts',
-          'Solution: Integrated Google OAuth alongside traditional database authentication'
-        ]
-      },
-      {
-        title: 'Key Outcomes',
-        content: 'Measurable results from the custom e-commerce implementation.',
-        bullets: [
-          'Functional full-stack e-commerce prototype',
-          'Backend-driven authentication and cart system',
-          'Clean, modern UI tailored for a fashion brand',
-          'Strong foundation for future payment and order systems'
-        ]
+        title: 'Accounts and Cart',
+        content: 'Sign-in is Google only. The server checks the Google token, stores the account in Postgres, and returns a short-lived JWT. Cart routes require that token. Each signed-in shopper has their own cart, with size and quantity, so the catalog can stay public while the cart stays private.'
       }
     ],
     results: [
-      'Functional full-stack e-commerce prototype',
-      'Backend-driven authentication and cart system',
-      'Clean, modern UI tailored for a fashion brand',
-      'Strong foundation for future payment and order systems'
+      'Shipped Nine Lives as a React and Express ecommerce site',
+      'Google sign-in with accounts and roles stored in PostgreSQL',
+      'Signed-in cart with size and quantity, plus a checkout step',
+      'Live at nnlvsstore.onrender.com'
     ],
     samples: [ecommerceCustomSample],
-    liveUrl: 'https://nnlvsstore.onrender.com/index.html',
+    liveUrl: 'https://nnlvsstore.onrender.com/',
     githubUrl: 'https://github.com/jaycreative/ecommerce-platform'
   },
   '3d-visualization': {

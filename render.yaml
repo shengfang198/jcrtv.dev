@@ -1,8 +1,0 @@
-services:
-  - type: web
-    name: jcrtv-dev
-    runtime: static
-    # Include devDependencies so Vite can build (NODE_ENV=production would otherwise skip them)
-    buildCommand: npm install --include=dev && npm run build
-    staticPublishPath: dist
-    autoDeployTrigger: commit

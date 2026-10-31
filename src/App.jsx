@@ -1,134 +1,85 @@
-import './App.css'
 import { useEffect, useState } from 'react'
+import projectsData, { projectOrder } from './data/ProjectsData.jsx'
 import Header from './components/Header.jsx'
-import Body from './components/Body.jsx'
-import Profile from './components/Profile.jsx'
-import Expertise from './components/Expertise.jsx'
-import Projects from './components/Projects.jsx'
-import Career from './components/Career.jsx'
+import Hero from './components/Hero.jsx'
+import ProjectGrid from './components/ProjectGrid.jsx'
+import ExpertiseCareer from './components/ExpertiseCareer.jsx'
+import Performance from './components/Performance.jsx'
 import MiniGame from './components/MiniGame.jsx'
-import OverviewPanels from './components/OverviewPanels.jsx'
-import Clock from './components/Clock.jsx'
 import Footer from './components/Footer.jsx'
 import ProjectPage from './components/ProjectPage.jsx'
-import projectsData from './data/ProjectsData.jsx'
-import useScrollReveal from './hooks/useScrollReveal.js'
-import useInkFill from './hooks/useInkFill.js'
+import ExpertisePage from './components/ExpertisePage.jsx'
+import CareerPage from './components/CareerPage.jsx'
 
-function getProjectIdFromHash(hash = window.location.hash) {
-  const match = hash.match(/^#\/project\/([^/?#]+)/);
-  if (!match) return null;
-  const id = decodeURIComponent(match[1]);
-  if (id === 'product-design') return 'graphic-product-design';
-  if (id === 'nft-marketplace') return 'ui-ux';
-  return id;
+function readRoute(hash = window.location.hash) {
+  const projectMatch = hash.match(/^#\/project\/([^/?#]+)/)
+  if (projectMatch) {
+    let id = decodeURIComponent(projectMatch[1])
+    if (id === 'product-design') id = 'graphic-product-design'
+    if (id === 'nft-marketplace') id = 'ui-ux'
+    return { page: 'project', projectId: id }
+  }
+  if (hash.startsWith('#/expertise')) return { page: 'expertise', projectId: null }
+  if (hash.startsWith('#/career')) return { page: 'career', projectId: null }
+  return { page: 'home', projectId: null }
 }
 
 function App() {
-  const [projectId, setProjectId] = useState(() => getProjectIdFromHash());
-  useScrollReveal();
-  useInkFill();
+  const [route, setRoute] = useState(() => readRoute())
 
   useEffect(() => {
-    const layer = document.getElementById('particles-js');
-    if (!layer) return undefined;
+    const onHashChange = () => setRoute(readRoute())
+    window.addEventListener('hashchange', onHashChange)
+    return () => window.removeEventListener('hashchange', onHashChange)
+  }, [])
 
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reducedMotion) {
-      layer.style.transform = '';
-      return undefined;
+  useEffect(() => {
+    if (route.page !== 'home') {
+      window.scrollTo({ top: 0, behavior: 'instant' })
+      return undefined
     }
 
-    let rafId = 0;
-    let targetY = 0;
-    let currentY = 0;
-
-    const tick = () => {
-      currentY += (targetY - currentY) * 0.08;
-      layer.style.transform = `translate3d(0, ${currentY.toFixed(2)}px, 0)`;
-      if (Math.abs(targetY - currentY) > 0.1) {
-        rafId = requestAnimationFrame(tick);
-      } else {
-        currentY = targetY;
-        layer.style.transform = `translate3d(0, ${currentY.toFixed(2)}px, 0)`;
-        rafId = 0;
-      }
-    };
-
-    const onScroll = () => {
-      // Clamp to the oversized buffer so top/bottom never show empty gaps
-      const maxShift = window.innerHeight * 0.45;
-      targetY = Math.min(window.scrollY * 0.2, maxShift);
-      if (!rafId) rafId = requestAnimationFrame(tick);
-    };
-
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-      if (rafId) cancelAnimationFrame(rafId);
-    };
-  }, []);
-
-  useEffect(() => {
-    const onHashChange = () => {
-      setProjectId(getProjectIdFromHash());
-    };
-
-    window.addEventListener('hashchange', onHashChange);
-    return () => window.removeEventListener('hashchange', onHashChange);
-  }, []);
-
-  useEffect(() => {
-    if (projectId) {
-      window.scrollTo({ top: 0, behavior: 'instant' });
-      return undefined;
-    }
-
-    const sectionHash = window.location.hash;
+    const sectionHash = window.location.hash
     const frame = window.requestAnimationFrame(() => {
-      if (sectionHash && sectionHash !== '#') {
-        const target = document.querySelector(sectionHash);
+      if (sectionHash && sectionHash !== '#' && !sectionHash.startsWith('#/')) {
+        const target = document.querySelector(sectionHash)
         if (target) {
-          target.scrollIntoView({ behavior: 'instant', block: 'start' });
-          return;
+          target.scrollIntoView({ behavior: 'instant', block: 'start' })
+          return
         }
       }
-      window.scrollTo({ top: 0, behavior: 'instant' });
-    });
+      window.scrollTo({ top: 0, behavior: 'instant' })
+    })
 
-    return () => window.cancelAnimationFrame(frame);
-  }, [projectId]);
+    return () => window.cancelAnimationFrame(frame)
+  }, [route])
 
-  const selectedProject = projectId ? projectsData[projectId] : null;
-  const isProjectPage = Boolean(projectId);
+  const project = route.projectId ? projectsData[route.projectId] : null
+
+  let content
+  if (route.page === 'project') {
+    content = <ProjectPage project={project} projectOrder={projectOrder} projectsData={projectsData} />
+  } else if (route.page === 'expertise') {
+    content = <ExpertisePage />
+  } else if (route.page === 'career') {
+    content = <CareerPage />
+  } else {
+    content = (
+      <main>
+        <Hero />
+        <ProjectGrid />
+        <ExpertiseCareer />
+        <Performance />
+        <MiniGame />
+      </main>
+    )
+  }
 
   return (
-    <div className="w-full min-h-screen relative">
-      {/* Clip wrapper keeps parallax edges covered; particles layer is oversized */}
-      <div className="particles-parallax-clip fixed inset-0 pointer-events-none z-0" aria-hidden="true">
-        <div id="particles-js" className="particles-parallax" />
-      </div>
-      <div className="relative z-[1]">
-        <Header />
-        <div className={isProjectPage ? 'hidden' : undefined}>
-          <Body />
-          <Profile />
-          <Clock />
-          <Projects />
-          <Expertise />
-          <Career />
-          <MiniGame />
-          <OverviewPanels projectsData={projectsData} />
-          <Footer />
-        </div>
-        {isProjectPage && (
-          <ProjectPage
-            project={selectedProject}
-            projectsData={projectsData}
-          />
-        )}
-      </div>
+    <div className="min-h-screen overflow-x-hidden bg-white text-ink">
+      <Header />
+      {content}
+      <Footer />
     </div>
   )
 }

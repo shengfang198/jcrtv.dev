@@ -1,78 +1,17 @@
-import React, { useState } from 'react';
-
 function Header() {
-  const [theme, setTheme] = useState(() => {
-    const storedTheme = localStorage.getItem('theme');
-    const initialTheme = storedTheme === 'dark' || storedTheme === 'light' ? storedTheme : 'dark';
-    document.documentElement.classList.toggle('theme-light', initialTheme === 'light');
-    return initialTheme;
-  });
-
-  const toggleTheme = () => {
-    const nextTheme = theme === 'dark' ? 'light' : 'dark';
-    setTheme(nextTheme);
-    localStorage.setItem('theme', nextTheme);
-    document.documentElement.classList.toggle('theme-light', nextTheme === 'light');
-  };
-
   return (
-    <>
-      <div className="fixed top-4 md:top-[30px] left-0 right-0 flex justify-center z-50 px-2">
-      <nav className="site-header-nav grid grid-cols-3 items-center bg-[#0C0D0F] w-full h-14 md:h-16 max-w-5xl border border-white/5 rounded-full px-3 md:px-8 py-2 md:py-3 shadow-2xl">
-
-        <div className="flex items-center justify-start">
-          <a href="#overview" className="site-header-link text-base md:text-lg font-bold tracking-tight text-white hover:text-fuchsia-400 transition-colors scroll-smooth" aria-label="Home">
-            jcrtv<span className="site-header-brand-muted hidden sm:inline text-white/40">.dev</span>
-          </a>
-        </div>
-
-        <div className="flex items-center justify-center gap-1.5 sm:gap-3 md:gap-5 text-[11px] sm:text-xs md:text-sm font-medium whitespace-nowrap">
-          <a href="#overview" className="site-header-link text-white hover:text-fuchsia-400 transition-colors scroll-smooth">Overview</a>
-          <a href="#about" className="site-header-link text-white hover:text-fuchsia-400 transition-colors scroll-smooth">Profile</a>
-          <a href="#projects" className="site-header-link text-white hover:text-fuchsia-400 transition-colors scroll-smooth">Projects</a>
-          <a href="#skills" className="site-header-link text-white hover:text-fuchsia-400 transition-colors scroll-smooth">Expertise</a>
-          <a href="#resume" className="site-header-link hidden sm:inline text-white hover:text-fuchsia-400 transition-colors scroll-smooth">Career</a>
-          <a href="#insights" className="site-header-link text-white hover:text-fuchsia-400 transition-colors scroll-smooth">Insights</a>
-        </div>
-
-        <div className="flex items-center justify-end gap-2 text-sm font-medium">
-          <button
-            type="button"
-            onClick={toggleTheme}
-            className="theme-toggle-btn inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 p-2 text-neutral-200 focus:outline-none"
-            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-            title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-          >
-            {theme === 'dark' ? (
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="12" r="4"></circle>
-                <path d="M12 2v2"></path>
-                <path d="M12 20v2"></path>
-                <path d="m4.93 4.93 1.41 1.41"></path>
-                <path d="m17.66 17.66 1.41 1.41"></path>
-                <path d="M2 12h2"></path>
-                <path d="M20 12h2"></path>
-                <path d="m6.34 17.66-1.41 1.41"></path>
-                <path d="m19.07 4.93-1.41 1.41"></path>
-              </svg>
-            ) : (
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 3a7 7 0 1 0 9 9 9 9 0 1 1-9-9"></path>
-              </svg>
-            )}
-          </button>
-          <a href="#footer" className="site-header-contact-btn focus:outline-none flex text-sm font-medium text-neutral-200 bg-white/10 border border-white/10 rounded-full px-2 sm:px-4 py-1.5 sm:py-2 gap-x-2 gap-y-2 items-center scroll-smooth">
-            <span className="hidden md:inline text-xs font-semibold tracking-tight">Contact me</span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-neutral-400">
-              <path d="M5 12h14"></path>
-              <path d="m12 5 7 7-7 7"></path>
-            </svg>
-          </a>
-        </div>
+    <header className="sticky top-0 z-50 bg-ink text-white">
+      <div className="page-shell flex h-[72px] items-center justify-between px-6 md:h-[108px] md:px-14">
+        <a href="#overview" className="font-display text-sm font-medium tracking-[0.16em] sm:tracking-[0.22em] md:text-base">
+          JCREATV
+        </a>
+        <nav className="flex items-center gap-4 font-display text-[11px] font-medium tracking-[0.12em] sm:gap-8 sm:text-xs sm:tracking-[0.16em] md:gap-14 md:text-sm">
+          <a href="#contact" className="transition-colors hover:bg-[#ffb703] hover:text-black">CONTACT</a>
+          <a href="#/career" className="transition-colors hover:bg-[#fb8500] hover:text-black">CAREER</a>
         </nav>
       </div>
-    </>
-  );
+    </header>
+  )
 }
 
-export default Header;
+export default Header
