@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import particlesUrl from 'particles.js/particles.js?url';
 
 function Body() {
   const [typedText, setTypedText] = useState('');
@@ -8,16 +9,9 @@ function Body() {
   const [submitStatus, setSubmitStatus] = useState(null); // null | 'success' | 'error'
 
   useEffect(() => {
-    // Load particles.js script
-    const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js';
-    script.async = true;
-
     const initParticles = () => {
       if (window.particlesJS) {
-        // Small delay to ensure DOM is ready
-        setTimeout(() => {
-          window.particlesJS('particles-js', {
+        window.particlesJS('particles-js', {
             particles: {
               number: { value: 32, density: { enable: true, value_area: 1100 } },
               color: {
@@ -36,16 +30,14 @@ function Body() {
             },
             retina_detect: false
           });
-        }, 100);
       }
     };
 
-    if (window.particlesJS) {
-      initParticles();
-    } else {
-      script.onload = initParticles;
-      document.body.appendChild(script);
-    }
+    const script = document.createElement('script');
+    script.src = particlesUrl;
+    script.async = true;
+    script.onload = initParticles;
+    document.body.appendChild(script);
 
     // Typing animation for hero text
     const fullText = "Work Showcase";
@@ -458,7 +450,14 @@ function Body() {
     };
 
     // Initialize flashlight effect after cards are rendered
-    setTimeout(addFlashlightEffect, 100);
+    const flashlightTimer = setTimeout(addFlashlightEffect, 100);
+
+    return () => {
+      clearInterval(typingInterval);
+      clearTimeout(flashlightTimer);
+      script.onload = null;
+      script.remove();
+    };
   }, []);
 
   useEffect(() => {

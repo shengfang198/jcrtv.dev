@@ -41,12 +41,16 @@ function Profile() {
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-2">
                   <div className="profile-contact-item flex items-center text-neutral-500 text-xs font-semibold">
-                    <i className="fas fa-envelope mr-2 text-neutral-600"></i>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" className="mr-2 text-neutral-600" aria-hidden="true">
+                      <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5L4 8V6l8 5 8-5v2z" />
+                    </svg>
                     <span>lharc3395@gmail.com</span>
                   </div>
                 </div>
                 <div className="profile-contact-item flex items-center text-neutral-500 text-xs font-semibold">
-                  <i className="fas fa-map-marker-alt mr-2 text-neutral-600"></i>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" className="mr-2 text-neutral-600" aria-hidden="true">
+                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 .001-5.001A2.5 2.5 0 0 1 12 11.5z" />
+                  </svg>
                   <span>Manila, Philippines</span>
                 </div>
               </div>
