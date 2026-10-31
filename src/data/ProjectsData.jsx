@@ -313,71 +313,71 @@ const projectsData = {
   },
   'ai-agent-automation': {
     id: 'ai-agent-automation',
-    title: 'AI Agent / Automation',
-    description: 'An AI agent that helps users with everyday tasks, research, and connected tools so work can move from question to result without switching apps.',
-    category: 'AI Agent · Research · Tools · Automation',
+    title: 'Nova',
+    description: 'A visual workflow builder for AI agents, with chat, browser tasks, and saved memory.',
+    category: 'AI Workflows · Browser Agent',
     color: 'bg-purple-500/20',
     badgeColor: 'bg-fuchsia-500/20 text-fuchsia-300',
     client: 'Self-Initiated',
     duration: 'Ongoing Project',
-    tech: ['React', 'TypeScript', 'Express', 'OpenAI', 'PostgreSQL', 'Redis', 'Socket.io', 'Electron'],
+    tech: ['React', 'TypeScript', 'Express', 'PostgreSQL', 'Redis', 'Playwright', 'OpenAI', 'Electron'],
     icon: <svg className="w-5 h-5 text-fuchsia-300" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="8" width="6" height="6" rx="1" strokeWidth={1.5}></rect><rect x="15" y="4" width="6" height="6" rx="1" strokeWidth={1.5}></rect><rect x="15" y="14" width="6" height="6" rx="1" strokeWidth={1.5}></rect><path d="M9 11h3M12 7v8" strokeWidth={1.5} strokeLinecap="round"></path></svg>,
     caseStudy: [
       {
         title: 'Overview',
-        content: 'This AI agent is built to help with the work people do all day: research a topic, break a task into steps, use the right tools, and return a clear result. Instead of jumping between search, notes, and apps, the user asks once and the agent handles the follow-through.'
+        content: 'Nova is a visual workflow builder. A blueprint is a graph of nodes on a canvas. Connecting those nodes defines the run. The same app also has chat, browser tasks, and saved memory. Blueprint runs stay queued until a worker is running. API keys stay on the server.'
       },
       {
-        title: 'What It Helps With',
-        content: '',
+        title: 'Canvas',
+        content: 'The editor is a React Flow canvas with a node library, a selected-node panel, and a Run control.',
         bullets: [
-          'Everyday tasks: planning, follow-ups, summaries, and next-step checklists',
-          'Research: gathering sources, comparing options, and turning findings into a short brief',
-          'Tools: calling search, docs, calendars, and APIs when a task needs more than text',
-          'Automation: repeating the same workflow so the user does not redo it by hand'
+          'Flow nodes for a manual start, chat, input, conditions, switch, loop, delay, approval, and output',
+          'An agent node and a model node for the LLM step',
+          'Tool nodes for the browser, page research, document extraction, HTTP requests, a custom app action, and Gmail',
+          'Logic and storage nodes for math, text, run variables, CSV export, and Postgres rows',
+          'Saved blueprints that can be reopened and run again'
         ]
       },
       {
-        title: 'How It Works',
-        content: 'The agent reads the request, chooses a plan, and uses tools when needed.',
+        title: 'Runs',
+        content: 'Clicking Run validates the graph, queues the job, and lets the worker execute nodes in dependency order.',
         bullets: [
-          'Understands the goal in plain language',
-          'Breaks the job into research, action, and review steps',
-          'Uses connected tools to search, fetch data, and complete the task',
-          'Returns a usable answer, file, or next action instead of leftover notes'
+          'Outputs pass from one node to the nodes connected after it',
+          'Conditions and switches choose a branch',
+          'An approval node pauses until a person continues the run',
+          'Browser work uses Playwright in the worker, not in the page request',
+          'Stop on the canvas cancels a run that is already going',
+          'Chat and sign-in work without Redis. Blueprint runs and browser tasks need the worker'
+        ]
+      },
+      {
+        title: 'Memory and Vault',
+        content: 'Chat can keep a memory of earlier exchanges in Postgres. Tool credentials do not live in the website.',
+        bullets: [
+          'Memory is scored and stored per account, with embeddings when pgvector is available',
+          'Nova Vault is an Electron app on the user\'s PC. Credentials stay encrypted there',
+          'A blueprint step that needs a vault key is sent to that desktop app. The browser does not hold the secret',
+          'Gmail and custom app actions require a credential picked in the vault'
         ]
       },
       {
         title: 'Tech Stack',
-        content: '',
+        content: 'The site, API, and worker are one TypeScript repo.',
         bullets: [
-          'Frontend: React, TypeScript, Vite, and Tailwind CSS',
-          'API: Express on Node.js',
-          'AI: OpenAI with tool calling',
-          'Data: PostgreSQL for tasks, memory, and agent history',
+          'Frontend: React, Vite, TypeScript, Tailwind CSS, and React Flow',
+          'API: Express, with Socket.IO for run updates',
+          'Data: PostgreSQL',
           'Jobs: Redis and BullMQ',
-          'Realtime: Socket.io',
-          'Desktop: Electron vault with SQLite'
-        ]
-      },
-      {
-        title: 'Problem Statement',
-        content: 'People lose time switching tabs to research, copy results into another tool, and repeat the same task later. The agent keeps the task, the research, and the tools in one place.'
-      },
-      {
-        title: 'Solution Approach',
-        content: 'I designed the agent around a simple loop: understand the task, research if needed, use tools, then deliver a result the user can act on.',
-        bullets: [
-          'Task-first prompts so the agent starts with what the user wants done',
-          'Research tools for sources, comparisons, and summaries',
-          'Connected actions so the agent can move beyond chat into real work'
+          'AI: OpenAI, called from the server',
+          'Browser: Playwright and Chromium',
+          'Desktop: Electron Nova Vault'
         ]
       }
     ],
     results: [
-      'One agent for daily tasks, research, and tool use',
-      'Faster path from a question to a finished brief or action',
-      'Repeatable workflows that the agent can run again without extra setup'
+      'A canvas where an AI workflow is a graph of connected nodes',
+      'Queued blueprint and browser runs, with approval and stop',
+      'Chat memory in Postgres, and tool credentials kept in the desktop vault'
     ],
     samples: ['/AI/Screenshot 2026-10-19 065349.png'],
     liveUrl: null,
@@ -464,65 +464,61 @@ const projectsData = {
   },
   'saas-platform': {
     id: 'saas-platform',
-    title: 'Editing Services SaaS',
-    description: 'A deployment-ready cloud-based editing services platform designed to manage orders, editors, revisions, payments, and real-time collaboration in a single, structured system.',
-    category: 'SaaS Platform · Full-Stack Application',
+    title: 'Virtual Editor',
+    description: 'A real estate photo editing workspace for client orders, editor revisions, and PayPal checkout.',
+    category: 'Real Estate Editing · SaaS',
     color: 'bg-purple-500/20',
     badgeColor: 'bg-fuchsia-500/20 text-fuchsia-300',
     client: 'Self-Initiated',
     duration: 'Production-Ready SaaS Project',
-    tech: ['Next.js', 'PostgreSQL', 'Socket.io', 'Docker', 'OnRender', 'Supabase', 'PayPal', 'React'],
+    tech: ['React', 'Vite', 'Express', 'PostgreSQL', 'Supabase', 'PayPal', 'Socket.io', 'Redis'],
     icon: <svg className="w-5 h-5 text-fuchsia-300" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect width="18" height="18" x="3" y="4" rx="2" ry="2" strokeWidth={1.5}></rect><line x1="16" x2="16" y1="2" y2="6" strokeWidth={1.5}></line><line x1="8" x2="8" y1="2" y2="6" strokeWidth={1.5}></line><line x1="3" x2="21" y1="10" y2="10" strokeWidth={1.5}></line><path d="M8 14h.01" strokeWidth={2}></path><path d="M12 14h.01" strokeWidth={2}></path><path d="M16 14h.01" strokeWidth={2}></path><path d="M8 18h.01" strokeWidth={2}></path><path d="M12 18h.01" strokeWidth={2}></path><path d="M16 18h.01" strokeWidth={2}></path></svg>,
     caseStudy: [
       {
         title: 'Overview',
-        content: 'This project is a full-featured Editing Services SaaS, built to support real-world creative service workflows at scale. The platform centralizes client orders, editor assignments, revisions, communication, and payments—eliminating fragmented tools like email, chat apps, and shared drives. The system is designed to be ready for deployment, with a complete backend, role management, scalable data structure, and a comprehensive Admin Management System that allows administrators to oversee users, editors, orders, revisions, payments, and platform-wide activity in real time.'
+        content: 'Virtual Editor is a photo editing workspace for real estate listings. A client picks a service, uploads files, and pays with PayPal. An editor works the order, handles revisions, and delivers the finals. Owner and admin tools cover the catalog, the team, payments, and activity.'
+      },
+      {
+        title: 'Orders',
+        content: 'An order moves through a fixed set of statuses, from pending and in progress to revision, review, and delivery.',
+        bullets: [
+          'A service catalog with industries, variants, options, and file categories',
+          'Drafts that can be continued, then added to a cart',
+          'PayPal checkout created on the server before the order is booked',
+          'Originals, revision images, and final outputs in private storage',
+          'A timer on active editor work, and a due window once an order is in revision',
+          'Order chat, with live updates over Socket.IO'
+        ]
+      },
+      {
+        title: 'Roles',
+        content: 'Each account opens the workspace that matches its role.',
+        bullets: [
+          'Clients place orders, follow status, and download delivery',
+          'Editors work assigned orders, revisions, and resources',
+          'Leaders manage editors and salaries',
+          'Affiliates and management have their own dashboards',
+          'Owner and admin cover users, services, transactions, quality check, catalog requests, and activity logs'
+        ]
       },
       {
         title: 'Tech Stack',
-        content: '',
+        content: 'The browser talks to Express. Postgres and file storage stay on the server side.',
         bullets: [
-          'Next.js – frontend application and UI',
-          'PostgreSQL – relational database for structured business logic',
-          'Socket.io – real-time updates and messaging',
-          'Docker – containerized services for deployment consistency',
-          'Supabase – managed database, authentication, and backend services',
-          'OnRender – cloud hosting, builds, and production deployment'
+          'Frontend: React, Vite, Tailwind CSS, and React Router',
+          'API: Express, with Google sign-in and server-side sessions',
+          'Data: PostgreSQL on Supabase, plus private buckets for uploads',
+          'Payments: PayPal, created and confirmed on the server',
+          'Live updates: Socket.IO, with Redis when more than one API process is running',
+          'Images: Sharp for processing uploads',
+          'Local run: Docker Compose for the app and API'
         ]
-      },
-      {
-        title: 'Business Problem',
-        content: 'Editing service businesses often struggle with: Unstructured client requests, Unclear revision history, Manual editor assignment and tracking, Scattered communication and file handling. The goal was to build a single SaaS platform that manages the entire editing lifecycle—from order placement to final delivery.'
-      },
-      {
-        title: 'Product Development',
-        content: 'I designed and implemented a complete backend-driven SaaS system with clear separation of concerns and real operational logic.',
-        bullets: [
-          'User authentication, sessions, and role management',
-          'Editing service listings with variants and options',
-          'Order creation, status tracking, and timers',
-          'Editor onboarding, applications, availability, and assignments',
-          'Revision cycles with image/file versioning',
-          'Real-time chat and notification system',
-          'Payment, refund, and review handling',
-          'Activity logging and reporting for auditing and insights'
-        ]
-      },
-      {
-        title: 'Backend & Data Architecture',
-        content: 'The platform is supported by a comprehensive relational database, covering all critical workflows: Users & Roles: users, roles, user_roles, user_sessions, preferences. Orders & Services: services, service_variants, orders, statuses, order_timers. Editing Workflow: original_image, revision_images, final_outputs, card_revisions. Editors Management: editors, editor_applications, editor_assignments, availability, salaries, stats. Collaboration: chat_messages, notifications, notification_history. Payments & Trust: payments, refunds, reviews, reports. System Support: activity_logs, test_files, file categories, industries. This structure supports scalability, traceability, and future automation.'
-      },
-      {
-        title: 'Scalability & Deployment Readiness',
-        content: 'Designed for multi-user and multi-team usage. Optimized relational queries for high-volume orders and revisions. WebSocket-based updates for live order and chat status. Dockerized setup for consistent staging and production deployment. Cloud-ready stack hosted on OnRender with Supabase for data, auth, and backend services.'
       }
     ],
     results: [
-      'Built a complete, deployable Editing Services SaaS platform',
-      'Implemented real-world business logic for creative service operations',
-      'Reduced workflow complexity by centralizing editing, revisions, and communication',
-      'Established a strong foundation for launch, onboarding, and monetization',
-      'Self-Initiated / Production-Ready SaaS Project Prepared for deployment and future commercial use.'
+      'One workspace for real estate photo orders, revisions, and delivery',
+      'PayPal checkout and private file storage handled on the server',
+      'Separate dashboards for clients, editors, leaders, and admins'
     ],
     samples: [saasImage],
     liveUrl: 'https://virtual-editor-dsel.onrender.com/',
@@ -574,71 +570,56 @@ const projectsData = {
   'bridgehub': {
     id: 'bridgehub',
     title: 'Bridgehub',
-    description: 'Bridgehub is jobs, learning, placement, and community in one place: an agency hub with job listings, a simple forum, and space to build with others.',
-    category: 'Agency · Jobs · Learning · Placement · Community',
+    description: 'An agency site and workspace for staff chat, client assignments, and agent time tracking.',
+    category: 'Agency CRM · Workspace · Time Tracking',
     color: 'bg-purple-500/20',
     badgeColor: 'bg-fuchsia-500/20 text-fuchsia-300',
     client: 'Self-Initiated',
-    duration: 'Coming Project',
-    tech: ['React', 'Vite', 'Tailwind CSS', 'Express', 'PostgreSQL', 'S3', 'OnRender'],
+    duration: 'Live Project',
+    tech: ['React', 'Vite', 'Tailwind CSS', 'Express', 'PostgreSQL', 'S3', 'Electron'],
     icon: <svg className="w-5 h-5 text-fuchsia-300" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="7" width="20" height="14" rx="2" strokeWidth={1.5}></rect><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"></path><path strokeLinecap="round" strokeWidth={1.5} d="M2 13h20"></path></svg>,
     caseStudy: [
       {
-        title: 'Project Overview',
-        content: 'Bridgehub is built as a single place for jobs, learning, placement, and community. It works like an agency hub: people can browse job listings, follow learning paths, find placement support, and talk in a simple forum instead of spreading that work across separate sites.'
+        title: 'Overview',
+        content: 'Bridgehub is an agency site and the workspace behind it. Public pages cover the company, careers, jobs, courses, a forum, and contact. Owner, admin, agent, and client accounts open the workspace. A desktop tracker records agent time against the weekly schedule.'
       },
       {
-        title: 'What It Includes',
-        content: '',
+        title: 'Workspace',
+        content: 'Accounts, sessions, chat, and the agent lists are stored in Postgres. There is one owner, created on first boot.',
         bullets: [
-          'Agency hub for talent, clients, and placement in one workspace',
-          'Job listings with search, role details, and apply flow',
-          'Learning space for skills, guides, and progress toward roles',
-          'Placement support that connects candidates with openings',
-          'Simple forum for community questions, builds, and discussion',
-          'Build area where users can share work and follow projects'
+          'Owner and admin create admins, agents, and clients. Public registration only creates a member, who stays on the public site',
+          'Client threads are shared with the owner and admins. Agent threads are shared with admins. Admin threads go to the owner',
+          'Assigning a client to one agent opens a private thread between that pair. Reassigning moves access to the new agent',
+          'An agent keeps tasks, deliverables, requests, a calendar, deadlines, contacts, files, notes, and time entries',
+          'Reports count open work, deliverables sent, and minutes logged. Activity records creates and completions'
         ]
       },
       {
-        title: 'Key Features',
-        content: '',
+        title: 'Time Tracker',
+        content: 'Agents clock in from a desktop app. The API checks that time against the schedule set by the owner or an admin.',
         bullets: [
-          'Jobs, learning, placement, and community in one product',
-          'Job cards with company, location, and tags',
-          'Forum threads for help, builds, and community updates',
-          'Shared profiles so listing, learning, and placement stay connected'
+          'Clock in, break, and clock out',
+          'Counted time pauses during a break',
+          'Screenshots and focus reports are sent to the API',
+          'Stored files can go to S3 when that bucket is configured'
         ]
       },
       {
         title: 'Tech Stack',
-        content: 'Web app for listings, learning, placement, and a lightweight community forum.',
+        content: 'The site proxies API calls. The browser never opens Postgres.',
         bullets: [
           'Frontend: React, Vite, and Tailwind CSS',
-          'API: Express on Node.js',
-          'Database: PostgreSQL',
-          'Files: S3 object storage',
-          'Hosting: OnRender'
-        ]
-      },
-      {
-        title: 'Problem Statement',
-        content: 'Job boards, courses, placement, and community usually live in different products. People lose context when they apply somewhere, learn somewhere else, and ask questions in a third place. Bridgehub keeps those pieces together.'
-      },
-      {
-        title: 'Solution Approach',
-        content: 'I designed Bridgehub as one hub with four connected surfaces: jobs, learning, placement, and a simple forum for the community.',
-        bullets: [
-          'Job listing flow for search, detail, and apply',
-          'Learning and placement paths tied to the same user profile',
-          'Forum for community discussion without extra social overhead',
-          'Agency-style layout so talent and openings meet in one place'
+          'API: Express, with SQL migrations on boot',
+          'Database: PostgreSQL, with bcrypt passwords and an httpOnly session cookie',
+          'Files: S3-compatible object storage',
+          'Desktop: Electron tracker for Windows'
         ]
       }
     ],
     results: [
-      'One hub for jobs, learning, placement, and community',
-      'Agency, job listing, build, and simple forum in a single product',
-      'Clearer path from learning a skill to applying and joining the community'
+      'A public agency site and a role-based workspace in one product',
+      'Staff chat and one assigned agent per client',
+      'Desktop time tracking tied to the weekly schedule'
     ],
     samples: [bridgehubImage],
     liveUrl: 'https://bridgehub-global.com',
@@ -647,59 +628,60 @@ const projectsData = {
   'writely': {
     id: 'writely',
     title: 'Writely',
-    description: 'AI-powered docs editor and notes app for drafting, organizing, and refining writing in one place.',
-    category: 'Docs Editor · Notes · AI',
+    description: 'A document and notes editor with a design canvas, a 3D studio, and a writing assistant.',
+    category: 'Docs · Notes · Design · AI',
     color: 'bg-purple-500/20',
     badgeColor: 'bg-fuchsia-500/20 text-fuchsia-300',
     client: 'Self-Initiated',
     duration: 'Self-Initiated Project',
-    tech: ['React', 'ProseMirror', 'Express', 'PostgreSQL', 'OpenAI', 'Dexie', 'OnRender'],
+    tech: ['React', 'ProseMirror', 'Express', 'PostgreSQL', 'pgvector', 'OpenAI', 'PayPal'],
     icon: <svg className="w-5 h-5 text-fuchsia-300" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 20h9"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg>,
     caseStudy: [
       {
-        title: 'Project Overview',
-        content: 'Writely is a docs editor and notes workspace powered by AI. It helps users capture ideas, structure documents, and refine writing with AI assistance in a clean, focused interface.'
+        title: 'Overview',
+        content: 'Writely is a document and notes editor. Documents use a paginated page. Notes use a dotted sheet. The same account can open a design canvas, a 3D studio, and a writing assistant that searches that user\'s saved writing.'
       },
       {
-        title: 'Key Features',
-        content: '',
+        title: 'Writing',
+        content: 'Notes and documents are saved to Postgres for the signed-in account.',
         bullets: [
-          'Document and notes editing in one workspace',
-          'AI-assisted drafting and refinement',
-          'Organized writing flow for docs and notes',
-          'Cloud-hosted live demo on OnRender'
+          'Notes with a pin and a word count',
+          'Documents on A0 through A8 paper, with heading styles, built on ProseMirror',
+          'Import for .docx, .md, .markdown, and .txt files up to 8 MB',
+          'Export to .txt, .html, .pdf, or .docx, plus merge and print',
+          'Free, Plus, and Pro plans. Plus is $8 a month and Pro is $16. Paid plans go through PayPal on the server',
+          'The assistant is included on Plus and Pro. Admins are not limited by the plan caps'
+        ]
+      },
+      {
+        title: 'Design and Assistant',
+        content: 'Design files and the assistant sit next to the writing, and both stay on the account.',
+        bullets: [
+          'A design canvas that can export PNG, JPEG, SVG, or PDF',
+          'A 3D studio for scenes, with local scene files when the database is down',
+          'Blueprint canvases that can be saved and run',
+          'The assistant calls GPT from the server. It searches the user\'s notes and documents with pgvector and can write into the open item after confirmation',
+          'The API key never goes to the browser'
         ]
       },
       {
         title: 'Tech Stack',
-        content: 'Web-based writing app with AI-assisted editing and cloud deployment.',
+        content: 'The site and API are one repo. Vite proxies API calls in development.',
         bullets: [
           'Frontend: React, Vite, and Tailwind CSS',
           'Editor: ProseMirror',
-          'API: Express on Node.js',
-          'Database: PostgreSQL, with Dexie for local notes',
-          'AI: OpenAI for writing help and embeddings',
-          'Hosting: OnRender'
-        ]
-      },
-      {
-        title: 'Problem Statement',
-        content: 'Writers and builders often split notes, drafts, and AI tools across separate apps. Writely brings docs, notes, and AI help into one editor.'
-      },
-      {
-        title: 'Solution Approach',
-        content: 'I built a focused writing environment where users can create notes and documents while using AI to support drafting and iteration.',
-        bullets: [
-          'Unified docs and notes experience',
-          'AI support for writing and refinement',
-          'Deployed as a live web app for easy access'
+          'API: Express, with JWT sessions in cookies',
+          'Database: PostgreSQL, including the vector extension for search',
+          'AI: OpenAI chat and embeddings, called from the server',
+          'Billing: PayPal subscriptions',
+          'Files: S3 for design images'
         ]
       }
     ],
     results: [
-      'Shipped a live AI-powered docs and notes editor',
-      'Combined document writing and note-taking in one product',
-      'Made the app available as a hosted demo on OnRender'
+      'Documents, notes, design, and a 3D studio on one account',
+      'A writing assistant that searches saved work and writes into the open item',
+      'Free, Plus, and Pro plans, with PayPal handled on the server'
     ],
     samples: [writelyImage],
     liveUrl: 'https://writely-editor.onrender.com/',

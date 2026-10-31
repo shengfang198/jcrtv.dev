@@ -25,39 +25,39 @@ export const projectCards = [
   },
   {
     id: 'ai-agent-automation',
-    title: 'AI Agent',
-    description: 'Tasks / Research / Tools',
+    title: 'Nova',
+    description: 'Blueprints / Browser',
     image: '/AI/Screenshot 2026-10-19 065349.png'
   },
   {
     id: 'saas-platform',
-    title: 'Editing SaaS',
+    title: 'Virtual Editor',
     description: 'Orders / Editors / Payments',
     image: '/SAAS/thumbnail.png'
   },
   {
     id: 'writely',
     title: 'Writely',
-    description: 'Docs Editor / AI',
+    description: 'Docs / Design / AI',
     image: '/WRITELY/Screenshot 2026-10-26 064242.png'
   },
   {
     id: '3d-visualization',
     title: '3D Visualization',
     description: 'Interior / Architecture',
-    image: '/3DVISUALIZATION/1.jpg'
+    image: '/3DVISUALIZATION/8.jpg'
   },
   {
     id: 'ui-ux',
     title: 'UI UX Design',
     description: 'Figma / Product Design',
-    image: '/FIGMA/ninelives-prototype.png'
+    image: '/FIGMA/VS.png'
   },
   {
     id: 'bridgehub',
     title: 'Bridgehub',
-    description: 'Jobs / Learning / Community',
-    image: '/BRIDGEHUB/Screenshot 2026-10-25 203802.png'
+    description: 'Agency / Workspace',
+    image: '/BRIDGEHUB/bridgehub.png'
   },
   {
     id: 'action-rpg',
@@ -75,7 +75,7 @@ export const projectCards = [
     id: 'ecommerce-custom',
     title: 'Nine Lives',
     description: 'Ecommerce',
-    image: '/ECOMMERCE/eccomerce2.png'
+    image: '/ECOMMERCE/ninelives.png'
   }
 ]
 
