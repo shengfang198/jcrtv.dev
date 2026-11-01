@@ -75,6 +75,7 @@ function ProjectGrid() {
 
   return (
     <section id="projects" className="page-shell px-6 py-12 md:px-14 md:py-16">
+      <h2 className="mb-8 text-xs font-semibold tracking-[0.2em] text-neutral-500">PROJECTS</h2>
       <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 xl:grid-cols-4">
         {visible.map((project) => (
           <ProjectCard key={project.id} project={project} onReady={markReady} />
@@ -82,7 +83,7 @@ function ProjectGrid() {
       </div>
 
       {projectCards.length > VISIBLE_COUNT && (
-        <div className="mt-12 flex justify-center">
+        <div className="mt-12 flex justify-end">
           <button
             type="button"
             onClick={toggle}

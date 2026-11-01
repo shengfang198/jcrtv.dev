@@ -1,7 +1,8 @@
-import { experience, technologies } from '../data/site.js'
+import { education, experience, technologies } from '../data/site.js'
 
 function ExpertiseCareer() {
   const preview = experience.slice(0, 3)
+  const educationPreview = education.slice(0, 2)
 
   return (
     <section id="skills" className="page-shell px-6 py-8 md:px-14 md:py-12">
@@ -37,6 +38,15 @@ function ExpertiseCareer() {
                     <li key={bullet} className="pl-3">{bullet}</li>
                   ))}
                 </ul>
+              </article>
+            ))}
+            {educationPreview.map((item) => (
+              <article key={item.title}>
+                <h3 className="font-semibold">{item.title}</h3>
+                <p>{item.years}</p>
+                {item.lines.map((line) => (
+                  <p key={line}>{line}</p>
+                ))}
               </article>
             ))}
           </div>
