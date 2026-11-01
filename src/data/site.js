@@ -39,7 +39,7 @@ export const projectCards = [
     id: 'writely',
     title: 'Writely',
     description: 'Docs / Design / AI',
-    image: '/WRITELY/Screenshot 2026-11-01 093317.png'
+    image: '/WRITELY/Screenshot 2026-11-01 093658.png'
   },
   {
     id: '3d-visualization',
