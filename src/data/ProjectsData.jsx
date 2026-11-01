@@ -627,7 +627,7 @@ const projectsData = {
   },
   'writely': {
     id: 'writely',
-    title: 'Writely',
+    title: 'Terra',
     description: 'A document and notes editor with a design canvas, a 3D studio, and a writing assistant.',
     category: 'Docs · Notes · Design · AI',
     color: 'bg-purple-500/20',
@@ -639,7 +639,7 @@ const projectsData = {
     caseStudy: [
       {
         title: 'Overview',
-        content: 'Writely is a document and notes editor. Documents use a paginated page. Notes use a dotted sheet. The same account can open a design canvas, a 3D studio, and a writing assistant that searches that user\'s saved writing.'
+        content: 'Terra is a document and notes editor. Documents use a paginated page. Notes use a dotted sheet. The same account can open a design canvas, a 3D studio, and a writing assistant that searches that user\'s saved writing.'
       },
       {
         title: 'Writing',

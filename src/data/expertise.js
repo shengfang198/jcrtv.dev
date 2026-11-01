@@ -70,7 +70,7 @@ export const expertiseSections = [
     ],
     notes: [
       'Nova: AI browser agent and workflow automation',
-      'Writely: documents, notes, memory, and RAG',
+      'Terra: documents, notes, memory, and RAG',
       'Virtual Editor: real estate image editing and editor services'
     ]
   },
@@ -194,7 +194,7 @@ export const expertiseSections = [
     rows: [
       ['Real Estate', 'Virtual editing services'],
       ['E-commerce', 'Shopify store development'],
-      ['Productivity', 'Writely AI assistant'],
+      ['Productivity', 'Terra AI assistant'],
       ['Automation', 'Nova AI browser agent'],
       ['Operations', 'BridgeHub agency platform'],
       ['Logistics', 'Truck and shipment tracking'],

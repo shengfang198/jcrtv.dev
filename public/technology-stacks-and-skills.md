@@ -79,7 +79,7 @@ project experience based on previously shared information.
 ### Related Projects
 
 -   **Nova:** AI browser agent and workflow automation platform.
--   **Writely:** AI assistant for documents, notes, canvas-based work,
+-   **Terra:** AI assistant for documents, notes, canvas-based work,
     memory, RAG, and productivity workflows.
 -   **Virtual Editor:** AI-assisted real estate image editing and
     human-editor service platform.
@@ -200,7 +200,7 @@ project experience based on previously shared information.
   --------------------- ----------------------------------------
   Real Estate           Virtual editing services platform
   E-commerce            Shopify store development
-  Productivity          Writely AI assistant
+  Productivity          Terra AI assistant
   Automation            Nova AI browser agent
   Business Operations   BridgeHub agency platform
   Logistics             Truck and shipment tracking concepts
