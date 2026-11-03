@@ -25,9 +25,9 @@ export const projectCards = [
   },
   {
     id: 'ai-agent-automation',
-    title: 'Nova',
+    title: 'Relay',
     description: 'Blueprints / Browser',
-    image: '/AI/Screenshot 2026-10-19 065349.png'
+    image: '/AI/Screenshot 2026-11-03 144555.png'
   },
   {
     id: 'saas-platform',
@@ -36,10 +36,10 @@ export const projectCards = [
     image: '/SAAS/thumbnail.png'
   },
   {
-    id: 'writely',
+    id: 'terra',
     title: 'Terra',
     description: 'Docs / Design / AI',
-    image: '/WRITELY/Screenshot 2026-11-01 094141.png'
+    image: '/TERRA/Screenshot 2026-11-03 150045.png'
   },
   {
     id: '3d-visualization',

@@ -69,7 +69,7 @@ export const expertiseSections = [
       ['Tool Interfaces', 'Structured JSON tool schemas']
     ],
     notes: [
-      'Nova: AI browser agent and workflow automation',
+      'Relay: AI browser agent and workflow automation',
       'Terra: documents, notes, memory, and RAG',
       'Virtual Editor: real estate image editing and editor services'
     ]
@@ -195,7 +195,7 @@ export const expertiseSections = [
       ['Real Estate', 'Virtual editing services'],
       ['E-commerce', 'Shopify store development'],
       ['Productivity', 'Terra AI assistant'],
-      ['Automation', 'Nova AI browser agent'],
+      ['Automation', 'Relay AI browser agent'],
       ['Operations', 'BridgeHub agency platform'],
       ['Logistics', 'Truck and shipment tracking'],
       ['Community', 'Location-based lost-and-found'],

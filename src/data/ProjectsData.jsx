@@ -18,7 +18,7 @@ const figmaVS = '/FIGMA/VS.png'
 const gamedevImage = '/GAMEDEV/indiegame.jpeg'
 const saasImage = '/SAAS/thumbnail.png'
 const bridgehubImage = '/BRIDGEHUB/Screenshot 2026-10-25 203802.png'
-const writelyImage = '/WRITELY/Screenshot 2026-11-01 093317.png'
+const terraImage = '/TERRA/Screenshot 2026-11-01 093317.png'
 const graphicArtist1 = '/GRAPHIC_ARTIST/Untitled-1.png'
 const graphicArtist2 = '/GRAPHIC_ARTIST/2.png'
 const graphicArtist5 = '/GRAPHIC_ARTIST/MindSole.jpg'
@@ -313,7 +313,7 @@ const projectsData = {
   },
   'ai-agent-automation': {
     id: 'ai-agent-automation',
-    title: 'Nova',
+    title: 'Relay',
     description: 'A visual workflow builder for AI agents, with chat, browser tasks, and saved memory.',
     category: 'AI Workflows · Browser Agent',
     color: 'bg-purple-500/20',
@@ -325,7 +325,7 @@ const projectsData = {
     caseStudy: [
       {
         title: 'Overview',
-        content: 'Nova is a visual workflow builder. A blueprint is a graph of nodes on a canvas. Connecting those nodes defines the run. The same app also has chat, browser tasks, and saved memory. Blueprint runs stay queued until a worker is running. API keys stay on the server.'
+        content: 'Relay is a visual workflow builder. A blueprint is a graph of nodes on a canvas. Connecting those nodes defines the run. The same app also has chat, browser tasks, and saved memory. Blueprint runs stay queued until a worker is running. API keys stay on the server.'
       },
       {
         title: 'Canvas',
@@ -355,7 +355,7 @@ const projectsData = {
         content: 'Chat can keep a memory of earlier exchanges in Postgres. Tool credentials do not live in the website.',
         bullets: [
           'Memory is scored and stored per account, with embeddings when pgvector is available',
-          'Nova Vault is an Electron app on the user\'s PC. Credentials stay encrypted there',
+          'Relay Vault is an Electron app on the user\'s PC. Credentials stay encrypted there',
           'A blueprint step that needs a vault key is sent to that desktop app. The browser does not hold the secret',
           'Gmail and custom app actions require a credential picked in the vault'
         ]
@@ -370,7 +370,7 @@ const projectsData = {
           'Jobs: Redis and BullMQ',
           'AI: OpenAI, called from the server',
           'Browser: Playwright and Chromium',
-          'Desktop: Electron Nova Vault'
+          'Desktop: Electron Relay Vault'
         ]
       }
     ],
@@ -379,7 +379,7 @@ const projectsData = {
       'Queued blueprint and browser runs, with approval and stop',
       'Chat memory in Postgres, and tool credentials kept in the desktop vault'
     ],
-    samples: ['/AI/Screenshot 2026-10-19 065349.png'],
+    samples: ['/AI/Screenshot 2026-11-03 144555.png'],
     liveUrl: null,
     githubUrl: null
   },
@@ -625,10 +625,10 @@ const projectsData = {
     liveUrl: 'https://bridgehub-global.com',
     githubUrl: null
   },
-  'writely': {
-    id: 'writely',
+  'terra': {
+    id: 'terra',
     title: 'Terra',
-    description: 'A document and notes editor with a design canvas, a 3D studio, and a writing assistant.',
+    description: 'A document and notes editor with a design canvas and a writing assistant.',
     category: 'Docs · Notes · Design · AI',
     color: 'bg-purple-500/20',
     badgeColor: 'bg-fuchsia-500/20 text-fuchsia-300',
@@ -639,7 +639,7 @@ const projectsData = {
     caseStudy: [
       {
         title: 'Overview',
-        content: 'Terra is a document and notes editor. Documents use a paginated page. Notes use a dotted sheet. The same account can open a design canvas, a 3D studio, and a writing assistant that searches that user\'s saved writing.'
+        content: 'Terra is a document and notes editor. Documents use a paginated page. Notes use a dotted sheet. The same account can open a design canvas and a writing assistant that searches that user\'s saved writing.'
       },
       {
         title: 'Writing',
@@ -658,7 +658,6 @@ const projectsData = {
         content: 'Design files and the assistant sit next to the writing, and both stay on the account.',
         bullets: [
           'A design canvas that can export PNG, JPEG, SVG, or PDF',
-          'A 3D studio for scenes, with local scene files when the database is down',
           'Blueprint canvases that can be saved and run',
           'The assistant calls GPT from the server. It searches the user\'s notes and documents with pgvector and can write into the open item after confirmation',
           'The API key never goes to the browser'
@@ -679,11 +678,11 @@ const projectsData = {
       }
     ],
     results: [
-      'Documents, notes, design, and a 3D studio on one account',
+      'Documents, notes, and design on one account',
       'A writing assistant that searches saved work and writes into the open item',
       'Free, Plus, and Pro plans, with PayPal handled on the server'
     ],
-    samples: [writelyImage],
+    samples: [terraImage],
     liveUrl: 'https://writely-editor.onrender.com/',
     githubUrl: null
   }
@@ -693,7 +692,7 @@ export const projectOrder = [
   'ecommerce',
   'ai-agent-automation',
   'saas-platform',
-  'writely',
+  'terra',
   '3d-visualization',
   'ui-ux',
   'bridgehub',
