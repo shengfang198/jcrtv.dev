@@ -39,7 +39,7 @@ export const projectCards = [
     id: 'terra',
     title: 'Terra',
     description: 'Docs / Design / AI',
-    image: '/TERRA/Screenshot 2026-11-03 150045.png'
+    image: '/TERRA/Screenshot 2026-11-04 040707.png'
   },
   {
     id: '3d-visualization',
