@@ -7,6 +7,8 @@ export const profile = {
   bio: "I'm a designer and full-stack developer with 5+ years of experience, focused on building business-driven digital products that combine intuitive user experiences, scalable systems, and clean, efficient code. I help startups and established businesses turn ideas into practical, high-quality solutions that improve workflows, enhance customer experiences, and support business growth."
 }
 
+export const spotifyPlaylistId = '2zGNVtCUhcoGx135sLjq7Q'
+
 export const services = [
   'UI/UX Design',
   'Full-Stack Development',

@@ -1,4 +1,4 @@
-import { profile, services } from '../data/site.js'
+import { profile, services, spotifyPlaylistId } from '../data/site.js'
 import CopyEmail from './CopyEmail.jsx'
 
 function Footer() {
@@ -6,8 +6,19 @@ function Footer() {
 
   return (
     <footer id="contact" className="relative bg-ink text-white">
-      <div className="page-shell px-6 py-14 md:grid md:grid-cols-[1fr_auto_1fr] md:items-start md:gap-8 md:px-14">
-        <div aria-hidden="true" className="hidden md:block" />
+      <div className="page-shell flex flex-col px-6 py-14 md:grid md:grid-cols-[1fr_auto_1fr] md:items-start md:gap-8 md:px-14">
+        <div className="order-last mt-10 md:order-none md:mt-0 md:w-72">
+          <p className="text-sm font-semibold tracking-[0.16em]">NOW PLAYING</p>
+          <iframe
+            title="Spotify playlist"
+            src={`https://open.spotify.com/embed/playlist/${spotifyPlaylistId}?utm_source=generator&theme=0`}
+            width="100%"
+            height="152"
+            loading="lazy"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            className="mt-4 block rounded-xl border-0"
+          />
+        </div>
         <div className="mx-auto max-w-md text-center">
           <p className="font-display text-4xl font-black tracking-[0.08em] md:text-5xl">JCREATV</p>
           <CopyEmail className="mt-4 mx-auto block font-display text-sm font-medium" />
