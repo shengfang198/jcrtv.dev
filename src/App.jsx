@@ -10,6 +10,7 @@ import Footer from './components/Footer.jsx'
 import ProjectPage from './components/ProjectPage.jsx'
 import ExpertisePage from './components/ExpertisePage.jsx'
 import CareerPage from './components/CareerPage.jsx'
+import ContactPage from './components/ContactPage.jsx'
 
 function readRoute(hash = window.location.hash) {
   const projectMatch = hash.match(/^#\/project\/([^/?#]+)/)
@@ -21,6 +22,7 @@ function readRoute(hash = window.location.hash) {
   }
   if (hash.startsWith('#/expertise')) return { page: 'expertise', projectId: null }
   if (hash.startsWith('#/career')) return { page: 'career', projectId: null }
+  if (hash.startsWith('#/contact')) return { page: 'contact', projectId: null }
   return { page: 'home', projectId: null }
 }
 
@@ -63,6 +65,8 @@ function App() {
     content = <ExpertisePage />
   } else if (route.page === 'career') {
     content = <CareerPage />
+  } else if (route.page === 'contact') {
+    content = <ContactPage />
   } else {
     content = (
       <main>
@@ -76,9 +80,9 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-white text-ink">
+    <div className="flex min-h-screen flex-col overflow-x-hidden bg-white text-ink">
       <Header />
-      {content}
+      <div className="flex-1">{content}</div>
       <Footer />
     </div>
   )

@@ -1,4 +1,5 @@
 import { profile } from '../data/site.js'
+import CopyEmail from './CopyEmail.jsx'
 
 function Hero() {
   return (
@@ -19,9 +20,7 @@ function Hero() {
         <div className="max-w-xl lg:ml-auto lg:pb-2">
           <p className="text-sm leading-relaxed md:text-[15px]">{profile.bio}</p>
           <div className="mt-8 flex w-full flex-wrap items-center justify-between gap-4">
-            <a href={`mailto:${profile.email}`} className="font-display text-sm font-medium">
-              {profile.email}
-            </a>
+            <CopyEmail className="font-display text-sm font-medium" />
             <a
               href={profile.cv}
               target="_blank"

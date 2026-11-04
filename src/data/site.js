@@ -13,7 +13,8 @@ export const services = [
   'Shopify Development',
   'SaaS Development',
   'Graphic Design / Product Design',
-  '3D Visualization'
+  '3D Visualization',
+  'Automation & AI Services'
 ]
 
 export const projectCards = [

@@ -6,7 +6,7 @@ function Header() {
           JCREATV
         </a>
         <nav className="flex items-center gap-4 font-display text-[11px] font-medium tracking-[0.12em] sm:gap-8 sm:text-xs sm:tracking-[0.16em] md:gap-14 md:text-sm">
-          <a href="#contact" className="transition-colors hover:bg-[#ffb703] hover:text-black">CONTACT</a>
+          <a href="#/contact" className="transition-colors hover:bg-[#ffb703] hover:text-black">CONTACT</a>
           <a href="#/career" className="transition-colors hover:bg-[#fb8500] hover:text-black">CAREER</a>
         </nav>
       </div>
