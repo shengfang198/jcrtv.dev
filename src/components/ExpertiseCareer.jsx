@@ -6,8 +6,8 @@ function ExpertiseCareer() {
 
   return (
     <section id="skills" className="page-shell px-6 py-8 md:px-14 md:py-12">
-      <div className="grid items-start gap-12 lg:grid-cols-2 lg:gap-20">
-        <div>
+      <div className="grid gap-12 lg:grid-cols-2 lg:gap-20">
+        <div className="flex flex-col">
           <h2 className="font-display text-[clamp(3rem,16vw,7.6rem)] font-light leading-[0.8] tracking-[-0.04em]">
             EXPERT
             <br />
@@ -20,9 +20,12 @@ function ExpertiseCareer() {
               </div>
             ))}
           </div>
+          <div className="mt-10 lg:mt-auto lg:pt-10">
+            <a href="#/expertise" className="btn">EXPLORE</a>
+          </div>
         </div>
 
-        <div id="career">
+        <div id="career" className="flex flex-col">
           <h2 className="text-2xl font-semibold tracking-tight">CAREER</h2>
           <p className="text-lg">and Education</p>
           <div className="mt-6 space-y-8 text-sm leading-relaxed">
@@ -50,15 +53,9 @@ function ExpertiseCareer() {
               </article>
             ))}
           </div>
-        </div>
-      </div>
-
-      <div className="mt-10 grid gap-6 lg:grid-cols-2">
-        <div>
-          <a href="#/expertise" className="btn">EXPLORE</a>
-        </div>
-        <div className="lg:text-right">
-          <a href="#/career" className="btn">SEE MORE</a>
+          <div className="mt-10 lg:mt-auto lg:pt-10 lg:text-right">
+            <a href="#/career" className="btn">SEE MORE</a>
+          </div>
         </div>
       </div>
     </section>

@@ -314,70 +314,81 @@ const projectsData = {
   'ai-agent-automation': {
     id: 'ai-agent-automation',
     title: 'Relay',
-    description: 'A visual workflow builder for AI agents, with chat, browser tasks, and saved memory.',
-    category: 'AI Workflows · Browser Agent',
+    description: 'A visual workflow builder for AI agents. Workflows start from a click or a webhook, and tools connect through MCP.',
+    category: 'AI Automation · Workflows',
     color: 'bg-purple-500/20',
     badgeColor: 'bg-fuchsia-500/20 text-fuchsia-300',
     client: 'Self-Initiated',
     duration: 'Ongoing Project',
-    tech: ['React', 'TypeScript', 'Express', 'PostgreSQL', 'Redis', 'Playwright', 'OpenAI', 'Electron'],
+    tech: ['React', 'TypeScript', 'Express', 'PostgreSQL', 'Redis', 'BullMQ', 'MCP', 'OpenAI', 'Playwright'],
     icon: <svg className="w-5 h-5 text-fuchsia-300" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="8" width="6" height="6" rx="1" strokeWidth={1.5}></rect><rect x="15" y="4" width="6" height="6" rx="1" strokeWidth={1.5}></rect><rect x="15" y="14" width="6" height="6" rx="1" strokeWidth={1.5}></rect><path d="M9 11h3M12 7v8" strokeWidth={1.5} strokeLinecap="round"></path></svg>,
     caseStudy: [
       {
         title: 'Overview',
-        content: 'Relay is a visual workflow builder. A blueprint is a graph of nodes on a canvas. Connecting those nodes defines the run. The same app also has chat, browser tasks, and saved memory. Blueprint runs stay queued until a worker is running. API keys stay on the server.'
+        content: 'Relay is a visual workflow builder. A workflow is a graph of nodes on a canvas, and the connections between nodes define the run. A workflow starts from a click or an incoming webhook. Tools such as email, Slack, and HubSpot connect through MCP servers. The model key stays on the server.'
       },
       {
         title: 'Canvas',
-        content: 'The editor is a React Flow canvas with a node library, a selected-node panel, and a Run control.',
+        content: 'The editor is a canvas with a node library grouped into Flow, Logic, AI, Tools, and Storage.',
         bullets: [
-          'Flow nodes for a manual start, chat, input, conditions, switch, loop, delay, approval, and output',
-          'An agent node and a model node for the LLM step',
-          'Tool nodes for the browser, page research, document extraction, HTTP requests, a custom app action, and Gmail',
-          'Logic and storage nodes for math, text, run variables, CSV export, and Postgres rows',
-          'Saved blueprints that can be reopened and run again'
+          'Flow nodes for a manual start, a webhook, an error path, chat, input, conditions, switch, loop, delay, approval, and output',
+          'Logic nodes for math, text formatting, HTML-to-JSON cleanup, and run variables',
+          'An agent node with a model node and tool nodes connected to it',
+          'Tool nodes for the browser, page research, page extraction, HTTP requests, MCP tools, email, Slack, HubSpot, and knowledge search',
+          'Storage nodes for CSV export and Postgres rows',
+          'An editor assistant that suggests the next node from the open graph'
+        ]
+      },
+      {
+        title: 'Intelligent Inbox',
+        content: 'The main example workflow triages support email from start to finish.',
+        bullets: [
+          'A webhook receives a new support email',
+          'A code step turns the HTML into clean JSON with the sender, subject, and text',
+          'A triage agent on GPT-4.1 mini searches saved knowledge, then returns the intent, sentiment, a confidence score, and a draft reply',
+          'A confidence gate sends replies at 0.85 or higher by email, hands low-confidence emails to a person in Slack, and archives spam in HubSpot',
+          'Any failed step routes to a notify-on-failure path'
         ]
       },
       {
         title: 'Runs',
         content: 'Clicking Run validates the graph, queues the job, and lets the worker execute nodes in dependency order.',
         bullets: [
-          'Outputs pass from one node to the nodes connected after it',
+          'Outputs pass from each node to the nodes connected after it',
           'Conditions and switches choose a branch',
           'An approval node pauses until a person continues the run',
           'Browser work uses Playwright in the worker, not in the page request',
-          'Stop on the canvas cancels a run that is already going',
-          'Chat and sign-in work without Redis. Blueprint runs and browser tasks need the worker'
+          'Run history is kept per workflow. Stop on the canvas cancels a run that is already going'
         ]
       },
       {
-        title: 'Memory and Vault',
-        content: 'Chat can keep a memory of earlier exchanges in Postgres. Tool credentials do not live in the website.',
+        title: 'MCP Tools',
+        content: 'Relay does not store account credentials. Outside tools run through MCP servers.',
         bullets: [
-          'Memory is scored and stored per account, with embeddings when pgvector is available',
-          'Relay Vault is an Electron app on the user\'s PC. Credentials stay encrypted there',
-          'A blueprint step that needs a vault key is sent to that desktop app. The browser does not hold the secret',
-          'Gmail and custom app actions require a credential picked in the vault'
+          'Each account adds MCP servers by URL and lists the tools each server offers',
+          'An MCP node calls a chosen tool with inputs from the run',
+          'Email, Slack, HubSpot, and custom app actions run through a connected MCP server',
+          'The model key lives only on the server'
         ]
       },
       {
         title: 'Tech Stack',
         content: 'The site, API, and worker are one TypeScript repo.',
         bullets: [
-          'Frontend: React, Vite, TypeScript, Tailwind CSS, and React Flow',
+          'Frontend: React, Vite, TypeScript, and Tailwind CSS',
           'API: Express, with Socket.IO for run updates',
-          'Data: PostgreSQL',
+          'Data: PostgreSQL, with pgvector for knowledge search',
           'Jobs: Redis and BullMQ',
           'AI: OpenAI, called from the server',
-          'Browser: Playwright and Chromium',
-          'Desktop: Electron Relay Vault'
+          'Tools: MCP servers over HTTP',
+          'Browser: Playwright and Chromium'
         ]
       }
     ],
     results: [
       'A canvas where an AI workflow is a graph of connected nodes',
-      'Queued blueprint and browser runs, with approval and stop',
-      'Chat memory in Postgres, and tool credentials kept in the desktop vault'
+      'A support inbox workflow that answers, hands off, or archives each email based on confidence',
+      'Outside tools connected through MCP, with no account credentials stored in Relay'
     ],
     samples: ['/AI/Screenshot 2026-11-03 144555.png'],
     liveUrl: null,

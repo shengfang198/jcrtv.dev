@@ -262,13 +262,13 @@ function MiniGame() {
     }
   }, [started, gameOver])
 
-  const label = gameOver ? `Game over. Score ${score}` : 'Click or Space to fly'
-
   return (
     <section id="minigame" className="bg-ink text-white">
       <div className="page-shell px-6 pb-14 md:px-14 md:pb-16">
       <div className="flex items-end justify-between gap-4">
-        <h2 className="text-sm font-semibold tracking-[0.18em]">MINIGAME</h2>
+        <h2 className="text-sm font-semibold tracking-[0.18em]">
+          MINIGAME <span className="ml-2 text-[10px] font-medium tracking-[0.16em] text-white/60">FLAPPY BILLS</span>
+        </h2>
         <p className="text-xs font-medium tracking-wide text-white/70">
           Score {score} / Best {highScore}
         </p>
@@ -284,7 +284,7 @@ function MiniGame() {
           onPointerDown={onPointerDown}
           role="button"
           tabIndex={0}
-          aria-label="Flappy Bills. Click or press Space to fly."
+          aria-label="Flappy Bills. Tap, click, or press Space to fly."
         >
           <div
             ref={playerRef}
@@ -310,10 +310,19 @@ function MiniGame() {
           ))}
           {!started && (
             <div className="absolute inset-0 flex items-center justify-center px-6 text-center text-sm font-medium tracking-wide text-white">
-              {label}
+              {gameOver ? `Game over. Score ${score}` : 'Click or Space to fly'}
             </div>
           )}
         </div>
+      </div>
+      <div className="mt-4 md:hidden">
+        <button
+          type="button"
+          onPointerDown={onPointerDown}
+          className="btn w-full touch-none select-none"
+        >
+          TAP HERE
+        </button>
       </div>
       </div>
     </section>

@@ -27,7 +27,7 @@ export const projectCards = [
   {
     id: 'ai-agent-automation',
     title: 'Relay',
-    description: 'Automation / Browser',
+    description: 'Automation / Workflow',
     image: '/AI/Screenshot 2026-11-03 144555.png'
   },
   {
