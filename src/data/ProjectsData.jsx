@@ -694,7 +694,7 @@ const projectsData = {
       'Free, Plus, and Pro plans, with PayPal handled on the server'
     ],
     samples: [terraImage],
-    liveUrl: 'https://writely-editor.onrender.com/',
+    liveUrl: 'https://terra-tzoc.onrender.com/',
     githubUrl: null
   }
 };
