@@ -39,6 +39,13 @@ function ProjectCard({ project, onReady }) {
   )
 }
 
+function arrowCellClass(count) {
+  const classes = ['flex aspect-square items-center']
+  if (count % 2 === 0) classes.push('sm:col-start-2')
+  classes.push(count % 4 === 0 ? 'xl:col-start-4' : 'xl:col-start-auto')
+  return classes.join(' ')
+}
+
 function ProjectGrid() {
   const [expanded, setExpanded] = useState(false)
   const [pending, setPending] = useState(() => new Set(projectCards.slice(0, VISIBLE_COUNT).map((project) => project.id)))
@@ -80,6 +87,16 @@ function ProjectGrid() {
         {visible.map((project) => (
           <ProjectCard key={project.id} project={project} onReady={markReady} />
         ))}
+        {expanded && (
+          <div className={arrowCellClass(visible.length)}>
+            <a href={`#/project/${projectCards[0].id}`} className="inline-flex items-center gap-3 text-xs font-semibold tracking-[0.16em] hover:text-[#ff6608]">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+              SEE ALL PROJECTS
+            </a>
+          </div>
+        )}
       </div>
 
       {projectCards.length > VISIBLE_COUNT && (
