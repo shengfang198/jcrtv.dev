@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import LoadingCircle from './LoadingCircle.jsx'
+import ZoomImage from './ZoomImage.jsx'
 
 function drivePreview(url) {
   const match = String(url).match(/\/file\/d\/([^/]+)/)
@@ -39,10 +40,10 @@ function SampleFrame({ sample, alt }) {
     )
   } else {
     media = (
-      <img
+      <ZoomImage
         src={sample}
         alt={alt}
-        ref={(node) => {
+        imgRef={(node) => {
           if (node?.complete && node.naturalWidth > 0) finish()
         }}
         onLoad={finish}
