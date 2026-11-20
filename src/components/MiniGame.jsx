@@ -290,7 +290,7 @@ function MiniGame() {
             ref={playerRef}
             className="absolute bottom-0 left-16 h-[46px] w-[46px]"
           >
-            <img src="/money-cash.gif" alt="" className="h-full w-full object-contain" draggable="false" />
+            <img src="/site/money.webp" alt="" className="h-full w-full object-contain" draggable="false" />
           </div>
           {obstacles.map((obstacle) => (
             <div

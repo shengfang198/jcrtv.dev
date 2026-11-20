@@ -1,7 +1,7 @@
 export const profile = {
   email: 'lharc3395@gmail.com',
   location: 'Davao City',
-  cv: '/resume__.pdf',
+  cv: '/site/resume.pdf',
   linkedin: 'https://www.linkedin.com/in/corales-edgar-jr-506324247/',
   github: 'https://github.com/shengfang198',
   bio: "I'm a designer and full-stack developer with 5+ years of experience, focused on building business-driven digital products that combine intuitive user experiences, scalable systems, and clean, efficient code. I help startups and established businesses turn ideas into practical, high-quality solutions that improve workflows, enhance customer experiences, and support business growth."
@@ -24,74 +24,74 @@ export const projectCards = [
     id: 'ecommerce',
     title: 'Shopify Store',
     description: 'Shopify 2.0 / Liquid',
-    image: '/ECOMMERCE/thumbnailecommerce.png'
+    image: '/projects/shopify-store/card.webp'
   },
   {
     id: 'ai-agent-automation',
     title: 'Relay',
     description: 'Automation / Workflow',
-    image: '/AI/Screenshot 2026-11-03 144555.png'
+    image: '/projects/relay/card.webp'
   },
   {
     id: 'saas-platform',
     title: 'Virtual Editor',
     description: 'Orders / Editors / Payments',
-    image: '/SAAS/thumbnail.png'
+    image: '/projects/virtual-editor/card.webp'
   },
   {
     id: 'terra',
     title: 'Terra',
     description: 'Docs / Design / AI',
-    image: '/TERRA/Screenshot 2026-11-04 040707.png'
+    image: '/projects/terra/card.webp'
   },
   {
     id: '3d-visualization',
     title: '3D Visualization',
     description: 'Interior / Architecture',
-    image: '/3DVISUALIZATION/8.jpg'
+    image: '/projects/visualization/08.webp'
   },
   {
     id: 'ui-ux',
     title: 'UI UX Design',
     description: 'Figma / Product Design',
-    image: '/FIGMA/VS.png'
+    image: '/projects/ui-ux/vs.webp'
   },
   {
     id: 'bridgehub',
     title: 'Bridgehub',
     description: 'Agency / Workspace',
-    image: '/BRIDGEHUB/bridgehub.png'
+    image: '/projects/bridgehub/card.webp'
   },
   {
     id: 'action-rpg',
     title: 'Action RPG',
     description: 'Unreal Engine 5',
-    image: '/GAMEDEV/indiegame.jpeg'
+    image: '/projects/action-rpg/cover.webp'
   },
   {
     id: 'graphic-product-design',
     title: 'Graphic Design',
     description: 'Brand / Product / Print',
-    image: '/GRAPHIC_ARTIST/Samuraipng.png'
+    image: '/projects/graphic-design/samurai.webp'
   },
   {
     id: 'ecommerce-custom',
     title: 'Nine Lives',
     description: 'Ecommerce',
-    image: '/ECOMMERCE/ninelives.png'
+    image: '/projects/nine-lives/card.webp'
   }
 ]
 
 export const technologies = [
-  { name: 'Unreal Engine', src: '/unrealengine.svg' },
-  { name: 'AutoCAD', src: '/autocad.svg' },
-  { name: 'Blender', src: '/blender.svg' },
-  { name: 'Figma', src: '/figma.png' },
-  { name: 'React', src: '/react.svg' },
-  { name: 'Node.js', src: '/nodejs.png' },
-  { name: 'JavaScript', src: '/js.png' },
-  { name: 'PostgreSQL', src: '/database.png' },
-  { name: 'C++', src: '/cpp.png' }
+  { name: 'Unreal Engine', src: '/icons/unreal-engine.svg' },
+  { name: 'AutoCAD', src: '/icons/autocad.svg' },
+  { name: 'Blender', src: '/icons/blender.svg' },
+  { name: 'Figma', src: '/icons/figma.webp' },
+  { name: 'React', src: '/icons/react.svg' },
+  { name: 'Node.js', src: '/icons/nodejs.webp' },
+  { name: 'JavaScript', src: '/icons/javascript.webp' },
+  { name: 'PostgreSQL', src: '/icons/postgresql.webp' },
+  { name: 'C++', src: '/icons/cpp.webp' }
 ]
 
 export const skills = [
@@ -172,7 +172,7 @@ export const education = [
       'Udemy — Success Ogwudu',
       'Completed Oct. 21, 2026. Floor plan drafting in AutoCAD 2D, from beginner through advanced.'
     ],
-    certificate: '/cert-cad.pdf'
+    certificate: '/site/certificate-cad.pdf'
   },
   {
     title: '3D & Advanced C++ Programming',
@@ -181,7 +181,7 @@ export const education = [
       'Udemy — Game Development & Advanced Programming',
       'Focused on 3D systems, performance logic, and advanced C++ concepts for interactive applications'
     ],
-    certificate: '/cert.png'
+    certificate: '/site/certificate.webp'
   },
   {
     title: 'ICT / Multimedia Design',
