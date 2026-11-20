@@ -581,18 +581,18 @@ const projectsData = {
   'bridgehub': {
     id: 'bridgehub',
     title: 'Bridgehub',
-    description: 'An agency site and workspace for staff chat, client assignments, and agent time tracking.',
-    category: 'Agency CRM · Workspace · Time Tracking',
+    description: 'An agency site and workspace for staff chat, client assignments, agent time tracking, and AI monitoring.',
+    category: 'Agency CRM · Workspace · Time Tracking · AI Monitoring',
     color: 'bg-purple-500/20',
     badgeColor: 'bg-fuchsia-500/20 text-fuchsia-300',
     client: 'Self-Initiated',
     duration: 'Live Project',
-    tech: ['React', 'Vite', 'Tailwind CSS', 'Express', 'PostgreSQL', 'S3', 'Electron'],
+    tech: ['React', 'Vite', 'Tailwind CSS', 'Express', 'PostgreSQL', 'S3', 'Electron', 'AI Monitoring'],
     icon: <svg className="w-5 h-5 text-fuchsia-300" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="7" width="20" height="14" rx="2" strokeWidth={1.5}></rect><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"></path><path strokeLinecap="round" strokeWidth={1.5} d="M2 13h20"></path></svg>,
     caseStudy: [
       {
         title: 'Overview',
-        content: 'Bridgehub is an agency site and the workspace behind it. Public pages cover the company, careers, jobs, courses, a forum, and contact. Owner, admin, agent, and client accounts open the workspace. A desktop tracker records agent time against the weekly schedule.'
+        content: 'Bridgehub is an agency site and the workspace behind it. Public pages cover the company, careers, jobs, courses, a forum, and contact. Owner, admin, agent, and client accounts open the workspace. A desktop tracker records agent time against the weekly schedule, and AI monitoring reviews the captured activity.'
       },
       {
         title: 'Workspace',
@@ -616,6 +616,16 @@ const projectsData = {
         ]
       },
       {
+        title: 'AI Monitoring',
+        content: 'AI monitoring reads the screenshots and focus reports from the tracker and writes a short review for the owner and admins.',
+        bullets: [
+          'Each captured screen is checked on the server, not in the desktop app',
+          'The review notes whether the work matches the assigned tasks',
+          'Idle stretches and off-schedule time are called out next to the clock record',
+          'Owner and admin accounts see the review on the agent day. Agents do not edit it'
+        ]
+      },
+      {
         title: 'Tech Stack',
         content: 'The site proxies API calls. The browser never opens Postgres.',
         bullets: [
@@ -623,14 +633,16 @@ const projectsData = {
           'API: Express, with SQL migrations on boot',
           'Database: PostgreSQL, with bcrypt passwords and an httpOnly session cookie',
           'Files: S3-compatible object storage',
-          'Desktop: Electron tracker for Windows'
+          'Desktop: Electron tracker for Windows',
+          'AI: activity reviews run on the server from tracker screenshots and focus reports'
         ]
       }
     ],
     results: [
       'A public agency site and a role-based workspace in one product',
       'Staff chat and one assigned agent per client',
-      'Desktop time tracking tied to the weekly schedule'
+      'Desktop time tracking tied to the weekly schedule',
+      'AI reviews of tracker activity for the owner and admins'
     ],
     samples: [bridgehubImage],
     liveUrl: 'https://bridgehub-global.com',
