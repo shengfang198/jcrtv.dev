@@ -65,11 +65,36 @@ function SampleFrame({ sample, alt }) {
   )
 }
 
+function ProjectLinks({ order, projectsData, projectId, onSelect }) {
+  return (
+    <ul className="mt-4 space-y-2 text-sm leading-snug">
+      {order.map((id) => {
+        const item = projectsData[id]
+        const active = id === projectId
+        return (
+          <li key={id}>
+            <a
+              href={`#/project/${id}`}
+              className={active ? 'font-semibold' : 'text-neutral-500 hover:text-ink'}
+              aria-current={active ? 'page' : undefined}
+              onClick={onSelect}
+            >
+              {item.title}
+            </a>
+          </li>
+        )
+      })}
+    </ul>
+  )
+}
+
 function ProjectPage({ project, projectOrder, projectsData }) {
   const [index, setIndex] = useState(0)
+  const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
     setIndex(0)
+    setMenuOpen(false)
   }, [project?.id])
 
   const samples = project?.samples || []
@@ -86,6 +111,20 @@ function ProjectPage({ project, projectOrder, projectsData }) {
       return next
     })
   }, [count])
+
+  useEffect(() => {
+    if (!menuOpen) return undefined
+    const onKey = (event) => {
+      if (event.key === 'Escape') setMenuOpen(false)
+    }
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    window.addEventListener('keydown', onKey)
+    return () => {
+      document.body.style.overflow = previousOverflow
+      window.removeEventListener('keydown', onKey)
+    }
+  }, [menuOpen])
 
   useEffect(() => {
     if (!project) return undefined
@@ -125,26 +164,24 @@ function ProjectPage({ project, projectOrder, projectsData }) {
   return (
     <article className="page-shell px-6 py-10 md:px-14 md:py-14">
       <div className="grid items-start gap-8 lg:grid-cols-[200px_1fr] lg:gap-10">
-        <nav aria-label="Projects" className="lg:sticky lg:top-24">
+        <nav aria-label="Projects" className="hidden lg:sticky lg:top-24 lg:block">
           <p className="text-xs font-semibold tracking-[0.2em] text-neutral-500">PROJECTS</p>
-          <ul className="mt-4 space-y-2 text-sm leading-snug">
-            {order.map((id) => {
-              const item = projectsData[id]
-              const active = id === project.id
-              return (
-                <li key={id}>
-                  <a
-                    href={`#/project/${id}`}
-                    className={active ? 'font-semibold' : 'text-neutral-500 hover:text-ink'}
-                    aria-current={active ? 'page' : undefined}
-                  >
-                    {item.title}
-                  </a>
-                </li>
-              )
-            })}
-          </ul>
+          <ProjectLinks order={order} projectsData={projectsData} projectId={project.id} />
         </nav>
+        <div className="lg:hidden">
+          <button
+            type="button"
+            className="inline-flex items-center gap-3 text-xs font-semibold tracking-[0.2em]"
+            aria-expanded={menuOpen}
+            aria-controls="project-list"
+            onClick={() => setMenuOpen(true)}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+              <path d="M4 7h16M4 12h16M4 17h16" />
+            </svg>
+            PROJECTS
+          </button>
+        </div>
 
         <div>
           <div className="flex items-center gap-2">
@@ -238,6 +275,35 @@ function ProjectPage({ project, projectOrder, projectsData }) {
             </div>
           </div>
         </div>
+      </div>
+
+      <div className={`fixed inset-0 z-[60] lg:hidden ${menuOpen ? '' : 'pointer-events-none'}`} inert={!menuOpen} aria-hidden={!menuOpen}>
+        <button
+          type="button"
+          aria-label="Close projects"
+          className={`absolute inset-0 bg-black/40 transition-opacity duration-300 motion-reduce:transition-none ${menuOpen ? 'opacity-100' : 'opacity-0'}`}
+          onClick={() => setMenuOpen(false)}
+        />
+        <nav
+          id="project-list"
+          aria-label="Projects"
+          className={`absolute inset-y-0 left-0 w-[min(18rem,86vw)] bg-white px-6 py-8 transition-transform duration-300 ease-out motion-reduce:transition-none ${menuOpen ? 'translate-x-0' : '-translate-x-full'}`}
+        >
+          <div className="flex items-center justify-between">
+            <p className="text-xs font-semibold tracking-[0.2em] text-neutral-500">PROJECTS</p>
+            <button type="button" aria-label="Close" onClick={() => setMenuOpen(false)}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+                <path d="M6 6l12 12M18 6 6 18" />
+              </svg>
+            </button>
+          </div>
+          <ProjectLinks
+            order={order}
+            projectsData={projectsData}
+            projectId={project.id}
+            onSelect={() => setMenuOpen(false)}
+          />
+        </nav>
       </div>
     </article>
   )
